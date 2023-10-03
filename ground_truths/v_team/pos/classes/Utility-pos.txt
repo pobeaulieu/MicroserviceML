@@ -1,0 +1,2 @@
+com.rafsan.inventory.MainApp
+com.rafsan.inventory.HibernateUtil
