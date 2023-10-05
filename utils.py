@@ -1,5 +1,4 @@
 import os
-import torch
 import numpy as np
 import csv
 
@@ -17,44 +16,6 @@ def load_class_code_from_directory(system):
     return class_code
 
 
-def generate_embeddings_for_java_file(code, model, tokenizer, device):
-    '''Generate embeddings for the provided java file.'''
-    
-    # Tokenize the code
-    all_code_tokens = tokenizer.tokenize(code)
-
-    # Initialize an empty list to store the embeddings
-    embeddings_for_file = []
-
-    # Process the tokens in chunks of maximum length 510 (to account for [CLS] and [SEP])
-    chunk_size = 510
-
-    for n in range(0, len(all_code_tokens), chunk_size):
-        chunk_code_tokens = all_code_tokens[n:n+chunk_size]
-
-        # Add CLS (start) and SEP (end) tokens to the chunk tokens
-        tokens = [tokenizer.cls_token] + chunk_code_tokens + [tokenizer.sep_token]
-
-        # Convert the tokens to input IDs and create a PyTorch tensor
-        input_ids = tokenizer.convert_tokens_to_ids(tokens)
-        input_tensor = torch.tensor(input_ids).unsqueeze(0).to(device)  # add batch dimension and move to device
-
-        # Generate embeddings using the model
-        with torch.no_grad():
-            outputs = model(input_tensor)
-        
-        # Retrieve the [CLS] token's embeddings (the first token) from the outputs
-        cls_embedding = outputs.last_hidden_state[0][0].cpu().numpy()
-
-        # Append this embedding to our embeddings list
-        embeddings_for_file.append(cls_embedding)
-
-    # Compute the mean of all embeddings for this file
-    mean_of_embeddings = np.mean(embeddings_for_file, axis=0)
-
-    return mean_of_embeddings
-
-
 def load_data_from_csv(filename):
     with open(filename, 'r', newline='') as file:
         reader = csv.reader(file, delimiter=';')
@@ -67,3 +28,34 @@ def load_data_from_csv(filename):
             labels.append(label)
             embeddings.append(np.array(list(map(float, embedding_str.split(',')))))
         return class_names, labels, embeddings
+
+
+def save_embeddings_to_csv(version, system, model_type, class_embeddings, class_labels=None):
+    """
+    Writes embeddings and labels to a CSV file.
+
+    :param version: Version string
+    :param system: System string
+    :param model_type: Model type string
+    :param class_embeddings: Dictionary containing embeddings for each class.
+    :param class_labels: Dictionary containing labels for each class. If None, all labels are set to -1.
+    """
+
+    file_name = f"{version}_{system}_{model_type}_embeddings.csv"
+
+    with open(file_name, 'w') as f:
+        writer = csv.writer(f, delimiter=';', quotechar='"', quoting=csv.QUOTE_MINIMAL, lineterminator='\n')
+
+        # If class_labels is not provided, default all labels to -1
+        if class_labels is None:
+            class_labels = {}
+
+        # Match class_labels with class_embeddings based on key (class name) and write together to csv
+        for key, embedding in class_embeddings.items():
+            # Convert numpy array to comma-separated string
+            embedding_str = ','.join(map(str, embedding))
+            writer.writerow([key, class_labels.get(key, -1), embedding_str])
+
+# Example usage:
+# class_embeddings = {'class1': [0.5, 0.5], 'class2': [0.7, 0.3]}
+# save_embeddings_to_csv('v1', 'system1', 'modelA', class_embeddings)  # This will default all labels to -1
