@@ -1,6 +1,6 @@
 import torch
 import numpy as np
-
+import re
 
 def generate_embeddings_for_java_code(code, model, tokenizer, device):
     '''Generate embeddings for the provided java file.'''
