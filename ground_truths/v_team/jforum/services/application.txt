@@ -1,0 +1,195 @@
+S1-Attachment Service
+net.jforum.services.AttachmentService
+net.jforum.security.DownloadAttachmentRule
+net.jforum.extensions.Extends
+net.jforum.actions.interceptors.ExtendsAnnotationInterceptor
+
+S2-Avatar Service
+net.jforum.services.AvatarService
+net.jforum.controllers.AvatarAdminController
+
+S3-Category Service
+net.jforum.services.CategoryService
+net.jforum.controllers.CategoryAdminController
+net.jforum.events.listeners.CategoryEventListener
+net.jforum.events.EmptyCategoryEvent
+net.jforum.security.EmptyRule
+net.jforum.events.Event
+net.jforum.events.listeners.AbstractListener
+
+S4-Config Service
+net.jforum.services.ConfigService
+net.jforum.controllers.ConfigController
+net.jforum.core.VRaptorCustomPathResolver
+
+S5-Forum Service
+net.jforum.services.ForumService
+net.jforum.controllers.ForumController
+net.jforum.controllers.ForumAdminController
+net.jforum.plugins.post.ForumAdminExtension
+net.jforum.events.EmptyForumEvent
+net.jforum.events.listeners.ForumEventListener
+net.jforum.security.AccessForumRule
+net.jforum.security.EmptyRule
+net.jforum.events.Event
+net.jforum.core.events.post.ForumPostEvent
+net.jforum.core.events.topic.ForumTopicEvent
+net.jforum.events.listeners.AbstractListener
+net.jforum.extensions.Extends
+net.jforum.actions.interceptors.ExtendsAnnotationInterceptor
+net.jforum.security.AccessForumRule
+
+S6-Group Service
+net.jforum.services.GroupService
+net.jforum.controllers.GroupAdminController
+
+S7-Format Service
+net.jforum.services.MessageFormatService
+
+S8-Log Service
+net.jforum.services.ModerationLogService
+
+S9-Moderation Service
+net.jforum.services.ModerationService
+net.jforum.security.ModerationRule
+net.jforum.controllers.ModerationController
+net.jforum.services.ModerationLogService
+
+S10-Most Users Ever Online Service
+net.jforum.services.MostUsersEverOnlineService
+
+S11-Poll Service
+net.jforum.services.PollService
+net.jforum.services.PollService.PollChanges
+
+S12-Post Service
+net.jforum.services.PostService
+net.jforum.security.ChangePostRule
+net.jforum.plugins.post.PostEditInterceptor
+net.jforum.controllers.PostController
+net.jforum.events.EmptyPostEvent
+net.jforum.security.EmptyRule
+net.jforum.events.Event
+net.jforum.core.events.post.ForumPostEvent
+net.jforum.core.events.post.TopicPostEvent
+
+S13-Private Message Service
+net.jforum.services.PrivateMessageService
+net.jforum.controllers.PrivateMessageController
+net.jforum.security.PrivateMessageEnabledRule
+net.jforum.security.PrivateMessageOwnerRule
+
+S14-RSS Service
+net.jforum.services.RSSService
+net.jforum.controllers.RSSController
+
+S15-Ranking Service
+net.jforum.services.RankingService
+net.jforum.controllers.RankingAdminController
+
+S16-Smilie Service
+net.jforum.services.SmilieService
+net.jforum.controllers.SmilieAdminController
+
+S17-Topic Service
+net.jforum.services.TopicService
+net.jforum.security.CreateNewTopicRule
+net.jforum.security.ReplyTopicRule
+net.jforum.security.TopicFilter
+net.jforum.events.EmptyTopicEvent
+net.jforum.events.listeners.TopicEventListener
+net.jforum.controllers.TopicController
+net.jforum.security.EmptyRule
+net.jforum.events.Event
+net.jforum.core.events.post.TopicPostEvent
+net.jforum.core.events.post.TopicReplyEvent
+net.jforum.core.events.topic.ForumTopicEvent
+net.jforum.events.listeners.AbstractListener
+
+S18-Watch Service
+net.jforum.services.TopicWatchService
+net.jforum.actions.extensions.TopicWatchExtension
+net.jforum.core.events.topic.TopicWatchTopicEvent
+net.jforum.events.Event
+net.jforum.core.events.post.TopicWatchPostEvent
+net.jforum.extensions.Extends
+net.jforum.actions.interceptors.ExtendsAnnotationInterceptor
+
+S19-User Service
+net.jforum.services.UserService
+net.jforum.security.EditUserRule
+net.jforum.controllers.UserController
+
+S20-Authentication (Login) Service
+net.jforum.security.AuthenticatedRule
+net.jforum.services.LostPasswordService
+
+S21-Access Service
+net.jforum.security.AccessRule
+net.jforum.security.AccessForumRule
+
+S22-Administration Service
+net.jforum.security.AdministrationRule
+net.jforum.controllers.AdminController
+net.jforum.controllers.HibernateStatisticsController
+
+S23-Role Service
+net.jforum.security.RoleManager
+
+S24-Session Service
+net.jforum.core.SessionManager
+net.jforum.actions.interceptors.SessionManagerInterceptor
+net.jforum.core.UserSessionListener
+net.jforum.events.listeners.AbstractListener
+
+S25-Security Service
+net.jforum.actions.interceptors.SecurityInterceptor
+net.jforum.actions.interceptors.MethodSecurityInterceptor
+net.jforum.actions.interceptors.ControllerSecurityInterceptor
+
+S26-Bad Word Service
+net.jforum.controllers.BadWordAdminController
+net.jforum.core.events.post.BadWordEvent
+net.jforum.events.Event
+
+S27-Banning Service
+net.jforum.controllers.BanListAdminController
+
+S28-Spring Service
+net.jforum.core.support.hibernate.SessionFactoryCreator
+net.jforum.core.support.hibernate.SpringInterceptor
+net.jforum.core.support.hibernate.SpringSessionFactory
+net.jforum.core.VRaptorSpringProvider
+
+S29-Lucene Service
+net.jforum.controllers.LuceneAdminController
+
+S30-Message Service
+net.jforum.controllers.MessageController
+
+S31-Theme Service
+net.jforum.controllers.ThemeController
+
+S32-Search Service
+net.jforum.controllers.SearchController
+
+S33-JForum Service
+net.jforum.api.JForumExecutionContext
+
+S34-Recent Topics Service
+net.jforum.controllers.RecentTopicsController
+
+S35-Report Service
+net.jforum.controllers.PostReportController
+net.jforum.extensions.PostReportCounterOperation
+net.jforum.extensions.RequestOperation
+net.jforum.extensions.RequestOperationChain
+
+S36-Cache Service
+net.jforum.core.support.hibernate.CacheEvictionRules
+
+S37-Action Service
+net.jforum.extensions.ActionExtension
+net.jforum.extensions.ActionExtensionManager
+net.jforum.extensions.Extends
+net.jforum.actions.interceptors.ExtendsAnnotationInterceptor

@@ -1,0 +1,158 @@
+S1-Attachment Service
+net.jforum.entities.Attachment
+net.jforum.entities.AttachmentExtension
+net.jforum.entities.AttachmentExtensionGroup
+net.jforum.entities.AttachmentQuota
+
+S2-Avatar Service
+net.jforum.entities.Avatar
+net.jforum.entities.AvatarType
+net.jforum.repository.AvatarRepository
+net.jforum.repository.Repository
+net.jforum.repository.HibernateGenericDAO
+
+S3-Category Service
+net.jforum.entities.Category
+net.jforum.repository.CategoryRepository
+net.jforum.repository.Repository
+net.jforum.repository.HibernateGenericDAO
+
+S4-Config Service
+net.jforum.entities.Config
+
+S5-Forum Service
+net.jforum.entities.Forum
+net.jforum.entities.ForumStats
+net.jforum.repository.ForumRepository
+net.jforum.repository.Repository
+net.jforum.repository.HibernateGenericDAO
+
+S6-Group Service
+net.jforum.entities.Group
+net.jforum.repository.GroupRepository
+net.jforum.repository.Repository
+net.jforum.repository.HibernateGenericDAO
+
+S7-Log Service
+net.jforum.entities.ModerationLog
+net.jforum.entities.ModerationLogType
+net.jforum.repository.ModerationLogRepository
+net.jforum.repository.Repository
+net.jforum.repository.HibernateGenericDAO
+
+S8-Most Users Ever Online Service
+net.jforum.entities.MostUsersEverOnline
+
+S9-Poll Service
+net.jforum.entities.PollOption
+net.jforum.entities.PollVoter
+net.jforum.repository.PollRepository
+net.jforum.repository.Repository
+net.jforum.repository.HibernateGenericDAO
+
+S10-Post Service
+PostEvent
+net.jforum.repository.PostRepository
+net.jforum.repository.Repository
+net.jforum.repository.HibernateGenericDAO
+
+S11-Private Message Service
+net.jforum.entities.PrivateMessage
+net.jforum.repository.PrivateMessageRepository
+net.jforum.entities.PrivateMessageType
+net.jforum.repository.Repository
+net.jforum.repository.HibernateGenericDAO
+
+S12-RSS Service
+net.jforum.repository.RSSRepository
+net.jforum.repository.Repository
+net.jforum.repository.HibernateGenericDAO
+
+S13-Ranking Service
+net.jforum.entities.Ranking
+net.jforum.repository.RankingRepository
+net.jforum.repository.Repository
+net.jforum.repository.HibernateGenericDAO
+
+S14-Smilie Service
+net.jforum.entities.Smilie
+net.jforum.repository.SmilieRepository
+net.jforum.repository.Repository
+net.jforum.repository.HibernateGenericDAO
+
+S15-Topic Service
+net.jforum.entities.Topic
+net.jforum.repository.TopicRepository
+net.jforum.repository.Repository
+net.jforum.repository.HibernateGenericDAO
+
+S16-Watch Service
+net.jforum.entities.ForumWatch
+net.jforum.entities.TopicWatch
+net.jforum.repository.TopicWatchRepository
+net.jforum.repository.Repository
+net.jforum.repository.HibernateGenericDAO
+
+S17-User Service
+net.jforum.entities.User
+net.jforum.repository.UserRepository
+net.jforum.repository.Repository
+net.jforum.repository.HibernateGenericDAO
+net.jforum.entities.util.Pagination
+
+S18-Role Service
+net.jforum.entities.Role
+
+S19-Session Service
+net.jforum.entities.Session
+net.jforum.repository.SessionRepository
+net.jforum.entities.UserSession
+net.jforum.repository.Repository
+net.jforum.repository.HibernateGenericDAO
+
+S20-Bad Word Service
+net.jforum.core.events.post.BadWord
+net.jforum.repository.BadWordRepository
+net.jforum.repository.Repository
+net.jforum.repository.HibernateGenericDAO
+
+S21-Banning Service
+net.jforum.entities.BanList
+net.jforum.repository.BanListRepository
+net.jforum.repository.Repository
+net.jforum.repository.HibernateGenericDAO
+
+S22-Theme Service
+net.jforum.entities.Theme
+net.jforum.repository.ThemeRepository
+net.jforum.repository.Repository
+net.jforum.repository.HibernateGenericDAO
+
+S23-Search Service
+net.jforum.entities.util.SearchResult
+net.jforum.entities.util.SearchParams
+net.jforum.entities.util.SearchMatchType
+net.jforum.entities.util.SearchSort
+net.jforum.entities.util.SearchSortType
+net.jforum.repository.SearchRepository
+net.jforum.repository.Repository
+net.jforum.repository.HibernateGenericDAO
+net.jforum.entities.util.PaginatedResult
+
+S24-Recent Topics Service
+net.jforum.repository.RecentTopicsRepository
+net.jforum.repository.Repository
+net.jforum.repository.HibernateGenericDAO
+
+S25-Report Service
+net.jforum.entities.PostReport
+net.jforum.entities.PostReportStatus
+net.jforum.repository.PostReportRepository
+net.jforum.repository.Repository
+net.jforum.repository.HibernateGenericDAO
+
+S26-Forum Limited Time Service
+net.jforum.plugins.post.ForumLimitedTime
+net.jforum.plugins.post.ForumLimitedTimeRepository
+net.jforum.repository.Repository
+net.jforum.repository.HibernateGenericDAO
