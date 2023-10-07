@@ -61,7 +61,7 @@ def save_embeddings_to_csv(version, system, model_type, class_embeddings, class_
 # save_embeddings_to_csv('v1', 'system1', 'modelA', class_embeddings)  # This will default all labels to -1
 
 
-def process_files(version, system):
+def associate_classes_to_types(version, system):
     def process_file(filepath, label):
         with open(filepath, 'r') as f:
             for line in f:

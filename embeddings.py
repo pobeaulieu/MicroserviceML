@@ -2,7 +2,7 @@ import torch
 import numpy as np
 
 
-def generate_embeddings_for_java_file(code, model, tokenizer, device):
+def generate_embeddings_for_java_code(code, model, tokenizer, device):
     '''Generate embeddings for the provided java file.'''
     
     # Tokenize the code
@@ -38,3 +38,38 @@ def generate_embeddings_for_java_file(code, model, tokenizer, device):
     mean_of_embeddings = np.mean(embeddings_for_file, axis=0)
 
     return mean_of_embeddings
+
+
+# List of stopwords
+java_stopwords = [
+    'handle', 'cancel', 'title', 'parent', 'cell', 'bean', 'loader', 'stage',
+    'pressed', 'dragged', 'view', 'box', 'initialize', 'total', 'view', 'image',
+    'icon', 'offset', 'node', 'scene', 'duration', 'drawer', 'nav', 'load', 
+    'data', 'is', 'empty', 'all', 'static', 'cascade', 'transaction', 'override',
+    'join', 'one', 'description', 'strategy', 'generation', 'override',
+    'persistence', 'generated', 'io', 'projection', 'property', 'commit', 'dao',
+    'this', 'style', 'menu', 'begin', 'column', 'translate', 'on', 'selected',
+    'name', 'png', 'logo', 'string', 'name', 'table', 'exception', 'contains',
+    'filter', 'controller', 'implement', 'button', 'session', 'hibernate', 'array',
+    'org', 'save', 'clear', 'boolean', 'init', 'remove', 'entity', 'observable',
+    'double', 'length', 'alert', 'action', 'field', 'bundle', 'show', 'root', 
+    'list', 'index', 'text', 'return', 'wait', 'lower', 'true', 'false', 'java',
+    'util', 'long', 'collection', 'interface', 'layout', 'value', 'valid', 'is',
+    'value', 'type', 'model', 'public', 'private', 'id', 'error', 'void', 'not',
+    'int', 'float', 'for', 'set', 'catch', 'try', 'javafx', 'import', 'class',
+    'com', 'package', 'if', 'else', 'null', 'no', 'delete', 'add', 'edit', 'get',
+    'new', 'open', 'close', 'mouse', 'event', 'window', 'throw'
+]
+
+def generate_word_embeddings_for_java_code(code, model, lemmatizer, stopwords=java_stopwords):
+    """Process a Java code string to extract, preprocess, and vectorize words."""
+    
+    # Extract all alphabetic words and filter out stopwords.
+    words = [word for word in re.findall("[a-zA-Z]+", code) if word not in stopwords]
+
+    # Get embeddings for lemmatized words that are in the word2vec model.
+    embeddings = [model[lemma] for word in words 
+                  if (lemma := lemmatizer.lemmatize(word.lower())) in model]
+
+    # Return the mean embedding, if available.
+    return np.mean(embeddings, axis=0) if embeddings else None
