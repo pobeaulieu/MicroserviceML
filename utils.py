@@ -30,7 +30,7 @@ def load_data_from_csv(filename):
         return class_names, labels, embeddings
 
 
-def save_embeddings_to_csv(version, system, model_type, class_embeddings, class_labels=None):
+def write_embeddings_to_csv(version, system, model_type, class_embeddings, class_labels=None):
     """
     Writes embeddings and labels to a CSV file.
 
@@ -41,7 +41,7 @@ def save_embeddings_to_csv(version, system, model_type, class_embeddings, class_
     :param class_labels: Dictionary containing labels for each class. If None, all labels are set to -1.
     """
 
-    file_name = f"{version}_{system}_{model_type}_embeddings.csv"
+    file_name = f"./csv_files/{version}_{system}_{model_type}_embeddings.csv"
 
     with open(file_name, 'w') as f:
         writer = csv.writer(f, delimiter=';', quotechar='"', quoting=csv.QUOTE_MINIMAL, lineterminator='\n')
@@ -80,3 +80,14 @@ def associate_classes_to_types(version, system):
         process_file(base_path + file_path, label)
 
     return class_labels
+
+
+def write_distance_to_csv(matrix, version, system):
+    csv_filename = f"./csv_files/{version}_{system}_dependency_graph.csv"
+
+    with open(csv_filename, 'w', newline='') as csvfile:
+        csv_writer = csv.writer(csvfile)
+        csv_writer.writerow(['class1', 'class2', 'distance'])
+        for class1 in matrix:
+            for class2 in matrix[class1]:
+                csv_writer.writerow([class1, class2, matrix[class1][class2]])
