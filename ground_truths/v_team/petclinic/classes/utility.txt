@@ -1,0 +1,12 @@
+MAIN :
+
+java.org.springframework.samples.petclinic.owner.PetTypeFormatter
+
+java.org.springframework.samples.petclinic.system.CacheConfiguration
+java.org.springframework.samples.petclinic.system.CrashController
+java.org.springframework.samples.petclinic.system.WelcomeController
+
+TEST :
+
+EntityUtils.java
+PetTypeFormatterTests.java

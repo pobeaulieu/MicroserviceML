@@ -1,0 +1,22 @@
+MAIN :
+
+java.org.springframework.samples.petclinic.owner.OwnerController
+java.org.springframework.samples.petclinic.owner.PetController
+java.org.springframework.samples.petclinic.owner.PetValidator
+java.org.springframework.samples.petclinic.owner.VisitController
+
+java.org.springframework.samples.petclinic.vet.VetController
+
+TEST :
+
+MySqlIntegrationTests.java
+MysqlTestApplication.java
+PetClinicIntegrationTests.java
+PostgresIntegrationTests.java
+OwnerControllerTests.java
+PetControllerTests.java
+VisitControllerTests.java
+ClinicServiceTests.java
+CrashControllerIntegrationTests.java
+CrashControllerTests.java
+VetControllerTests.java
