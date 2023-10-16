@@ -87,7 +87,7 @@ def write_distance_to_csv(matrix, version, system):
 
     with open(csv_filename, 'w', newline='') as csvfile:
         csv_writer = csv.writer(csvfile)
-        csv_writer.writerow(['class1', 'class2', 'distance'])
+        csv_writer.writerow(['class1', 'class2', 'static_distance'])
         for class1 in matrix:
             for class2 in matrix[class1]:
                 csv_writer.writerow([class1, class2, matrix[class1][class2]])
