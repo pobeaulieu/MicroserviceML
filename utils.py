@@ -41,7 +41,7 @@ def write_embeddings_to_csv(version, system, model_type, class_embeddings, class
     :param class_labels: Dictionary containing labels for each class. If None, all labels are set to -1.
     """
 
-    file_name = f"./csv_files/{version}_{system}_{model_type}_embeddings.csv"
+    file_name = f"./generated_data/embedding/{version}_{system}_{model_type}_embeddings.csv"
 
     with open(file_name, 'w') as f:
         writer = csv.writer(f, delimiter=';', quotechar='"', quoting=csv.QUOTE_MINIMAL, lineterminator='\n')
@@ -82,8 +82,8 @@ def associate_classes_to_types(version, system):
     return class_labels
 
 
-def write_distance_to_csv(matrix, version, system):
-    csv_filename = f"./csv_files/{version}_{system}_dependency_graph.csv"
+def write_call_graph_to_csv(matrix, version, system):
+    csv_filename = f"./generated_data/graph/call/{version}_{system}_call_graph.csv"
 
     with open(csv_filename, 'w', newline='') as csvfile:
         csv_writer = csv.writer(csvfile)
