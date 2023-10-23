@@ -1,1 +1,20 @@
 class_name,service
+0,Application Service 1
+1,Application Service 2
+2,Application Service 3
+3,Application Service 4
+4,Application Service 5
+0,Entity Service 1
+1,Entity Service 2
+2,Entity Service 3
+3,Entity Service 4
+4,Entity Service 5
+5,Entity Service 6
+6,Entity Service 7
+7,Entity Service 8
+8,Entity Service 9
+9,Entity Service 10
+10,Entity Service 11
+11,Entity Service 12
+org.springframework.samples.petclinic.owner.PetTypeFormatter,Utility Service 1
+org.springframework.samples.petclinic.system.CrashController,Utility Service 2

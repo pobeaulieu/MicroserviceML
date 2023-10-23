@@ -1,6 +1,6 @@
-java.org.springframework.samples.petclinic.owner.PetTypeFormatter
-java.org.springframework.samples.petclinic.system.CacheConfiguration
-java.org.springframework.samples.petclinic.system.CrashController
-java.org.springframework.samples.petclinic.system.WelcomeController
-EntityUtils.java
-PetTypeFormatterTests.java
+org.springframework.samples.petclinic.owner.PetTypeFormatter
+org.springframework.samples.petclinic.system.CacheConfiguration
+org.springframework.samples.petclinic.system.CrashController
+org.springframework.samples.petclinic.system.WelcomeController
+org.springframework.samples.petclinic.service.EntityUtils.java
+org.springframework.samples.petclinic.owner.PetTypeFormatterTests.java
