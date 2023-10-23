@@ -91,3 +91,22 @@ def write_call_graph_to_csv(matrix, version, system):
         for class1 in matrix:
             for class2 in matrix[class1]:
                 csv_writer.writerow([class1, class2, matrix[class1][class2]])
+
+
+def print_communities(label_type, communities):
+    """Print the detected communities."""
+    for idx, community in enumerate(communities):
+        print(f"{label_type} Service Community {idx + 1}:")
+        for class_name in community:
+            print(f"  - {class_name}")
+        print("=" * 40)
+    print("\n")
+
+
+def save_communities_to_csv(communities, version, system, algorithm):
+    with open(f'generated_data/community/{version}_{system}_{algorithm}_communities.csv', 'w') as f:
+        f.write('class_name,service\n')
+        for label_type, services in communities.items():
+            for i, service in enumerate(services):
+                for class_name in service:
+                    f.write(f'{class_name},{label_type} Service {i + 1}\n')
