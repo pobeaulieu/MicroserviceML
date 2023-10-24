@@ -10,8 +10,10 @@ def load_class_code_from_directory(system):
         with open(file_path, encoding="ISO-8859-1", errors="ignore") as java_file:
             return java_file.read()
 
-    class_code = {file.replace(".java", ""): read_java_file(os.path.join(root_folder, file))
-                  for file in os.listdir(root_folder)}
+    class_code = {
+        file[:-5] if file.endswith(".java") else file: read_java_file(os.path.join(root_folder, file))
+        for file in os.listdir(root_folder)
+    }   
 
     return class_code
 
