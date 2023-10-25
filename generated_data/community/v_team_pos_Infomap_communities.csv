@@ -50,3 +50,5 @@ com.rafsan.inventory.entity.Employee,Entity Service 20
 com.rafsan.inventory.entity.Product,Entity Service 21
 com.rafsan.inventory.model.EmployeeModel,Entity Service 22
 com.rafsan.inventory.entity.Purchase,Entity Service 23
+com.rafsan.inventory.MainApp,Utility Service 1
+com.rafsan.inventory.HibernateUtil,Utility Service 1

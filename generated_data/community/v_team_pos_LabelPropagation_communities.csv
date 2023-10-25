@@ -50,3 +50,5 @@ com.rafsan.inventory.model.ProductModel,Entity Service 7
 com.rafsan.inventory.dao.ProductDao,Entity Service 7
 com.rafsan.inventory.entity.Item,Entity Service 8
 com.rafsan.inventory.entity.Payment,Entity Service 9
+com.rafsan.inventory.MainApp,Utility Service 1
+com.rafsan.inventory.HibernateUtil,Utility Service 1

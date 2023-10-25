@@ -50,3 +50,5 @@ com.rafsan.inventory.dao.InvoiceDao,Entity Service 3
 com.rafsan.inventory.model.InvoiceModel,Entity Service 3
 com.rafsan.inventory.entity.Item,Entity Service 4
 com.rafsan.inventory.entity.Payment,Entity Service 5
+com.rafsan.inventory.MainApp,Utility Service 1
+com.rafsan.inventory.HibernateUtil,Utility Service 1

@@ -23,7 +23,6 @@ net.java.cargotracker.domain.model.cargo.HandlingActivity,Entity Service 1
 net.java.cargotracker.domain.model.cargo.Delivery,Entity Service 1
 net.java.cargotracker.domain.model.cargo.Itinerary,Entity Service 1
 net.java.cargotracker.domain.model.cargo.TrackingId,Entity Service 1
-net.java.cargotracker.domain.model.handling.HandlingHistory,Entity Service 1
 net.java.cargotracker.domain.model.handling.HandlingEvent,Entity Service 1
 net.java.cargotracker.domain.model.voyage.Voyage,Entity Service 1
 net.java.cargotracker.domain.model.cargo.Cargo,Entity Service 1
@@ -37,9 +36,9 @@ net.java.cargotracker.interfaces.booking.facade.dto.Location,Entity Service 2
 net.java.cargotracker.interfaces.booking.facade.dto.RouteCandidate,Entity Service 2
 net.java.cargotracker.interfaces.booking.facade.dto.CargoRoute,Entity Service 2
 net.java.cargotracker.interfaces.booking.facade.dto.Leg,Entity Service 2
-net.java.cargotracker.infrastructure.persistence.jpa.JpaVoyageRepository,Entity Service 3
+net.java.cargotracker.domain.model.location.LocationRepository,Entity Service 3
 net.java.cargotracker.domain.model.handling.HandlingEventFactory,Entity Service 3
-net.java.cargotracker.domain.model.voyage.VoyageRepository,Entity Service 3
+net.java.cargotracker.infrastructure.persistence.jpa.JpaLocationRepository,Entity Service 3
 net.java.cargotracker.domain.model.voyage.CarrierMovement,Entity Service 4
 net.java.cargotracker.domain.model.voyage.Schedule,Entity Service 4
 net.java.cargotracker.domain.model.voyage.VoyageNumber,Entity Service 5
@@ -48,11 +47,12 @@ net.java.cargotracker.domain.model.handling.HandlingEventRepository,Entity Servi
 net.java.cargotracker.infrastructure.persistence.jpa.JpaHandlingEventRepository,Entity Service 6
 net.java.cargotracker.domain.model.cargo.CargoRepository,Entity Service 7
 net.java.cargotracker.infrastructure.persistence.jpa.JpaCargoRepository,Entity Service 7
-net.java.pathfinder.api.TransitPath,Entity Service 8
-net.java.pathfinder.api.TransitEdge,Entity Service 8
-net.java.cargotracker.domain.model.location.LocationRepository,Entity Service 9
-net.java.cargotracker.infrastructure.persistence.jpa.JpaLocationRepository,Entity Service 9
-net.java.pathfinder.internal.GraphDao,Entity Service 10
+net.java.cargotracker.infrastructure.persistence.jpa.JpaVoyageRepository,Entity Service 8
+net.java.cargotracker.domain.model.voyage.VoyageRepository,Entity Service 8
+net.java.pathfinder.api.TransitPath,Entity Service 9
+net.java.pathfinder.api.TransitEdge,Entity Service 9
+net.java.cargotracker.domain.model.handling.HandlingHistory,Entity Service 10
+net.java.pathfinder.internal.GraphDao,Entity Service 11
 net.java.cargotracker.domain.model.handling.UnknownVoyageException,Utility Service 1
 net.java.cargotracker.domain.model.handling.UnknownCargoException,Utility Service 1
 net.java.cargotracker.domain.model.handling.CannotCreateHandlingEventException,Utility Service 1
