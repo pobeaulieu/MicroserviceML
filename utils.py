@@ -112,3 +112,18 @@ def save_communities_to_csv(communities, version, system, algorithm):
             for i, service in enumerate(services):
                 for class_name in service:
                     f.write(f'{class_name},{label_type} Service {i + 1}\n')
+
+
+def save_microservices_to_file(labels, services_graph, communities_df, filename):
+    """Saves the clustered services and related classes to a file."""
+    with open(filename, "w") as file:
+        for cluster_num in np.unique(labels):
+            file.write(f"Microservice {cluster_num + 1}:\n")
+            cluster_services = [service_name for idx, service_name in enumerate(services_graph.nodes) if labels[idx] == cluster_num]
+            
+            for service in cluster_services:
+                file.write(f"  - Service: {service}\n")
+                related_classes = communities_df[communities_df['service'] == service]['class_name'].tolist()
+                for related_class in related_classes:
+                    file.write(f"    - Class: {related_class}\n")
+            file.write("\n")

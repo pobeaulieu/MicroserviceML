@@ -1,81 +1,44 @@
 Microservice 1:
-  - Service: Application Service 3
-    - Class: com.rafsan.inventory.controller.employee.EditController
-    - Class: com.rafsan.inventory.interfaces.EmployeeInterface
-    - Class: com.rafsan.inventory.controller.employee.EmployeeController
-    - Class: com.rafsan.inventory.controller.employee.AddController
-  - Service: Entity Service 8
-    - Class: com.rafsan.inventory.entity.Sale
-    - Class: com.rafsan.inventory.entity.Invoice
-  - Service: Entity Service 9
-    - Class: com.rafsan.inventory.model.SupplierModel
+  - Service: Entity Service 3
+    - Class: com.rafsan.inventory.dao.EmployeeDao
+    - Class: com.rafsan.inventory.entity.Employee
+    - Class: com.rafsan.inventory.model.EmployeeModel
+  - Service: Entity Service 5
     - Class: com.rafsan.inventory.dao.SupplierDao
+    - Class: com.rafsan.inventory.model.SupplierModel
+  - Service: Entity Service 6
+    - Class: com.rafsan.inventory.model.ProductModel
+    - Class: com.rafsan.inventory.dao.ProductDao
 
 Microservice 2:
-  - Service: Application Service 10
-    - Class: com.rafsan.inventory.MainApp
-  - Service: Application Service 5
-    - Class: com.rafsan.inventory.controller.pos.PosController
-    - Class: com.rafsan.inventory.controller.pos.InvoiceController
-    - Class: com.rafsan.inventory.controller.pos.ConfirmController
-
-Microservice 3:
-  - Service: Application Service 7
-    - Class: com.rafsan.inventory.controller.purchase.AddController
-    - Class: com.rafsan.inventory.controller.purchase.PurchaseController
-    - Class: com.rafsan.inventory.interfaces.PurchaseInterface
-  - Service: Entity Service 1
-    - Class: com.rafsan.inventory.entity.Supplier
-    - Class: com.rafsan.inventory.entity.Product
-    - Class: com.rafsan.inventory.entity.Purchase
-  - Service: Entity Service 7
-    - Class: com.rafsan.inventory.dao.ProductDao
-    - Class: com.rafsan.inventory.model.ProductModel
-
-Microservice 4:
-  - Service: Application Service 6
-    - Class: com.rafsan.inventory.controller.report.ReportController
-    - Class: com.rafsan.inventory.controller.report.ViewController
-    - Class: com.rafsan.inventory.interfaces.ReportInterface
-  - Service: Entity Service 13
-    - Class: com.rafsan.inventory.entity.Payment
-  - Service: Entity Service 2
-    - Class: com.rafsan.inventory.entity.Employee
-    - Class: com.rafsan.inventory.dao.EmployeeDao
-    - Class: com.rafsan.inventory.model.EmployeeModel
-
-Microservice 5:
-  - Service: Application Service 8
-    - Class: com.rafsan.inventory.controller.sales.SalesController
-    - Class: com.rafsan.inventory.interfaces.SaleInterface
-  - Service: Entity Service 11
-    - Class: com.rafsan.inventory.entity.Payment
-  - Service: Entity Service 3
-    - Class: com.rafsan.inventory.model.CategoryModel
-    - Class: com.rafsan.inventory.dao.CategoryDao
-    - Class: com.rafsan.inventory.entity.Category
-
-Microservice 6:
-  - Service: Application Service 4
-    - Class: com.rafsan.inventory.controller.category.CategoryController
-    - Class: com.rafsan.inventory.interfaces.CategoryInterface
-    - Class: com.rafsan.inventory.controller.category.AddController
-    - Class: com.rafsan.inventory.controller.category.EditController
-  - Service: Entity Service 5
-    - Class: com.rafsan.inventory.dao.SaleDao
-    - Class: com.rafsan.inventory.model.SalesModel
-  - Service: Entity Service 6
-    - Class: com.rafsan.inventory.model.PurchaseModel
-    - Class: com.rafsan.inventory.dao.PurchaseDao
-  - Service: Utility Service 2
-    - Class: com.rafsan.inventory.HibernateUtil
-
-Microservice 7:
   - Service: Application Service 1
     - Class: com.rafsan.inventory.controller.product.AddController
     - Class: com.rafsan.inventory.controller.product.EditController
     - Class: com.rafsan.inventory.controller.product.ProductController
     - Class: com.rafsan.inventory.interfaces.ProductInterface
+  - Service: Entity Service 1
+    - Class: com.rafsan.inventory.model.CategoryModel
+    - Class: com.rafsan.inventory.entity.Category
+    - Class: com.rafsan.inventory.dao.CategoryDao
+  - Service: Entity Service 8
+    - Class: com.rafsan.inventory.entity.Invoice
+    - Class: com.rafsan.inventory.entity.Sale
+
+Microservice 3:
+  - Service: Application Service 4
+    - Class: com.rafsan.inventory.controller.category.CategoryController
+    - Class: com.rafsan.inventory.interfaces.CategoryInterface
+    - Class: com.rafsan.inventory.controller.category.AddController
+    - Class: com.rafsan.inventory.controller.category.EditController
+  - Service: Application Service 7
+    - Class: com.rafsan.inventory.controller.purchase.AddController
+    - Class: com.rafsan.inventory.controller.purchase.PurchaseController
+    - Class: com.rafsan.inventory.interfaces.PurchaseInterface
+  - Service: Application Service 8
+    - Class: com.rafsan.inventory.controller.sales.SalesController
+    - Class: com.rafsan.inventory.interfaces.SaleInterface
+
+Microservice 4:
   - Service: Application Service 2
     - Class: com.rafsan.inventory.controller.supplier.EditController
     - Class: com.rafsan.inventory.controller.supplier.SupplierController
@@ -84,20 +47,47 @@ Microservice 7:
   - Service: Entity Service 4
     - Class: com.rafsan.inventory.dao.InvoiceDao
     - Class: com.rafsan.inventory.model.InvoiceModel
+  - Service: Utility Service 2
+    - Class: com.rafsan.inventory.controller.login.LoginController
 
-Microservice 8:
-  - Service: Application Service 11
+Microservice 5:
+  - Service: Application Service 6
+    - Class: com.rafsan.inventory.controller.report.ReportController
+    - Class: com.rafsan.inventory.controller.report.ViewController
+    - Class: com.rafsan.inventory.interfaces.ReportInterface
+  - Service: Entity Service 7
+    - Class: com.rafsan.inventory.dao.PurchaseDao
+    - Class: com.rafsan.inventory.model.PurchaseModel
+  - Service: Utility Service 1
+    - Class: com.rafsan.inventory.HibernateUtil
+
+Microservice 6:
+  - Service: Application Service 10
     - Class: com.rafsan.inventory.controller.admin.AdminController
-  - Service: Application Service 12
-    - Class: com.rafsan.inventory.MainApp
+  - Service: Application Service 5
+    - Class: com.rafsan.inventory.controller.pos.PosController
+    - Class: com.rafsan.inventory.controller.pos.InvoiceController
+    - Class: com.rafsan.inventory.controller.pos.ConfirmController
   - Service: Application Service 9
-    - Class: com.rafsan.inventory.controller.admin.AdminController
+    - Class: com.rafsan.inventory.MainApp
   - Service: Entity Service 10
     - Class: com.rafsan.inventory.entity.Item
-  - Service: Entity Service 12
-    - Class: com.rafsan.inventory.entity.Item
-  - Service: Utility Service 1
-    - Class: com.rafsan.inventory.controller.login.LoginController
+  - Service: Entity Service 11
+    - Class: com.rafsan.inventory.entity.Payment
   - Service: Utility Service 3
     - Class: com.rafsan.inventory.pdf.PrintInvoice
+
+Microservice 7:
+  - Service: Application Service 3
+    - Class: com.rafsan.inventory.controller.employee.EditController
+    - Class: com.rafsan.inventory.interfaces.EmployeeInterface
+    - Class: com.rafsan.inventory.controller.employee.EmployeeController
+    - Class: com.rafsan.inventory.controller.employee.AddController
+  - Service: Entity Service 2
+    - Class: com.rafsan.inventory.entity.Supplier
+    - Class: com.rafsan.inventory.entity.Product
+    - Class: com.rafsan.inventory.entity.Purchase
+  - Service: Entity Service 9
+    - Class: com.rafsan.inventory.dao.SaleDao
+    - Class: com.rafsan.inventory.model.SalesModel
 
