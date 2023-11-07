@@ -127,3 +127,15 @@ def save_microservices_to_file(labels, services_graph, communities_df, filename)
                 for related_class in related_classes:
                     file.write(f"    - Class: {related_class}\n")
             file.write("\n")
+
+
+def save_clusters_to_file(clusters, communities_df, filename):
+    with open(filename, "w") as file:
+        for cluster_num, (center, members) in enumerate(clusters.items(), 1):
+            file.write(f"Microservice {cluster_num} centered at {center}:\n")
+            for service in members:
+                file.write(f"  - Service: {service}\n")
+                related_classes = communities_df[communities_df['service'] == service]['class_name'].tolist()
+                for related_class in related_classes:
+                    file.write(f"    - Class: {related_class}\n")
+            file.write("\n")
