@@ -26,3 +26,4 @@ com.rafsan.inventory.interfaces.SupplierInterface
 com.rafsan.inventory.controller.supplier.AddController
 com.rafsan.inventory.controller.supplier.EditController
 com.rafsan.inventory.controller.supplier.SupplierController
+com.rafsan.inventory.controller.login.LoginController
