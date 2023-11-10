@@ -10,5 +10,5 @@ org.springframework.samples.petclinic.vet.Specialty
 org.springframework.samples.petclinic.vet.Vet
 org.springframework.samples.petclinic.vet.VetRepository
 org.springframework.samples.petclinic.vet.Vets
-org.springframework.samples.petclinic.model.ValidatorTests.java
-org.springframework.samples.petclinic.vet.VetTests.java
+org.springframework.samples.petclinic.model.ValidatorTests
+org.springframework.samples.petclinic.vet.VetTests
