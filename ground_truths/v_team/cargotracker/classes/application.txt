@@ -1,11 +1,15 @@
 net.java.cargotracker.domain.model.cargo.BookingBackingBean
 net.java.cargotracker.application.ApplicationEvents
 net.java.cargotracker.application.BookingService
+net.java.cargotracker.application.BookingServiceTest
+net.java.cargotracker.application.BookingServiceTestRestConfiguration
+net.java.cargotracker.application.BookingServiceTestDataGenerator
 net.java.cargotracker.application.CargoInspectionService
 net.java.cargotracker.application.HandlingEventService
-net.java.cargotracker.application.DefaultBookingService
-net.java.cargotracker.application.DefaultCargoInspectionService
-net.java.cargotracker.application.DefaultHandlingEventService
+net.java.cargotracker.application.HandlingEventServiceTest
+net.java.cargotracker.application.internal.DefaultBookingService
+net.java.cargotracker.application.internal.DefaultCargoInspectionService
+net.java.cargotracker.application.internal.DefaultHandlingEventService
 net.java.cargotracker.domain.service.RoutingService
 net.java.cargotracker.domain.shared.AbstractSpecification
 net.java.cargotracker.domain.shared.Specification
@@ -18,7 +22,9 @@ net.java.cargotracker.infrastructure.messaging.jms.HandlingEventRegistrationCons
 net.java.cargotracker.infrastructure.messaging.jms.JmsApplicationEvents
 net.java.cargotracker.infrastructure.messaging.jms.MisdirectedCargoConsumer
 net.java.cargotracker.infrastructure.messaging.jms.RejectedRegistrationAttemptsConsumer
+net.java.cargotracker.infrastructure.messaging.jms.HandlingEventRegistrationAttemptConsumer
 net.java.cargotracker.infrastructure.routing.ExternalRoutingService
+net.java.cargotracker.infrastructure.routing.ExternalRoutingServiceTest
 net.java.cargotracker.interfaces.booking.facade.internal.DefaultBookingServiceFacade
 net.java.cargotracker.interfaces.booking.facade.BookingServiceFacade
 net.java.cargotracker.interfaces.booking.rest.CargoMonitoringService
@@ -41,3 +47,4 @@ net.java.cargotracker.interfaces.handling.mobile.HolderBean
 net.java.cargotracker.interfaces.handling.rest.HandlingReportService
 net.java.cargotracker.interfaces.tracking.web.Track
 net.java.pathfinder.api.GraphTraversalService
+net.java.cargotracker.scenario.CargoLifecycleScenarioTest
