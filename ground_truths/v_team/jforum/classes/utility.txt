@@ -72,3 +72,4 @@ net.jforum.util.mail.Spammer
 net.jforum.util.mail.SpammerFactory
 net.jforum.util.mail.SpammerTaskExecutor
 net.jforum.util.mail.TopicReplySpammer
+net.jforum.formatters.BBCodeConfigParser

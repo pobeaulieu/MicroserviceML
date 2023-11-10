@@ -65,3 +65,4 @@ net.jforum.repository.ThemeRepository
 net.jforum.repository.TopicRepository
 net.jforum.repository.TopicWatchRepository
 net.jforum.repository.UserRepository
+net.jforum.repository.AttachmentRepository
