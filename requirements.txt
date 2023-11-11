@@ -211,3 +211,5 @@ wrapt
 wsproto
 yarl
 zipp
+imblearn
+scikit-fuzzy
