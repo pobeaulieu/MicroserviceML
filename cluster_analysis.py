@@ -3,26 +3,6 @@ import numpy as np
 from itertools import combinations
 
 
-def normalize_memberships(memberships):
-    """
-    Normalize membership values so that they sum to 1 for each node.
-
-    Parameters:
-    - memberships (dict): A dictionary with nodes as keys and lists of (cluster, membership) tuples as values.
-
-    Returns:
-    - dict: Normalized membership values.
-    """
-    normalized_memberships = {}
-    for node, membership_values in memberships.items():
-        total_membership = sum(membership for _, membership in membership_values)
-        normalized_memberships[node] = [
-            (cluster, membership / total_membership if total_membership else 0)
-            for cluster, membership in membership_values
-        ]
-    return normalized_memberships
-
-
 def assign_clusters_based_on_comparative_ratios(memberships):
     """
     Assign services to clusters based on a comparison of their membership strengths.

@@ -2,7 +2,6 @@ import os
 import numpy as np
 import csv
 
-
 def load_class_code_from_directory(system):
     root_folder = './src_code/' + system + '/src_code_formatted/'
 
@@ -114,28 +113,43 @@ def save_communities_to_csv(communities, version, system, algorithm):
                     f.write(f'{class_name},{label_type} Service {i + 1}\n')
 
 
-def save_microservices_to_file(labels, services_graph, communities_df, filename):
-    """Saves the clustered services and related classes to a file."""
+def save_microservices_to_file(fuzzy_clusters, communities, filename):
+    """Saves and prints the clustered services and their corresponding classes to a file in a readable format.
+
+    Parameters:
+    fuzzy_clusters (dict): Dictionary with services as keys and lists of tuples (cluster id, membership value) as values.
+    communities (pd.DataFrame): DataFrame with class names and their corresponding services.
+    filename (str): The name of the file to which the clusters and services will be saved.
+    """
+    # Determine the unique clusters
+    unique_clusters = set()
+    for memberships in fuzzy_clusters.values():
+        for cluster_id, _ in memberships:
+            unique_clusters.add(cluster_id)
+    unique_clusters = sorted(unique_clusters)
+
+    # Open the file to write the microservice clusters
     with open(filename, "w") as file:
-        for cluster_num in np.unique(labels):
-            file.write(f"Microservice {cluster_num + 1}:\n")
-            cluster_services = [service_name for idx, service_name in enumerate(services_graph.nodes) if labels[idx] == cluster_num]
+        for cluster_num in unique_clusters:
+            # Prepare the cluster header
+            cluster_header = f"Microservice {cluster_num[7:]}:\n"
             
+            # Write and print the cluster header
+            file.write(cluster_header)
+
+            # Find services that belong to the current cluster
+            cluster_services = [service for service, memberships in fuzzy_clusters.items() if any(cluster_id == cluster_num for cluster_id, _ in memberships)]
             for service in cluster_services:
-                file.write(f"  - Service: {service}\n")
-                related_classes = communities_df[communities_df['service'] == service]['class_name'].tolist()
-                for related_class in related_classes:
-                    file.write(f"    - Class: {related_class}\n")
-            file.write("\n")
+                service_entry = f"  - Service: {service}\n"
+                
+                # Write and print the service entry
+                file.write(service_entry)
 
-
-def save_clusters_to_file(clusters, communities_df, filename):
-    with open(filename, "w") as file:
-        for cluster_num, (center, members) in enumerate(clusters.items(), 1):
-            file.write(f"Microservice {cluster_num} centered at {center}:\n")
-            for service in members:
-                file.write(f"  - Service: {service}\n")
-                related_classes = communities_df[communities_df['service'] == service]['class_name'].tolist()
+                # Get related classes for the service from the communities dataframe
+                related_classes = communities[communities['service'] == service]['class_name'].tolist()
                 for related_class in related_classes:
-                    file.write(f"    - Class: {related_class}\n")
+                    class_entry = f"      * Class: {related_class}\n"
+                    
+                    # Write and print the class entry
+                    file.write(class_entry)
             file.write("\n")

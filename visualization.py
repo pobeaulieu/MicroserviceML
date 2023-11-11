@@ -2,6 +2,26 @@
 import matplotlib.pyplot as plt
 import matplotlib.cm as cm
 import networkx as nx
+import seaborn as sns
+
+
+def visualize_heatmap(df, values_column, title):
+    """Visualize a heatmap from a dataframe."""
+    pivot_table = df.pivot(index='class1', columns='class2', values=values_column)
+    
+    plt.figure(figsize=(10, 8))
+    heatmap = sns.heatmap(pivot_table, cmap='coolwarm', cbar_kws={'label': title})
+    
+    # Update y-tick labels
+    ytick_labels = [label.get_text().split('.')[-1] for label in heatmap.get_yticklabels()]
+    heatmap.set_yticklabels(ytick_labels)
+    
+    # Update x-tick labels
+    xtick_labels = [label.get_text().split('.')[-1] for label in heatmap.get_xticklabels()]
+    heatmap.set_xticklabels(xtick_labels)
+    
+    plt.title(title)
+    plt.show()
 
 
 def visualize_clusters(services_graph, fuzzy_clusters):
@@ -80,4 +100,3 @@ def plot_membership_histograms(memberships):
         plt.xlabel('Membership Strength')
         plt.ylabel('Frequency')
         plt.show()
-        
