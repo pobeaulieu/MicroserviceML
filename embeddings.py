@@ -73,3 +73,22 @@ def generate_word_embeddings_for_java_code(code, model, lemmatizer, stopwords=ja
 
     # Return the mean embedding, if available.
     return np.mean(embeddings, axis=0) if embeddings else None
+
+
+def compute_service_embeddings(embeddings_dict, communities):
+    """
+    Compute service embeddings by averaging the embeddings of classes within each service.
+    
+    Parameters:
+    - embeddings_dict (dict): Dictionary mapping class names to their embeddings.
+    - communities (DataFrame): DataFrame containing community data for each class.
+    
+    Returns:
+    - dict: Dictionary of computed service embeddings.
+    """
+    service_embeddings = {}
+    for service, class_group in communities.groupby('service')['class_name']:
+        class_embeddings = [embeddings_dict[class_name] for class_name in class_group if class_name in embeddings_dict]
+        if class_embeddings:
+            service_embeddings[service] = np.mean(class_embeddings, axis=0)
+    return service_embeddings
