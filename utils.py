@@ -1,6 +1,7 @@
 import os
 import numpy as np
 import csv
+import pandas as pd
 
 def load_class_code_from_directory(system):
     root_folder = './src_code/' + system + '/src_code_formatted/'
@@ -29,6 +30,28 @@ def load_data_from_csv(filename):
             labels.append(label)
             embeddings.append(np.array(list(map(float, embedding_str.split(',')))))
         return class_names, labels, embeddings
+    
+def load_class_data(system, version, model_type):
+    """Load class code, class names, labels, and embeddings."""
+    class_code = load_class_code_from_directory(system)
+    class_names, class_labels, class_embeddings = load_data_from_csv(f"generated_data/embedding/{version}_{system}_{model_type}_embeddings.csv")
+    return class_code, dict(zip(class_names, class_labels)), dict(zip(class_names, class_embeddings))
+
+def load_call_graph(system):
+    """Load the call graph."""
+    file_path = f"./generated_data/graph/call/{system}_call_graph.csv"
+    call_graph = pd.read_csv(
+        file_path,
+        delimiter=';',
+        header=None,
+        names=['class1', 'class2', 'static_distance']
+    )
+    return call_graph
+
+def merge_dataframes(static_df, semantic_df):
+    """Merge structural and semantic dataframes."""
+    merged_df = static_df.merge(semantic_df, on=['class1', 'class2'], how='outer')
+    return merged_df.fillna({'static_distance': 0, 'semantic_distance': 0})
 
 
 def write_embeddings_to_csv(version, system, model_type, class_embeddings, class_labels=None):
