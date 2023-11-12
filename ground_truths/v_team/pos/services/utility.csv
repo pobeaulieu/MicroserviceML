@@ -1,1 +1,2 @@
-US1,com.rafsan.inventory.MainApp,US2,com.rafsan.inventory.HibernateUtil
+com.rafsan.inventory.MainApp
+com.rafsan.inventory.HibernateUtil
