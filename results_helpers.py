@@ -62,7 +62,7 @@ def read_microservice_csv(file_path):
         reader = csv.reader(file)
         return [row for row in reader]
 
-# generate_microservices_clustering_results_by_model computes the metrics for phase 3 (microservice clustering) and generates a csv file for results 
+# generate_microservices_clustering_result computes the metrics for phase 3 (microservice clustering) and generates a csv file for results 
 def generate_microservices_clustering_results(models, version, system, best_community_detection_algorithm, matching_threshold):
     ground_truth_path = f"ground_truths/{version}/{system}/microservices/microservices.csv"
     output_file_path = f"generated_data/phase3_microservice_clustering/hierarchical/{version}_{system}_{best_community_detection_algorithm}_metrics.csv"
