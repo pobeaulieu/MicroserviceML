@@ -5,7 +5,34 @@ import networkx as nx
 import seaborn as sns
 
 
-def visualize_heatmap(df, values_column, title):
+def visualize_class_type_subgraph(subgraph, label_type):
+        """Visualize the subgraph."""
+        labels = {node: node.split('.')[-1] for node in subgraph.nodes()}
+        
+        # Determine edge weights for thickness, and scale for visibility
+        min_thickness = 0.5  # minimum thickness for edges
+        max_thickness = 5.0  # maximum thickness for edges
+        edge_weights = [subgraph[u][v]['static_distance'] for u, v in subgraph.edges()]
+
+        if len(edge_weights) == 1:
+            scaled_weights = [min_thickness + (max_thickness - min_thickness) / 2]  # mid-thickness for a single edge
+        else:
+            scaled_weights = [min_thickness + (w - min(edge_weights)) * (max_thickness - min_thickness) / 
+                            (max(edge_weights) - min(edge_weights)) for w in edge_weights]
+        
+        # Use spring_layout for node positioning
+        pos = nx.spring_layout(subgraph, scale=100, weight='static_distance', iterations=100) # change scale to spread nodes more
+        
+        plt.figure(figsize=(8, 8))
+        nx.draw(subgraph, pos=pos, with_labels=True, labels=labels, 
+                node_size=500, node_color="lightblue", font_size=8, 
+                font_weight="bold", width=scaled_weights, edge_color="grey")
+        
+        plt.title(f"{label_type} Classes Subgraph")
+        plt.show()
+
+
+def visualize_class_distance_heatmap(df, values_column, title):
     """Visualize a heatmap from a dataframe."""
     pivot_table = df.pivot(index='class1', columns='class2', values=values_column)
     

@@ -26,14 +26,14 @@ def remove_zero_weight_edges(graph):
     ])
 
 
-def print_graph(graph):
+def print_graph(graph, data):
     """
     Print the nodes and edge weights of the graph.
 
     Parameters:
         graph (networkx.Graph): The graph with nodes and edge weights.
     """
-    for u, v, weight in graph.edges(data='weight'):
+    for u, v, weight in graph.edges(data=data):
         print(f"{u} -> {v}: {weight}")
 
 
