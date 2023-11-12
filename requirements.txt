@@ -1,7 +1,6 @@
 absl-py
 aiohttp
 aiosignal
-angelcommunity
 anyio
 appdirs
 argon2-cffi
@@ -82,7 +81,7 @@ jupyter-server
 jupyter_client
 jupyter_core
 jupyterlab-pygments
-karateclub
+karateclub==1.3.3
 Keras-Applications
 Keras-Preprocessing
 kiwisolver
@@ -213,3 +212,4 @@ yarl
 zipp
 imblearn
 scikit-fuzzy
+python-louvain

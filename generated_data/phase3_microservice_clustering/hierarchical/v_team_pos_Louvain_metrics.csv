@@ -1,0 +1,4 @@
+Model,TP,FP,FN,Precision,Recall,F-measure
+custom_cmeans,0,8,11,0.0,0.0,0.0
+cmeans,0,12,11,0.0,0.0,0.0
+hierarchical,0,10,11,0.0,0.0,0.0
