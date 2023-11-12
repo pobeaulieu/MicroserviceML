@@ -1,6 +1,18 @@
+import subprocess
+import pkg_resources
+import sys
+
+required = {'leidenalg'}
+installed = {pkg.key for pkg in pkg_resources.working_set}
+missing = required - installed
+
+if missing:
+    python = sys.executable
+    subprocess.check_call([python, '-m', 'pip', 'install', *missing], stdout=subprocess.DEVNULL)
+
 import networkx as nx
 from cdlib import algorithms
-from karateclub import EdMot
+# from karateclub import EdMot
 from visualization import visualize_class_type_subgraph
 from optimization import optimize_parameters_for_community_detection
 from graphs import remove_self_loops
@@ -24,15 +36,6 @@ def remove_duplicate_single_node_communities(communities):
     return communities
 
 
-def get_subgraph_reindexed(label_type, class_labels_dict, graph):
-    """Get a subgraph based on label type and reindex its nodes."""
-    classes = [class_name for class_name, label in class_labels_dict.items() if label == LABEL_MAPPING.get(label_type)]
-    subgraph = graph.subgraph(classes)
-    # visualize_class_type_subgraph(subgraph, label_type)
-    mapping = {node: i for i, node in enumerate(subgraph.nodes())}
-    return nx.relabel_nodes(subgraph, mapping), {i: node for node, i in mapping.items()}
-
-
 class CommunityDetection:
     
     def __init__(self, graph, class_labels_dict, optimize_hyperparameters_flag=False):
@@ -42,17 +45,18 @@ class CommunityDetection:
         self.optimize_hyperparameters_flag = optimize_hyperparameters_flag
         self.best_params = {}
 
-    def _algorithm_edmot(self, subgraph_reindexed):
-        """Compute communities using the EdMot algorithm."""
-        edmot = EdMot()
-        edmot.fit(subgraph_reindexed)
-        memberships = edmot.get_memberships()
-        unique_communities = set(memberships.values())
-        return [list({node for node, community_id in memberships.items() if community_id == c}) for c in unique_communities]
+    def get_subgraph_reindexed(self, label_type):
+        """Get a subgraph based on label type and reindex its nodes."""
+        classes = [class_name for class_name, label in self.class_labels_dict.items() if label == LABEL_MAPPING.get(label_type)]
+        subgraph = self.graph.subgraph(classes)
+        # visualize_class_type_subgraph(subgraph, label_type)
+        mapping = {node: i for i, node in enumerate(subgraph.nodes())}
+        return nx.relabel_nodes(subgraph, mapping), {i: node for node, i in mapping.items()}
+    
 
     def detect_communities(self, label_type, algorithm):
         """Perform community detection based on a specified algorithm."""
-        subgraph_reindexed, inverse_mapping = get_subgraph_reindexed(label_type, self.class_labels_dict, self.graph)
+        subgraph_reindexed, inverse_mapping = self.get_subgraph_reindexed(label_type)
 
         # If hyperparameter optimization flag is set, optimize parameters
         if self.optimize_hyperparameters_flag:
@@ -64,7 +68,9 @@ class CommunityDetection:
             'LabelPropagation': lambda: algorithms.label_propagation(subgraph_reindexed).communities,
             'GirvanNewman': lambda: algorithms.girvan_newman(subgraph_reindexed, level=self.best_params.get('level', 1)).communities,
             'FastGreedy': lambda: algorithms.greedy_modularity(subgraph_reindexed).communities,
-            'EdMot': lambda: self._algorithm_edmot(subgraph_reindexed)
+            # 'EdMot': lambda: self._algorithm_edmot(subgraph_reindexed),
+            'Leiden': lambda: algorithms.leiden(subgraph_reindexed).communities,
+            'Walktrap': lambda: algorithms.walktrap(subgraph_reindexed).communities
         }
             
         if len(subgraph_reindexed.nodes()) < 4:
@@ -89,3 +95,13 @@ class CommunityDetection:
         communities = remove_duplicate_single_node_communities(communities)
 
         return communities
+    
+
+    # Commented out because causes issues
+    # def _algorithm_edmot(self, subgraph_reindexed):
+    #     """Compute communities using the EdMot algorithm."""
+    #     edmot = EdMot()
+    #     edmot.fit(subgraph_reindexed)
+    #     memberships = edmot.get_memberships()
+    #     unique_communities = set(memberships.values())
+    #     return [list({node for node, community_id in memberships.items() if community_id == c}) for c in unique_communities]
