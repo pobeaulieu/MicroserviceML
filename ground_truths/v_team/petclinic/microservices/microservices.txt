@@ -1,88 +1,31 @@
 MS1 -> Vets Service
+java.org.springframework.samples.petclinic.vet.Specialty
+java.org.springframework.samples.petclinic.vet.Vet
+java.org.springframework.samples.petclinic.vet.VetRepository
+java.org.springframework.samples.petclinic.vet.Vets
+java.org.springframework.samples.petclinic.model.Person
+java.org.springframework.samples.petclinic.owner.PetTypeFormatter
+java.org.springframework.samples.petclinic.vet.VetController
 
-Entities :
-    java.org.springframework.samples.petclinic.vet.Specialty
-    java.org.springframework.samples.petclinic.vet.Vet
-    java.org.springframework.samples.petclinic.vet.VetRepository
-    java.org.springframework.samples.petclinic.vet.Vets
-    java.org.springframework.samples.petclinic.model.Person
-
-Utilities :
-    java.org.springframework.samples.petclinic.owner.PetTypeFormatter
-
-Application :
-    java.org.springframework.samples.petclinic.vet.VetController
-
-Tests :
-    VetControllerTests.java
-    VetTests.java
-
-
-______________________________________________________________________
 MS2 -> Visits Service
-
-Entities :
-    java.org.springframework.samples.petclinic.owner.Visit
-
-Application :
-    java.org.springframework.samples.petclinic.owner.VisitController
-
-Tests :
-    VisitControllerTests.java
-
-______________________________________________________________________
+java.org.springframework.samples.petclinic.owner.Visit
+java.org.springframework.samples.petclinic.owner.VisitController
 
 MS3 -> Pets Service
-
-Entities :
-    java.org.springframework.samples.petclinic.owner.Pet
-    java.org.springframework.samples.petclinic.owner.PetType
-
-Application : 
-    java.org.springframework.samples.petclinic.owner.PetController
-    java.org.springframework.samples.petclinic.owner.PetValidator
-
-Tests :
-    PetTypeFormatterTests.java
-    PetControllerTests.java
-    ValidatorTests.java
-
-______________________________________________________________________
+java.org.springframework.samples.petclinic.owner.Pet
+java.org.springframework.samples.petclinic.owner.PetType
+java.org.springframework.samples.petclinic.owner.PetController
+java.org.springframework.samples.petclinic.owner.PetValidator
 
 MS4 -> Owner Service
-
-Entities :
-    java.org.springframework.samples.petclinic.owner.Owner
-    java.org.springframework.samples.petclinic.owner.OwnerRepository
-
-Application :
-    java.org.springframework.samples.petclinic.owner.OwnerController
-
-Tests : 
-    OwnerControllerTests.java
-
-______________________________________________________________________
+java.org.springframework.samples.petclinic.owner.Owner
+java.org.springframework.samples.petclinic.owner.OwnerRepository
+java.org.springframework.samples.petclinic.owner.OwnerController
 
 MS5 -> Server Service
+java.org.springframework.samples.petclinic.model.BaseEntity
+java.org.springframework.samples.petclinic.model.NamedEntity
+java.org.springframework.samples.petclinic.system.CacheConfiguration
+java.org.springframework.samples.petclinic.system.CrashController
+java.org.springframework.samples.petclinic.system.WelcomeController
 
-Entities :
-    java.org.springframework.samples.petclinic.model.BaseEntity
-    java.org.springframework.samples.petclinic.model.NamedEntity
-
-Utilities :
-    java.org.springframework.samples.petclinic.system.CacheConfiguration
-    java.org.springframework.samples.petclinic.system.CrashController
-    java.org.springframework.samples.petclinic.system.WelcomeController
-
-Tests :
-    EntityUtils.java
-    MySqlIntegrationTests.java
-    MysqlTestApplication.java
-    PetClinicIntegrationTests.java
-    PostgresIntegrationTests.java
-    ClinicServiceTests.java
-    CrashControllerIntegrationTests.java
-    CrashControllerTests.java
-
-
-______________________________________________________________________

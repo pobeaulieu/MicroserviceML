@@ -7,7 +7,7 @@ def process_text_file(input_file_path, output_file_path):
         lines = []
         for line in input_file:
             line = line.strip()
-            if line.startswith(('MS', 'AS')):
+            if line.startswith(('MS', 'AS','S')):
                 if lines:
                     # Write the list of lines directly
                     csv_writer.writerow(lines)

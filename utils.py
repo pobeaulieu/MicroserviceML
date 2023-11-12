@@ -191,34 +191,40 @@ def save_microservices_to_csv(fuzzy_clusters, communities, csv_filename):
 def read_csv(file_path):
     with open(file_path, 'r') as file:
         reader = csv.reader(file)
-        return [row[0] for row in reader]
+        return [row for row in reader]
 
-def calculate_microservices_clustering_results(ground_truth_path, results_path, threshold=0.1):
-    # Read ground truth and results from CSV files
-    ground_truth = read_csv(ground_truth_path)
-    results = read_csv(results_path)
 
-    # Convert ground truth and results to sets for easy comparison
+def match_services(ground_truth, result, matching_threshold=0.8):
+    # Convert ground truth and result to sets for easy comparison
     ground_truth_set = set(ground_truth)
+    result_set = set(result)
 
     # Count the number of services in the ground truth
     total_services = len(ground_truth_set)
+
+    # Calculate the intersection size
+    intersection_size = len(ground_truth_set.intersection(result_set))
+
+    # Check if the result is considered a match based on the threshold
+    return intersection_size / total_services >= matching_threshold
+
+def calculate_microservices_clustering_results(ground_truth_path, results_path, matching_threshold=0.8):
+    # Read ground truth and results from CSV files
+    ground_truth = read_csv(ground_truth_path)
+    results = read_csv(results_path)
 
     # Initialize True Positives (TP)
     tp = 0
 
     # Iterate over results to check for True Positives
     for result in results:
-        result_set = set(result)
-        intersection_size = len(ground_truth_set.intersection(result_set))
-
-        # Check if the result is considered a TP based on the threshold
-        if intersection_size / total_services >= threshold:
+        # Check if the result is considered a match based on the threshold
+        if match_services(ground_truth, result, matching_threshold):
             tp += 1
 
     # Calculate False Positives (FP) and False Negatives (FN)
     fp = len(results) - tp
-    fn = total_services - tp
+    fn = len(ground_truth) - tp
 
     # Calculate Precision
     precision = tp / (tp + fp) if (tp + fp) > 0 else 0.0
@@ -228,5 +234,4 @@ def calculate_microservices_clustering_results(ground_truth_path, results_path, 
 
     # Calculate F-measure
     f_measure = (2 * precision * recall) / (precision + recall) if (precision + recall) > 0 else 0.0
-
     return precision, recall, f_measure, tp, fp, fn
