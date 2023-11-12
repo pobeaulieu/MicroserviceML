@@ -9,13 +9,13 @@ Microservice 1:
       * Class: com.rafsan.inventory.controller.report.ViewController
       * Class: com.rafsan.inventory.interfaces.ReportInterface
   - Service: Entity Service 2
-      * Class: com.rafsan.inventory.entity.Employee
-      * Class: com.rafsan.inventory.model.SalesModel
-      * Class: com.rafsan.inventory.entity.Sale
-      * Class: com.rafsan.inventory.dao.EmployeeDao
       * Class: com.rafsan.inventory.model.EmployeeModel
-      * Class: com.rafsan.inventory.dao.SaleDao
       * Class: com.rafsan.inventory.entity.Invoice
+      * Class: com.rafsan.inventory.entity.Sale
+      * Class: com.rafsan.inventory.model.SalesModel
+      * Class: com.rafsan.inventory.entity.Employee
+      * Class: com.rafsan.inventory.dao.EmployeeDao
+      * Class: com.rafsan.inventory.dao.SaleDao
 
 Microservice 2:
   - Service: Application Service 8
@@ -36,7 +36,7 @@ Microservice 5:
       * Class: com.rafsan.inventory.controller.pos.InvoiceController
       * Class: com.rafsan.inventory.controller.pos.PosController
       * Class: com.rafsan.inventory.controller.pos.ConfirmController
-  - Service: Entity Service 5
+  - Service: Entity Service 4
       * Class: com.rafsan.inventory.entity.Item
 
 Microservice 6:
@@ -55,18 +55,18 @@ Microservice 6:
       * Class: com.rafsan.inventory.controller.purchase.PurchaseController
       * Class: com.rafsan.inventory.interfaces.PurchaseInterface
   - Service: Entity Service 1
-      * Class: com.rafsan.inventory.dao.ProductDao
-      * Class: com.rafsan.inventory.model.SupplierModel
-      * Class: com.rafsan.inventory.model.ProductModel
+      * Class: com.rafsan.inventory.dao.CategoryDao
       * Class: com.rafsan.inventory.dao.SupplierDao
-      * Class: com.rafsan.inventory.dao.PurchaseDao
-      * Class: com.rafsan.inventory.entity.Product
-      * Class: com.rafsan.inventory.entity.Supplier
-      * Class: com.rafsan.inventory.model.PurchaseModel
       * Class: com.rafsan.inventory.entity.Purchase
+      * Class: com.rafsan.inventory.dao.PurchaseDao
+      * Class: com.rafsan.inventory.entity.Supplier
       * Class: com.rafsan.inventory.entity.Category
       * Class: com.rafsan.inventory.model.CategoryModel
-      * Class: com.rafsan.inventory.dao.CategoryDao
+      * Class: com.rafsan.inventory.dao.ProductDao
+      * Class: com.rafsan.inventory.entity.Product
+      * Class: com.rafsan.inventory.model.ProductModel
+      * Class: com.rafsan.inventory.model.SupplierModel
+      * Class: com.rafsan.inventory.model.PurchaseModel
 
 Microservice 7:
   - Service: Application Service 4
@@ -81,6 +81,6 @@ Microservice 8:
       * Class: com.rafsan.inventory.HibernateUtil
 
 Microservice 9:
-  - Service: Entity Service 4
+  - Service: Entity Service 5
       * Class: com.rafsan.inventory.entity.Payment
 

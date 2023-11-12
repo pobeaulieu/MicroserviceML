@@ -111,7 +111,7 @@ def generate_services_clustering_results(phase2_models, phase1_model, version, s
             avg_recall = (recall_as + recall_es + recall_us)/3
             avg_f_measure = (f_measure_as + f_measure_es + f_measure_us)/3
 
-            output_file_path = f"generated_data/phase2_service_clustering/{m}/METRICS_{version}_{system}_{phase1_model}_threshold_{mat}.csv"
+            output_file_path = f"generated_data/phase2_service_clustering/{m}/METRICS_{version}_{system}_{phase1_model}_threshold_{matching_threshold}.csv"
             with open(output_file_path, 'w', newline='') as csvfile:
                 fieldnames = [ 'Service Type', 'Nb ground truths', 'Nb clusters', 'TP', 'FP', 'FN','Precision', 'Recall', 'F-measure']
                 writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
