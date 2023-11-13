@@ -18,4 +18,5 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY ./webapp ./webapp
 
 # Command to run on container start
-CMD ["python", "./webapp/microminer.py"]
+WORKDIR /app/webapp
+CMD ["python", "microminer.py"]
