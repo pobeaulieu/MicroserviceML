@@ -9,7 +9,7 @@ __pycache__/
 # forbid .DS_Store
 .DS_Store
 **/.DS_Store
-
+webapp/src_code/
 # Distribution / packaging
 .Python
 build/

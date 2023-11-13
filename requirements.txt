@@ -213,3 +213,8 @@ zipp
 imblearn
 scikit-fuzzy
 python-louvain
+lask-socketio
+pygit2  
+flask-socketio==5.0.1
+Flask 
+gitpython   
