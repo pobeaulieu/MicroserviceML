@@ -91,7 +91,6 @@ def generate_services_clustering_results(phase2_models, phase1_model, version, s
 
         for m in phase2_models:
 
-
             # Load results
             application_clusters, entity_clusters, utility_clusters = extract_result_clusters(version, system, phase1_model, m)
 

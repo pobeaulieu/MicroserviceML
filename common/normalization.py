@@ -1,6 +1,5 @@
 # Functions to normalize data
 
-
 def normalize_column(df, column_name):
     """Normalize values of a dataframe column between 0 and 1."""
     column_min = df[column_name].min()

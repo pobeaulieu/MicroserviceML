@@ -127,3 +127,22 @@ def plot_membership_histograms(memberships):
         plt.xlabel('Membership Strength')
         plt.ylabel('Frequency')
         plt.show()
+
+
+def visualize_counts(ytrain_count, ytest_count):
+    # Map unique labels to their corresponding names
+    label_names_map = {-1: "None", 0: "Application", 1: "Utility", 2: "Entity"}
+    labels = [label_names_map[i] for i in range(len(ytrain_count))]
+
+    # Colors for each bar
+    colors_train = ['lightblue', 'lightgreen', 'lightcoral']
+    colors_test = ['blue', 'green', 'red']
+
+    # Generate the histogram
+    plt.bar(labels, ytrain_count, color=colors_train, label='ytrain')
+    plt.bar(labels, ytest_count, bottom=ytrain_count, color=colors_test, label='ytest')
+    
+    plt.ylabel('Count')
+    plt.title(f'Total type repartition')
+    plt.legend()
+    plt.show()

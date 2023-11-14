@@ -13,10 +13,10 @@ if missing:
 import networkx as nx
 from cdlib import algorithms
 # from karateclub import EdMot
-from visualization import visualize_class_type_subgraph
-from optimization import optimize_parameters_for_community_detection
-from graphs import remove_self_loops
-from constants import LABEL_MAPPING
+from common.visualization import visualize_class_type_subgraph
+from common.optimization import optimize_parameters_for_community_detection
+from common.graphs import remove_self_loops
+from config.constants import LABEL_MAPPING
 
 
 def remove_duplicate_single_node_communities(communities):

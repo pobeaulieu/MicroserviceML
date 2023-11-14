@@ -67,3 +67,22 @@ def construct_dissimilarity_matrix(graph):
     np.fill_diagonal(dissimilarity_matrix, 0)
 
     return dissimilarity_matrix
+
+
+def compute_edge_weight(semantic, static, alpha=0.5):
+    """
+    Compute the edge weight based on semantic and static similarity.
+
+    Parameters:
+        semantic (float): The semantic similarity value between two services.
+        static (float): The static similarity value between two services.
+        alpha (float): The weight given to the static similarity.
+
+    Returns:
+        float: The computed edge weight.
+    """
+    if not (0 <= semantic <= 1) or not (0 <= static <= 1):
+        raise ValueError("Both 'semantic' and 'static' values should be between 0 and 1.")
+    
+    beta = 1 - alpha
+    return alpha * static + beta * semantic

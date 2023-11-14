@@ -1,6 +1,6 @@
 # Functions for calculating distances
 from scipy import spatial
-from embeddings import compute_service_embeddings
+from embedding.embeddings import compute_service_embeddings
 import pandas as pd
 
 
