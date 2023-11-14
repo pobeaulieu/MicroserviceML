@@ -3,76 +3,73 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MicroMiner</title>
+    <title>MicroMiner Microservice Generator</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400&display=swap">
     <script defer src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
     <style>
         body {
-            font-family: 'Roboto', sans-serif;
+            font-family: 'Google Sans', sans-serif;
             margin: 0;
             padding: 0;
             display: flex;
             align-items: center;
             justify-content: center;
             height: 100vh;
-            background-color: #1a1a1a;
-            color: #ffffff;
+            background-color: #121212; /* Dark background color */
+            color: #ffffff; /* Light text color */
         }
 
         main {
-            background-color: #2e2e2e;
-            padding: 20px;
+            background-color: #121212; /* Dark background color */
+            padding: 40px; /* Larger padding */
             border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
             width: 100%;
-            max-width: 400px;
+            max-width: 600px; /* Larger max-width */
             box-sizing: border-box;
         }
 
         h1 {
-            color: #f4f4f4;
+            color:  #d1d2d5; /* White header color */
             text-align: center;
             margin-bottom: 20px;
-            font-size: 24px;
-        }
-
-        form {
-            margin-top: 20px;
+            font-size: 50px; /* Larger font size */
         }
 
         label {
             display: block;
-            margin-bottom: 8px;
-            color: #f4f4f4;
-            font-size: 14px;
+            margin-bottom: 12px; /* Larger margin-bottom */
+            color: #b3b3b3; /* Light grey label color */
+            font-size: 16px; /* Larger font size */
         }
 
         input {
             width: 100%;
-            padding: 10px;
-            margin-bottom: 16px;
+            padding: 16px; /* Larger padding */
+            margin-bottom: 20px; /* Larger margin-bottom */
             box-sizing: border-box;
-            border: 1px solid #f4f4f4;
+            border: 1px solid #282828; /* Dark border color */
             border-radius: 4px;
-            background-color: #2e2e2e;
+            background-color: #282828; /* Dark background color for input */
             color: #ffffff;
         }
 
         button {
-            background-color: #7d0b0b;
+            background-color:  #1c4dff; /* Google blue button color */
             color: #ffffff;
-            padding: 12px;
+            padding: 18px; /* Larger padding */
             border: none;
             border-radius: 4px;
             cursor: pointer;
             width: 100%;
             box-sizing: border-box;
-            font-size: 16px;
+            font-size: 18px; /* Larger font size */
         }
 
         button:hover {
-            background-color: #650404;
+            background-color: #1337b9; /* Darker blue button hover color */
         }
+
 
         #status {
             margin-top: 20px;
