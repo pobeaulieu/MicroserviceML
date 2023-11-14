@@ -30,16 +30,16 @@
         }
 
         h1 {
-            color:  #d1d2d5; /* White header color */
+            color: #e3e0e0; /* White header color */
             text-align: center;
             margin-bottom: 20px;
             font-size: 60px; /* Larger font size */
         }
 
-        h2 {
-            color: #b3b3b3; /* Light grey label color */
+        h4 {
+            color: #e7e4e4;/* Light grey label color */
             text-align: center;
-            font-size: 15px; /* Larger font size */
+            font-size: 20px; /* Larger font size */
             display: block;
 
         }
@@ -111,10 +111,10 @@
     <main>
         <header>
             <h1>MicroMiner</h1>
-            <h2>Tool to generate microservice decomposition from a monolith app!</h2>
+            <h4>Tool for Microservice Generation!</h4>
         </header>
         <form id="cloneForm" onsubmit="submitForm(event)">
-            <label for="repo_url">Repository URL:</label>
+            <label for="repo_url">GitHub URL to monolith (public repository only):</label>
             <input type="text" id="repo_url" name="repo_url" required>
             <br>
             <button type="submit">Generate Microservices</button>
