@@ -42,7 +42,7 @@ def write_embeddings_to_csv(version, system, model_type, class_embeddings, class
     :param class_labels: Dictionary containing labels for each class. If None, all labels are set to -1.
     """
 
-    file_name = f"./generated_data/embedding/{version}_{system}_{model_type}_embeddings.csv"
+    file_name = f"./generated_data/class_embeddings/{version}_{system}_{model_type}_embeddings.csv"
 
     with open(file_name, 'w') as f:
         writer = csv.writer(f, delimiter=';', quotechar='"', quoting=csv.QUOTE_MINIMAL, lineterminator='\n')

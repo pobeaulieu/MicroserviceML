@@ -9,7 +9,7 @@ def print_communities(label_type, communities):
 
 
 def save_communities_to_csv(communities, version, system, phase1_model, phase2_model):
-    with open(f'generated_data/phase2_service_clustering/{phase2_model}/{version}_{system}_{phase1_model}_communities.csv', 'w') as f:
+    with open(f'generated_data/service_communities/{phase2_model}/{version}_{system}_{phase1_model}_communities.csv', 'w') as f:
         f.write('class_name,service\n')
         for label_type, services in communities.items():
             for i, service in enumerate(services):

@@ -16,12 +16,12 @@ from helpers.class_helpers import get_number_of_classes
 ####################################################################################################
 
 def run_microservice_identification(version, system, phase1_model, phase2_model, phase3_model):
-    filename = f"generated_data/graph/service/{version}_{system}_service_graph.csv"
+    filename = f"generated_data/graphs/service/{version}_{system}_service_graph.csv"
 
     # Load the data from CSV files
-    communities_df = pd.read_csv(f"generated_data/phase2_service_clustering/{phase2_model}/{version}_{system}_{phase1_model}_communities.csv")
-    class_graph_df = pd.read_csv(f"generated_data/graph/class/{version}_{system}_class_graph.csv")
-    embeddings_df = pd.read_csv(f"generated_data/embedding/{version}_{system}_{phase1_model}_embeddings.csv")
+    communities_df = pd.read_csv(f"generated_data/service_communities/{phase2_model}/{version}_{system}_{phase1_model}_communities.csv")
+    class_graph_df = pd.read_csv(f"generated_data/graphs/class/{version}_{system}_class_graph.csv")
+    embeddings_df = pd.read_csv(f"generated_data/class_embeddings/{version}_{system}_{phase1_model}_embeddings.csv")
 
     # Extract class names and their embeddings from the embeddings DataFrame
     class_names = embeddings_df.iloc[:, 0].str.split(';', expand=True)[0]
@@ -87,8 +87,8 @@ def run_microservice_identification(version, system, phase1_model, phase2_model,
 
     # Save the clusters to .txt and .csv files
     save_microservices_to_txt(clusters, communities_df, 
-                           f"generated_data/phase3_microservice_clustering/custom_cmeans/{version}_{system}_{phase2_model}_microservices.txt")
+                           f"generated_data/microservice_clusters/custom_cmeans/{version}_{system}_{phase2_model}_microservices.txt")
     save_microservices_to_csv(clusters, communities_df, 
-                           f"generated_data/phase3_microservice_clustering/custom_cmeans/{version}_{system}_{phase2_model}_microservices.csv")
+                           f"generated_data/microservice_clusters/custom_cmeans/{version}_{system}_{phase2_model}_microservices.csv")
     
     generate_microservices_clustering_results([phase3_model], phase2_model, phase1_model, version, system, matching_threshold=0.8)

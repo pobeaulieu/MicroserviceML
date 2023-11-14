@@ -9,7 +9,7 @@ def aggregate_training_data(version, model_type, training_systems, test_system=N
     test_embeddings, test_labels, test_class_names = [], [], []
 
     for system in training_systems:
-        filename = f"./generated_data/embedding/{version}_{system}_{model_type}_embeddings.csv"
+        filename = f"./generated_data/class_embeddings/{version}_{system}_{model_type}_embeddings.csv"
         class_names, labels, embeddings = load_embeddings_from_csv(filename)
 
         # Check if the system is the test_system and split data if needed

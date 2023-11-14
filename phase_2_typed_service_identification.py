@@ -14,7 +14,7 @@ from common.utils import load_call_graph
 ####################################################################################################
 
 def run_typed_service_identification(version, system, phase1_model, phase2_model):
-    filename = f"generated_data/embedding/{version}_{system}_{phase1_model}_embeddings.csv"
+    filename = f"generated_data/class_embeddings/{version}_{system}_{phase1_model}_embeddings.csv"
 
     class_names, class_labels, class_embeddings = load_embeddings_from_csv(filename)
     class_labels_dict, class_embeddings_dict = dict(zip(class_names, class_labels)), dict(zip(class_names, class_embeddings))

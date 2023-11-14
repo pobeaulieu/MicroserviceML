@@ -59,11 +59,6 @@ def run_class_typing(training_systems, version, test_system, model_type, selecte
             generate_classification_report_to_csv(y_evaluation, prediction, classifier_name, model_type)
             generate_classification_report_for_types(y_evaluation, prediction, classifier_name)
 
-    # Save predictions
-    df = pd.DataFrame(predictions)
-    df['class'] = list(class_embeddings.keys())  # Use class names as keys from class_embeddings
-    df.to_csv(f"generated_data/phase1_class_typing/{version}_{test_system}_{model_type}_predictions.csv", index=False)
-
     # Write embeddings with predictions for selected classifier to CSV for next phase
     write_embeddings_to_csv(version, test_system, model_type, class_embeddings, predictions=predictions[selected_classifier])
 

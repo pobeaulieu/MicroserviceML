@@ -63,7 +63,7 @@ def extract_classes_for_services(communities_df, service_names):
     ]
 
 def extract_result_clusters(version, system, phase1_model, phase2_model):
-        communities_df = pd.read_csv(f"generated_data/phase2_service_clustering/{phase2_model}/{version}_{system}_{phase1_model}_communities.csv")
+        communities_df = pd.read_csv(f"generated_data/service_communities/{phase2_model}/{version}_{system}_{phase1_model}_communities.csv")
         all_services = communities_df['service'].unique().tolist()
         
         application_services_names = [service for service in all_services if service.startswith('Application')]
@@ -82,7 +82,7 @@ def generate_services_clustering_results(phase2_models, phase1_model, version, s
     application_ground_truths = read_services_csv(f"ground_truths/{version}/{system}/services/application.csv")
     entity_ground_truths = read_services_csv(f"ground_truths/{version}/{system}/services/entity.csv")
     utility_ground_truths = read_services_csv(f"ground_truths/{version}/{system}/services/utility.csv")
-    all_models_output_file_path = f"generated_data/phase2_service_clustering/AVERAGE_METRICS_{version}_{system}_{phase1_model}_threshold_{matching_threshold}.csv"
+    all_models_output_file_path = f"generated_data/service_communities/AVERAGE_METRICS_{version}_{system}_{phase1_model}_threshold_{matching_threshold}.csv"
 
     with open(all_models_output_file_path, 'w', newline='') as all_models_csv_file:
         fieldnames = [ 'Phase 2 Model', 'Average Precision', 'Average Recall', 'Average F-measure']
@@ -110,7 +110,7 @@ def generate_services_clustering_results(phase2_models, phase1_model, version, s
             avg_recall = (recall_as + recall_es + recall_us)/3
             avg_f_measure = (f_measure_as + f_measure_es + f_measure_us)/3
 
-            output_file_path = f"generated_data/phase2_service_clustering/{m}/METRICS_{version}_{system}_{phase1_model}_threshold_{matching_threshold}.csv"
+            output_file_path = f"generated_data/service_communities/{m}/METRICS_{version}_{system}_{phase1_model}_threshold_{matching_threshold}.csv"
             with open(output_file_path, 'w', newline='') as csvfile:
                 fieldnames = [ 'Service Type', 'Nb ground truths', 'Nb clusters', 'TP', 'FP', 'FN','Precision', 'Recall', 'F-measure']
                 writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
@@ -188,7 +188,7 @@ def generate_microservices_clustering_results(models, phase2_model, phase1_model
     ground_truth_path = f"ground_truths/{version}/{system}/microservices/microservices.csv"
     microservices_ground_truths = read_microservice_csv(ground_truth_path)
     
-    output_file_path = f"generated_data/phase3_microservice_clustering/METRICS_{version}_{system}_{phase1_model}_{phase2_model}_threshold_{matching_threshold}.csv"
+    output_file_path = f"generated_data/microservice_clusters/METRICS_{version}_{system}_{phase1_model}_{phase2_model}_threshold_{matching_threshold}.csv"
     with open(output_file_path, 'w', newline='') as csvfile:
         fieldnames = [ 'Model','Microservice Ground Truth Count','Microservice Generated Count', 'TP', 'FP', 'FN','Precision', 'Recall', 'F-measure']
         writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
@@ -197,7 +197,7 @@ def generate_microservices_clustering_results(models, phase2_model, phase1_model
 
         for m in models:
             print(f"Evaluating model {m}")
-            results_path = f"generated_data/phase3_microservice_clustering/{m}/{version}_{system}_{phase2_model}_microservices.csv"
+            results_path = f"generated_data/microservice_clusters/{m}/{version}_{system}_{phase2_model}_microservices.csv"
             microservices_results = read_microservice_csv(results_path)
 
      
