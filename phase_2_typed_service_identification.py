@@ -2,11 +2,11 @@ from helpers.service_community_helpers import print_communities, save_communitie
 from common.distances import compute_semantic_distances_for_class_pairs
 from common.visualization import visualize_class_distance_heatmap
 from common.normalization import filter_and_normalize_distances
-from community.community_tuning import fine_tune_all_services
+from community_detection.community_tuning import fine_tune_all_services
 from helpers.results_helpers import generate_services_clustering_results
 from helpers.embedding_helpers import load_embeddings_from_csv
 import networkx as nx
-from community.community_detection import CommunityDetection
+from community_detection.community_detection import CommunityDetection
 from common.utils import load_call_graph
 
 ####################################################################################################

@@ -1,5 +1,5 @@
 import csv
-from class_helpers import load_class_code_from_directory
+from helpers.class_helpers import load_class_code_from_directory
 from embedding.embeddings import generate_embeddings_for_java_code, generate_word_embeddings_for_java_code
 from config.device_setup import set_device
 import numpy as np

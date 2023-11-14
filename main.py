@@ -23,6 +23,13 @@ parser.add_argument("--phase3_model", help="Phase 3 model to use", type=str, cho
 parser.add_argument("--training_systems", help="Systems to use for training", type=str, choices=training_systems_choices, nargs="+", default=["jforum", "cargotracker", "petclinic"])
 parser.add_argument("--classifier", help="Classifier to use", type=str, choices=classifier_choices, default="svm")
 
+# Example usage:
+# python main.py --version v_imen --system pos --phase1_model codebert --phase2_model GirvanNewman --phase3_model custom_cmeans --training_systems jforum cargotracker petclinic --classifier svm
+
+
+####################################################################################################
+# MAIN EXECUTION
+####################################################################################################
 
 def main(version, system, phase1_model, phase2_model, phase3_model, selected_classifier):
     # Run phase 1 (class typing)

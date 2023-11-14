@@ -2,13 +2,12 @@ from config.device_setup import set_device
 from embedding.embedding_model import select_model_and_tokenizer
 from helpers.embedding_helpers import write_embeddings_to_csv
 from helpers.embedding_helpers import create_class_embeddings_for_system
-from classification.data_processing import prepare_training_data
-from classification.classifiers import create_classifiers, train_classifiers, save_classifiers_to_pickle, predict_class
+from type_classification.data_processing import prepare_training_data
+from type_classification.classifiers import create_classifiers, train_classifiers, save_classifiers_to_pickle, predict_class
 from config.constants import System
 from sklearn.metrics import accuracy_score, confusion_matrix
-from classification.classification_reports import generate_classification_report, generate_classification_report_to_csv, generate_classification_report_for_types
+from type_classification.classification_reports import generate_classification_report, generate_classification_report_to_csv, generate_classification_report_for_types
 from helpers.class_helpers import associate_classes_to_types
-import pandas as pd
 
 system_names = [system.name for system in System]
 
