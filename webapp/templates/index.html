@@ -8,7 +8,7 @@
     <script defer src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
     <style>
         body {
-            font-family: 'Google Sans', sans-serif;
+            font-family: 'Helvetica Neue', sans-serif;
             margin: 0;
             padding: 0;
             display: flex;
@@ -25,7 +25,7 @@
             border-radius: 8px;
             box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
             width: 100%;
-            max-width: 600px; /* Larger max-width */
+            max-width: 900px; /* Larger max-width */
             box-sizing: border-box;
         }
 
@@ -33,7 +33,15 @@
             color:  #d1d2d5; /* White header color */
             text-align: center;
             margin-bottom: 20px;
-            font-size: 50px; /* Larger font size */
+            font-size: 60px; /* Larger font size */
+        }
+
+        h2 {
+            color: #b3b3b3; /* Light grey label color */
+            text-align: center;
+            font-size: 15px; /* Larger font size */
+            display: block;
+
         }
 
         label {
@@ -55,15 +63,20 @@
         }
 
         button {
-            background-color:  #1c4dff; /* Google blue button color */
+            background-color:  #1c4dff;
             color: #ffffff;
             padding: 18px; /* Larger padding */
             border: none;
             border-radius: 4px;
             cursor: pointer;
-            width: 100%;
+            width: 100%; /* Set the button width to 60% */
             box-sizing: border-box;
+            font-size: 14px; /* Adjust font size to make it smaller */
+            display: block; /* Ensure block-level display to center the button */
+            margin-left: auto; /* Center the button horizontally */
+            margin-right: 2px;
             font-size: 18px; /* Larger font size */
+            font-family: 'Helvetica Neue', sans-serif;
         }
 
         button:hover {
@@ -98,6 +111,7 @@
     <main>
         <header>
             <h1>MicroMiner</h1>
+            <h2>Tool to generate microservice decomposition from a monolith app!</h2>
         </header>
         <form id="cloneForm" onsubmit="submitForm(event)">
             <label for="repo_url">Repository URL:</label>
