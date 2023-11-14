@@ -21,7 +21,7 @@ def generate_classification_report(y_true, y_pred):
 
 def generate_classification_report_to_csv(y_true, y_pred, model_name, embedding_model):
 
-    csv_file = f'generated_data/reports/classification_reports_{embedding_model}.csv'
+    csv_file = f'generated_data/classification_reports/classification_reports_{embedding_model}.csv'
 
     unique_labels = np.unique(np.concatenate((y_true, y_pred)))
     label_names_map = {-1: "None", 0: "Application", 1: "Utility", 2: "Entity"}
@@ -76,7 +76,7 @@ def extract_avg_metrics_and_save(embedding_models):
     
     for embedding_model in embedding_models:
         # Construct the file path based on the provided embedding model name
-        file_path = f"generated_data/reports/classification_reports_{embedding_model}.csv"
+        file_path = f"generated_data/classification_reports/classification_reports_{embedding_model}.csv"
         
         # Read the CSV data into a DataFrame
         df = pd.read_csv(file_path)
@@ -92,4 +92,4 @@ def extract_avg_metrics_and_save(embedding_models):
         aggregated_df = pd.concat([aggregated_df, result], ignore_index=True)
 
     # Save the aggregated dataframe to a new CSV
-    aggregated_df.to_csv("generated_data/reports/aggregated_results.csv", index=False)
+    aggregated_df.to_csv("generated_data/classification_reports/aggregated_results.csv", index=False)

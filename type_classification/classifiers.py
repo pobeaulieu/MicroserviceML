@@ -35,19 +35,20 @@ def create_classifiers():
     return classifiers
 
 def train_classifiers(classifiers, Xtrain, ytrain):
-    for _, classifier in classifiers.items():
+    for classifier_name, classifier in classifiers.items():
+        print(f"Training {classifier_name}...")
         classifier.fit(Xtrain, ytrain)
     return classifiers
 
 def save_classifiers_to_pickle(classifiers, model_type):
     for classifier_name, classifier in classifiers.items():
-        filename = f"./generated_data/classifiers/{model_type}_{classifier_name}.pkl"
+        filename = f"./generated_data/classification_models/{model_type}_{classifier_name}.pkl"
         pickle.dump(classifier, open(filename, 'wb'))
 
 def load_classifiers_from_pickle(model_type):
     classifiers = {}
     for classifier_name in ['svm', 'knn', 'decision_tree', 'logistic_regression', 'naive_bayes', 'ensemble']:
-        filename = f"./generated_data/classifiers/{model_type}_{classifier_name}.pkl"
+        filename = f"./generated_data/classification_models/{model_type}_{classifier_name}.pkl"
         classifiers[classifier_name] = pickle.load(open(filename, 'rb'))
     return classifiers
 

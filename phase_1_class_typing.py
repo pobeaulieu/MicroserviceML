@@ -8,6 +8,7 @@ from config.constants import System
 from sklearn.metrics import accuracy_score, confusion_matrix
 from type_classification.classification_reports import generate_classification_report, generate_classification_report_to_csv, generate_classification_report_for_types
 from helpers.class_helpers import associate_classes_to_types
+import os
 
 system_names = [system.name for system in System]
 
@@ -23,8 +24,12 @@ def run_class_typing(training_systems, version, test_system, model_type, selecte
     is_test_system_in_training = test_system in training_systems
 
     # Create embeddings and ground truth labels
-    for system in system_names:
+    for system in training_systems:
+        print(f"Creating embeddings for {system}...")
         class_labels = associate_classes_to_types(version, system)
+        # If embeddings already exist, skip the rest
+        if os.path.exists(f"./generated_data/class_embeddings/{version}_{system}_{model_type}_embeddings.csv"):
+            continue
         class_embeddings = create_class_embeddings_for_system(system, model_type, model, tokenizer)
         write_embeddings_to_csv(version, system, model_type, class_embeddings, class_labels)
 
@@ -45,11 +50,15 @@ def run_class_typing(training_systems, version, test_system, model_type, selecte
         # Normal prediction process
         class_embeddings = create_class_embeddings_for_system(test_system, model_type, model, tokenizer)
         predictions = predict_class(classifiers, list(class_embeddings.values()))
+        # Write embeddings with predictions for selected classifier to CSV for next phase
+        write_embeddings_to_csv(version, test_system, model_type, class_embeddings, predictions=predictions[selected_classifier])
         y_evaluation = None
 
     # Generate evaluation metrics and reports
-    if y_evaluation:
+    if y_evaluation.any():
         for classifier_name, prediction in predictions.items():
+            prediction = [int(pred) for pred in prediction]
+            print(zip(y_evaluation, prediction))
             accuracy = accuracy_score(y_evaluation, prediction)
             print(f"Accuracy for {classifier_name}: {accuracy}")
             print(f"Confusion matrix for {classifier_name}:")
@@ -57,9 +66,6 @@ def run_class_typing(training_systems, version, test_system, model_type, selecte
             generate_classification_report(y_evaluation, prediction)
             generate_classification_report_to_csv(y_evaluation, prediction, classifier_name, model_type)
             generate_classification_report_for_types(y_evaluation, prediction, classifier_name)
-
-    # Write embeddings with predictions for selected classifier to CSV for next phase
-    write_embeddings_to_csv(version, test_system, model_type, class_embeddings, predictions=predictions[selected_classifier])
 
 
 # Example usage:

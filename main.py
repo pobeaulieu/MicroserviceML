@@ -20,7 +20,7 @@ parser.add_argument("--phase1_model", help="Phase 1 model to use", type=str, cho
 parser.add_argument("--phase2_model", help="Phase 2 model to use", type=str, choices=phase2_model_choices, default="GirvanNewman")
 parser.add_argument("--phase3_model", help="Phase 3 model to use", type=str, choices=phase3_model_choices, default="custom_cmeans")
 # Add training systems argument (can be multiple)
-parser.add_argument("--training_systems", help="Systems to use for training", type=str, choices=training_systems_choices, nargs="+", default=["jforum", "cargotracker", "petclinic"])
+parser.add_argument("--training_systems", help="Systems to use for training", type=str, choices=training_systems_choices, nargs="+", default=["jforum", "cargotracker", "petclinic" ])
 parser.add_argument("--classifier", help="Classifier to use", type=str, choices=classifier_choices, default="svm")
 
 # Example usage:
@@ -33,10 +33,13 @@ parser.add_argument("--classifier", help="Classifier to use", type=str, choices=
 
 def main(version, system, phase1_model, phase2_model, phase3_model, selected_classifier):
     # Run phase 1 (class typing)
+    print("Running phase 1...")
     run_class_typing(training_systems, version, system, phase1_model, selected_classifier)
     # Run phase 2 (service clustering)
+    print("Running phase 2...")
     run_typed_service_identification(version, system, phase1_model, phase2_model)
     # Run phase 3 (microservice identification)
+    print("Running phase 3...")
     run_microservice_identification(version, system, phase1_model, phase2_model, phase3_model)
 
 
