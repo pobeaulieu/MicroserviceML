@@ -1,0 +1,453 @@
+Microservice 1:
+  - Service: Application Service 1
+      * Class: org.springframework.samples.petclinic.vet.VetController
+  - Service: Application Service 2
+      * Class: org.springframework.samples.petclinic.owner.VisitController
+  - Service: Application Service 3
+      * Class: org.springframework.samples.petclinic.owner.OwnerController
+  - Service: Application Service 4
+      * Class: org.springframework.samples.petclinic.owner.PetController
+  - Service: Application Service 5
+      * Class: org.springframework.samples.petclinic.owner.PetValidator
+  - Service: Entity Service 4
+      * Class: org.springframework.samples.petclinic.owner.OwnerRepository
+  - Service: Entity Service 5
+      * Class: org.springframework.samples.petclinic.vet.VetRepository
+  - Service: Utility Service 1
+      * Class: org.springframework.samples.petclinic.system.CrashController
+  - Service: Utility Service 2
+      * Class: org.springframework.samples.petclinic.owner.PetTypeFormatter
+
+Microservice 10:
+  - Service: Application Service 1
+      * Class: org.springframework.samples.petclinic.vet.VetController
+  - Service: Application Service 2
+      * Class: org.springframework.samples.petclinic.owner.VisitController
+  - Service: Application Service 3
+      * Class: org.springframework.samples.petclinic.owner.OwnerController
+  - Service: Application Service 4
+      * Class: org.springframework.samples.petclinic.owner.PetController
+  - Service: Application Service 5
+      * Class: org.springframework.samples.petclinic.owner.PetValidator
+  - Service: Entity Service 4
+      * Class: org.springframework.samples.petclinic.owner.OwnerRepository
+  - Service: Entity Service 5
+      * Class: org.springframework.samples.petclinic.vet.VetRepository
+  - Service: Utility Service 1
+      * Class: org.springframework.samples.petclinic.system.CrashController
+  - Service: Utility Service 2
+      * Class: org.springframework.samples.petclinic.owner.PetTypeFormatter
+
+Microservice 11:
+  - Service: Application Service 1
+      * Class: org.springframework.samples.petclinic.vet.VetController
+  - Service: Application Service 2
+      * Class: org.springframework.samples.petclinic.owner.VisitController
+  - Service: Application Service 3
+      * Class: org.springframework.samples.petclinic.owner.OwnerController
+  - Service: Application Service 4
+      * Class: org.springframework.samples.petclinic.owner.PetController
+  - Service: Application Service 5
+      * Class: org.springframework.samples.petclinic.owner.PetValidator
+  - Service: Entity Service 4
+      * Class: org.springframework.samples.petclinic.owner.OwnerRepository
+  - Service: Entity Service 5
+      * Class: org.springframework.samples.petclinic.vet.VetRepository
+  - Service: Utility Service 1
+      * Class: org.springframework.samples.petclinic.system.CrashController
+  - Service: Utility Service 2
+      * Class: org.springframework.samples.petclinic.owner.PetTypeFormatter
+
+Microservice 12:
+  - Service: Application Service 1
+      * Class: org.springframework.samples.petclinic.vet.VetController
+  - Service: Application Service 2
+      * Class: org.springframework.samples.petclinic.owner.VisitController
+  - Service: Application Service 3
+      * Class: org.springframework.samples.petclinic.owner.OwnerController
+  - Service: Application Service 4
+      * Class: org.springframework.samples.petclinic.owner.PetController
+  - Service: Application Service 5
+      * Class: org.springframework.samples.petclinic.owner.PetValidator
+  - Service: Entity Service 4
+      * Class: org.springframework.samples.petclinic.owner.OwnerRepository
+  - Service: Entity Service 5
+      * Class: org.springframework.samples.petclinic.vet.VetRepository
+  - Service: Utility Service 1
+      * Class: org.springframework.samples.petclinic.system.CrashController
+  - Service: Utility Service 2
+      * Class: org.springframework.samples.petclinic.owner.PetTypeFormatter
+
+Microservice 13:
+  - Service: Application Service 1
+      * Class: org.springframework.samples.petclinic.vet.VetController
+  - Service: Application Service 2
+      * Class: org.springframework.samples.petclinic.owner.VisitController
+  - Service: Application Service 3
+      * Class: org.springframework.samples.petclinic.owner.OwnerController
+  - Service: Application Service 4
+      * Class: org.springframework.samples.petclinic.owner.PetController
+  - Service: Application Service 5
+      * Class: org.springframework.samples.petclinic.owner.PetValidator
+  - Service: Entity Service 4
+      * Class: org.springframework.samples.petclinic.owner.OwnerRepository
+  - Service: Entity Service 5
+      * Class: org.springframework.samples.petclinic.vet.VetRepository
+  - Service: Utility Service 1
+      * Class: org.springframework.samples.petclinic.system.CrashController
+  - Service: Utility Service 2
+      * Class: org.springframework.samples.petclinic.owner.PetTypeFormatter
+
+Microservice 14:
+  - Service: Application Service 1
+      * Class: org.springframework.samples.petclinic.vet.VetController
+  - Service: Application Service 2
+      * Class: org.springframework.samples.petclinic.owner.VisitController
+  - Service: Application Service 3
+      * Class: org.springframework.samples.petclinic.owner.OwnerController
+  - Service: Application Service 4
+      * Class: org.springframework.samples.petclinic.owner.PetController
+  - Service: Application Service 5
+      * Class: org.springframework.samples.petclinic.owner.PetValidator
+  - Service: Entity Service 1
+      * Class: org.springframework.samples.petclinic.model.NamedEntity
+      * Class: org.springframework.samples.petclinic.owner.PetType
+      * Class: org.springframework.samples.petclinic.owner.Pet
+      * Class: org.springframework.samples.petclinic.owner.Visit
+  - Service: Entity Service 2
+      * Class: org.springframework.samples.petclinic.owner.Owner
+      * Class: org.springframework.samples.petclinic.model.Person
+      * Class: org.springframework.samples.petclinic.model.BaseEntity
+  - Service: Entity Service 3
+      * Class: org.springframework.samples.petclinic.vet.Vets
+      * Class: org.springframework.samples.petclinic.vet.Specialty
+      * Class: org.springframework.samples.petclinic.vet.Vet
+  - Service: Entity Service 4
+      * Class: org.springframework.samples.petclinic.owner.OwnerRepository
+  - Service: Entity Service 5
+      * Class: org.springframework.samples.petclinic.vet.VetRepository
+  - Service: Utility Service 1
+      * Class: org.springframework.samples.petclinic.system.CrashController
+  - Service: Utility Service 2
+      * Class: org.springframework.samples.petclinic.owner.PetTypeFormatter
+
+Microservice 15:
+  - Service: Application Service 1
+      * Class: org.springframework.samples.petclinic.vet.VetController
+  - Service: Application Service 2
+      * Class: org.springframework.samples.petclinic.owner.VisitController
+  - Service: Application Service 3
+      * Class: org.springframework.samples.petclinic.owner.OwnerController
+  - Service: Application Service 4
+      * Class: org.springframework.samples.petclinic.owner.PetController
+  - Service: Application Service 5
+      * Class: org.springframework.samples.petclinic.owner.PetValidator
+  - Service: Entity Service 4
+      * Class: org.springframework.samples.petclinic.owner.OwnerRepository
+  - Service: Entity Service 5
+      * Class: org.springframework.samples.petclinic.vet.VetRepository
+  - Service: Utility Service 1
+      * Class: org.springframework.samples.petclinic.system.CrashController
+  - Service: Utility Service 2
+      * Class: org.springframework.samples.petclinic.owner.PetTypeFormatter
+
+Microservice 16:
+  - Service: Application Service 1
+      * Class: org.springframework.samples.petclinic.vet.VetController
+  - Service: Application Service 2
+      * Class: org.springframework.samples.petclinic.owner.VisitController
+  - Service: Application Service 3
+      * Class: org.springframework.samples.petclinic.owner.OwnerController
+  - Service: Application Service 4
+      * Class: org.springframework.samples.petclinic.owner.PetController
+  - Service: Application Service 5
+      * Class: org.springframework.samples.petclinic.owner.PetValidator
+  - Service: Entity Service 4
+      * Class: org.springframework.samples.petclinic.owner.OwnerRepository
+  - Service: Entity Service 5
+      * Class: org.springframework.samples.petclinic.vet.VetRepository
+  - Service: Utility Service 1
+      * Class: org.springframework.samples.petclinic.system.CrashController
+  - Service: Utility Service 2
+      * Class: org.springframework.samples.petclinic.owner.PetTypeFormatter
+
+Microservice 17:
+  - Service: Application Service 1
+      * Class: org.springframework.samples.petclinic.vet.VetController
+  - Service: Application Service 2
+      * Class: org.springframework.samples.petclinic.owner.VisitController
+  - Service: Application Service 3
+      * Class: org.springframework.samples.petclinic.owner.OwnerController
+  - Service: Application Service 4
+      * Class: org.springframework.samples.petclinic.owner.PetController
+  - Service: Application Service 5
+      * Class: org.springframework.samples.petclinic.owner.PetValidator
+  - Service: Entity Service 4
+      * Class: org.springframework.samples.petclinic.owner.OwnerRepository
+  - Service: Entity Service 5
+      * Class: org.springframework.samples.petclinic.vet.VetRepository
+  - Service: Utility Service 1
+      * Class: org.springframework.samples.petclinic.system.CrashController
+  - Service: Utility Service 2
+      * Class: org.springframework.samples.petclinic.owner.PetTypeFormatter
+
+Microservice 18:
+  - Service: Application Service 1
+      * Class: org.springframework.samples.petclinic.vet.VetController
+  - Service: Application Service 2
+      * Class: org.springframework.samples.petclinic.owner.VisitController
+  - Service: Application Service 3
+      * Class: org.springframework.samples.petclinic.owner.OwnerController
+  - Service: Application Service 4
+      * Class: org.springframework.samples.petclinic.owner.PetController
+  - Service: Application Service 5
+      * Class: org.springframework.samples.petclinic.owner.PetValidator
+  - Service: Entity Service 4
+      * Class: org.springframework.samples.petclinic.owner.OwnerRepository
+  - Service: Entity Service 5
+      * Class: org.springframework.samples.petclinic.vet.VetRepository
+  - Service: Utility Service 1
+      * Class: org.springframework.samples.petclinic.system.CrashController
+  - Service: Utility Service 2
+      * Class: org.springframework.samples.petclinic.owner.PetTypeFormatter
+
+Microservice 19:
+  - Service: Application Service 1
+      * Class: org.springframework.samples.petclinic.vet.VetController
+  - Service: Application Service 2
+      * Class: org.springframework.samples.petclinic.owner.VisitController
+  - Service: Application Service 3
+      * Class: org.springframework.samples.petclinic.owner.OwnerController
+  - Service: Application Service 4
+      * Class: org.springframework.samples.petclinic.owner.PetController
+  - Service: Application Service 5
+      * Class: org.springframework.samples.petclinic.owner.PetValidator
+  - Service: Entity Service 4
+      * Class: org.springframework.samples.petclinic.owner.OwnerRepository
+  - Service: Entity Service 5
+      * Class: org.springframework.samples.petclinic.vet.VetRepository
+  - Service: Utility Service 1
+      * Class: org.springframework.samples.petclinic.system.CrashController
+  - Service: Utility Service 2
+      * Class: org.springframework.samples.petclinic.owner.PetTypeFormatter
+
+Microservice 2:
+  - Service: Application Service 1
+      * Class: org.springframework.samples.petclinic.vet.VetController
+  - Service: Application Service 2
+      * Class: org.springframework.samples.petclinic.owner.VisitController
+  - Service: Application Service 3
+      * Class: org.springframework.samples.petclinic.owner.OwnerController
+  - Service: Application Service 4
+      * Class: org.springframework.samples.petclinic.owner.PetController
+  - Service: Application Service 5
+      * Class: org.springframework.samples.petclinic.owner.PetValidator
+  - Service: Entity Service 4
+      * Class: org.springframework.samples.petclinic.owner.OwnerRepository
+  - Service: Entity Service 5
+      * Class: org.springframework.samples.petclinic.vet.VetRepository
+  - Service: Utility Service 1
+      * Class: org.springframework.samples.petclinic.system.CrashController
+  - Service: Utility Service 2
+      * Class: org.springframework.samples.petclinic.owner.PetTypeFormatter
+
+Microservice 20:
+  - Service: Application Service 1
+      * Class: org.springframework.samples.petclinic.vet.VetController
+  - Service: Application Service 2
+      * Class: org.springframework.samples.petclinic.owner.VisitController
+  - Service: Application Service 3
+      * Class: org.springframework.samples.petclinic.owner.OwnerController
+  - Service: Application Service 4
+      * Class: org.springframework.samples.petclinic.owner.PetController
+  - Service: Application Service 5
+      * Class: org.springframework.samples.petclinic.owner.PetValidator
+  - Service: Entity Service 4
+      * Class: org.springframework.samples.petclinic.owner.OwnerRepository
+  - Service: Entity Service 5
+      * Class: org.springframework.samples.petclinic.vet.VetRepository
+  - Service: Utility Service 1
+      * Class: org.springframework.samples.petclinic.system.CrashController
+  - Service: Utility Service 2
+      * Class: org.springframework.samples.petclinic.owner.PetTypeFormatter
+
+Microservice 21:
+  - Service: Application Service 1
+      * Class: org.springframework.samples.petclinic.vet.VetController
+  - Service: Application Service 2
+      * Class: org.springframework.samples.petclinic.owner.VisitController
+  - Service: Application Service 3
+      * Class: org.springframework.samples.petclinic.owner.OwnerController
+  - Service: Application Service 4
+      * Class: org.springframework.samples.petclinic.owner.PetController
+  - Service: Application Service 5
+      * Class: org.springframework.samples.petclinic.owner.PetValidator
+  - Service: Entity Service 4
+      * Class: org.springframework.samples.petclinic.owner.OwnerRepository
+  - Service: Entity Service 5
+      * Class: org.springframework.samples.petclinic.vet.VetRepository
+  - Service: Utility Service 1
+      * Class: org.springframework.samples.petclinic.system.CrashController
+  - Service: Utility Service 2
+      * Class: org.springframework.samples.petclinic.owner.PetTypeFormatter
+
+Microservice 22:
+  - Service: Application Service 1
+      * Class: org.springframework.samples.petclinic.vet.VetController
+  - Service: Application Service 2
+      * Class: org.springframework.samples.petclinic.owner.VisitController
+  - Service: Application Service 3
+      * Class: org.springframework.samples.petclinic.owner.OwnerController
+  - Service: Application Service 4
+      * Class: org.springframework.samples.petclinic.owner.PetController
+  - Service: Application Service 5
+      * Class: org.springframework.samples.petclinic.owner.PetValidator
+  - Service: Entity Service 4
+      * Class: org.springframework.samples.petclinic.owner.OwnerRepository
+  - Service: Entity Service 5
+      * Class: org.springframework.samples.petclinic.vet.VetRepository
+  - Service: Utility Service 1
+      * Class: org.springframework.samples.petclinic.system.CrashController
+  - Service: Utility Service 2
+      * Class: org.springframework.samples.petclinic.owner.PetTypeFormatter
+
+Microservice 3:
+  - Service: Application Service 1
+      * Class: org.springframework.samples.petclinic.vet.VetController
+  - Service: Application Service 2
+      * Class: org.springframework.samples.petclinic.owner.VisitController
+  - Service: Application Service 3
+      * Class: org.springframework.samples.petclinic.owner.OwnerController
+  - Service: Application Service 4
+      * Class: org.springframework.samples.petclinic.owner.PetController
+  - Service: Application Service 5
+      * Class: org.springframework.samples.petclinic.owner.PetValidator
+  - Service: Entity Service 4
+      * Class: org.springframework.samples.petclinic.owner.OwnerRepository
+  - Service: Entity Service 5
+      * Class: org.springframework.samples.petclinic.vet.VetRepository
+  - Service: Utility Service 1
+      * Class: org.springframework.samples.petclinic.system.CrashController
+  - Service: Utility Service 2
+      * Class: org.springframework.samples.petclinic.owner.PetTypeFormatter
+
+Microservice 4:
+  - Service: Application Service 1
+      * Class: org.springframework.samples.petclinic.vet.VetController
+  - Service: Application Service 2
+      * Class: org.springframework.samples.petclinic.owner.VisitController
+  - Service: Application Service 3
+      * Class: org.springframework.samples.petclinic.owner.OwnerController
+  - Service: Application Service 4
+      * Class: org.springframework.samples.petclinic.owner.PetController
+  - Service: Application Service 5
+      * Class: org.springframework.samples.petclinic.owner.PetValidator
+  - Service: Entity Service 4
+      * Class: org.springframework.samples.petclinic.owner.OwnerRepository
+  - Service: Entity Service 5
+      * Class: org.springframework.samples.petclinic.vet.VetRepository
+  - Service: Utility Service 1
+      * Class: org.springframework.samples.petclinic.system.CrashController
+  - Service: Utility Service 2
+      * Class: org.springframework.samples.petclinic.owner.PetTypeFormatter
+
+Microservice 5:
+  - Service: Application Service 1
+      * Class: org.springframework.samples.petclinic.vet.VetController
+  - Service: Application Service 2
+      * Class: org.springframework.samples.petclinic.owner.VisitController
+  - Service: Application Service 3
+      * Class: org.springframework.samples.petclinic.owner.OwnerController
+  - Service: Application Service 4
+      * Class: org.springframework.samples.petclinic.owner.PetController
+  - Service: Application Service 5
+      * Class: org.springframework.samples.petclinic.owner.PetValidator
+  - Service: Entity Service 4
+      * Class: org.springframework.samples.petclinic.owner.OwnerRepository
+  - Service: Entity Service 5
+      * Class: org.springframework.samples.petclinic.vet.VetRepository
+  - Service: Utility Service 1
+      * Class: org.springframework.samples.petclinic.system.CrashController
+  - Service: Utility Service 2
+      * Class: org.springframework.samples.petclinic.owner.PetTypeFormatter
+
+Microservice 6:
+  - Service: Application Service 1
+      * Class: org.springframework.samples.petclinic.vet.VetController
+  - Service: Application Service 2
+      * Class: org.springframework.samples.petclinic.owner.VisitController
+  - Service: Application Service 3
+      * Class: org.springframework.samples.petclinic.owner.OwnerController
+  - Service: Application Service 4
+      * Class: org.springframework.samples.petclinic.owner.PetController
+  - Service: Application Service 5
+      * Class: org.springframework.samples.petclinic.owner.PetValidator
+  - Service: Entity Service 4
+      * Class: org.springframework.samples.petclinic.owner.OwnerRepository
+  - Service: Entity Service 5
+      * Class: org.springframework.samples.petclinic.vet.VetRepository
+  - Service: Utility Service 1
+      * Class: org.springframework.samples.petclinic.system.CrashController
+  - Service: Utility Service 2
+      * Class: org.springframework.samples.petclinic.owner.PetTypeFormatter
+
+Microservice 7:
+  - Service: Application Service 1
+      * Class: org.springframework.samples.petclinic.vet.VetController
+  - Service: Application Service 2
+      * Class: org.springframework.samples.petclinic.owner.VisitController
+  - Service: Application Service 3
+      * Class: org.springframework.samples.petclinic.owner.OwnerController
+  - Service: Application Service 4
+      * Class: org.springframework.samples.petclinic.owner.PetController
+  - Service: Application Service 5
+      * Class: org.springframework.samples.petclinic.owner.PetValidator
+  - Service: Entity Service 4
+      * Class: org.springframework.samples.petclinic.owner.OwnerRepository
+  - Service: Entity Service 5
+      * Class: org.springframework.samples.petclinic.vet.VetRepository
+  - Service: Utility Service 1
+      * Class: org.springframework.samples.petclinic.system.CrashController
+  - Service: Utility Service 2
+      * Class: org.springframework.samples.petclinic.owner.PetTypeFormatter
+
+Microservice 8:
+  - Service: Application Service 1
+      * Class: org.springframework.samples.petclinic.vet.VetController
+  - Service: Application Service 2
+      * Class: org.springframework.samples.petclinic.owner.VisitController
+  - Service: Application Service 3
+      * Class: org.springframework.samples.petclinic.owner.OwnerController
+  - Service: Application Service 4
+      * Class: org.springframework.samples.petclinic.owner.PetController
+  - Service: Application Service 5
+      * Class: org.springframework.samples.petclinic.owner.PetValidator
+  - Service: Entity Service 4
+      * Class: org.springframework.samples.petclinic.owner.OwnerRepository
+  - Service: Entity Service 5
+      * Class: org.springframework.samples.petclinic.vet.VetRepository
+  - Service: Utility Service 1
+      * Class: org.springframework.samples.petclinic.system.CrashController
+  - Service: Utility Service 2
+      * Class: org.springframework.samples.petclinic.owner.PetTypeFormatter
+
+Microservice 9:
+  - Service: Application Service 1
+      * Class: org.springframework.samples.petclinic.vet.VetController
+  - Service: Application Service 2
+      * Class: org.springframework.samples.petclinic.owner.VisitController
+  - Service: Application Service 3
+      * Class: org.springframework.samples.petclinic.owner.OwnerController
+  - Service: Application Service 4
+      * Class: org.springframework.samples.petclinic.owner.PetController
+  - Service: Application Service 5
+      * Class: org.springframework.samples.petclinic.owner.PetValidator
+  - Service: Entity Service 4
+      * Class: org.springframework.samples.petclinic.owner.OwnerRepository
+  - Service: Entity Service 5
+      * Class: org.springframework.samples.petclinic.vet.VetRepository
+  - Service: Utility Service 1
+      * Class: org.springframework.samples.petclinic.system.CrashController
+  - Service: Utility Service 2
+      * Class: org.springframework.samples.petclinic.owner.PetTypeFormatter
+
