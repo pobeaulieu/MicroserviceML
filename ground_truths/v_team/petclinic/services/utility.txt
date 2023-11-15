@@ -1,6 +1,11 @@
+US1
 org.springframework.samples.petclinic.system.CacheConfiguration
+US2
 org.springframework.samples.petclinic.PetClinicRuntimeHints
 org.springframework.samples.petclinic.PetClinicApplication
+US3
 org.springframework.samples.petclinic.system.WelcomeController
+US4
 org.springframework.samples.petclinic.service.EntityUtils
+US5
 org.springframework.samples.petclinic.model.package-info

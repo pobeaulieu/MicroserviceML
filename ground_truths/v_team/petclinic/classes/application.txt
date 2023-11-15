@@ -14,3 +14,7 @@ org.springframework.samples.petclinic.service.ClinicServiceTests
 org.springframework.samples.petclinic.system.CrashControllerIntegrationTests
 org.springframework.samples.petclinic.system.CrashControllerTests
 org.springframework.samples.petclinic.vet.VetControllerTests
+org.springframework.samples.petclinic.owner.PetTypeFormatter
+org.springframework.samples.petclinic.owner.PetTypeFormatterTests
+org.springframework.samples.petclinic.system.CrashController
+
