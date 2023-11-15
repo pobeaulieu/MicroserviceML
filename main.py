@@ -31,10 +31,10 @@ parser.add_argument("--classifier", help="Classifier to use", type=str, choices=
 # MAIN EXECUTION
 ####################################################################################################
 
-def main(version, system, phase1_model, phase2_model, phase3_model, selected_classifier):
+def main(version, system, training_systems, phase1_model, phase2_model, phase3_model, selected_classifier):
     # Run phase 1 (class typing)
     print("Running phase 1...")
-    run_class_typing(training_systems, version, system, phase1_model, selected_classifier)
+    run_class_typing(version, system, training_systems, phase1_model, selected_classifier)
     # Run phase 2 (service clustering)
     print("Running phase 2...")
     run_typed_service_identification(version, system, phase1_model, phase2_model)
@@ -53,4 +53,4 @@ if __name__ == "__main__":
     training_systems = args.training_systems
     selected_classifier = args.classifier
 
-    main(version, system, phase1_model, phase2_model, phase3_model, selected_classifier)
+    main(version, system, training_systems, phase1_model, phase2_model, phase3_model, selected_classifier)
