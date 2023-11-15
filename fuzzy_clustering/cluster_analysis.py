@@ -83,11 +83,18 @@ def merge_overlapping_clusters(cluster_assignments, overlap_threshold=0.5):
     }
     print(f"Overlapping clusters: {overlapping_clusters}")
 
-    # Step 3: Merge overlapping clusters
-    merged_clusters = {}
+    # Step 3: Decide final merges
+    final_merges = {}
     for cluster1, cluster2 in overlapping_clusters:
-        cluster_service_map[cluster1].update(cluster_service_map.pop(cluster2, set()))
-        merged_clusters[cluster2] = cluster1
+        final_cluster1 = final_merges.get(cluster1, cluster1)
+        final_cluster2 = final_merges.get(cluster2, cluster2)
+        if final_cluster1 != final_cluster2:
+            smaller, larger = sorted([final_cluster1, final_cluster2])
+            final_merges[larger] = smaller
+
+    # Execute merges
+    for to_merge, merge_into in final_merges.items():
+        cluster_service_map[merge_into].update(cluster_service_map.pop(to_merge))
 
     # Step 4: Renumber clusters sequentially
     cluster_renumbering_map = {original: new for new, original in enumerate(sorted(cluster_service_map), start=1)}
@@ -98,7 +105,7 @@ def merge_overlapping_clusters(cluster_assignments, overlap_threshold=0.5):
         updated_memberships = {}
         for cluster_name, membership in memberships:
             cluster_id = int(cluster_name[7:])
-            merged_cluster_id = merged_clusters.get(cluster_id, cluster_id)
+            merged_cluster_id = final_merges.get(cluster_id, cluster_id)
             new_cluster_id = cluster_renumbering_map[merged_cluster_id]
             updated_cluster_name = f"cluster{new_cluster_id}"
             updated_memberships[updated_cluster_name] = max(updated_memberships.get(updated_cluster_name, 0), membership)
