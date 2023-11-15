@@ -1,0 +1,7 @@
+java.org.springframework.samples.petclinic.model.BaseEntity,java.org.springframework.samples.petclinic.model.NamedEntity,,,
+java.org.springframework.samples.petclinic.model.Person,org.springframework.samples.petclinic.model.ValidatorTests,,,
+java.org.springframework.samples.petclinic.owner.OwnerRepository,java.org.springframework.samples.petclinic.owner.Owner,,,
+java.org.springframework.samples.petclinic.owner.Pet,java.org.springframework.samples.petclinic.owner.PetType,,,
+java.org.springframework.samples.petclinic.owner.Visit,,,,
+org.springframework.samples.petclinic.vet,java.org.springframework.samples.petclinic.vet.Vet,java.org.springframework.samples.petclinic.vet.VetRepository,java.org.springframework.samples.petclinic.vet.Vets,org.springframework.samples.petclinic.vet.VetTests,java.org.springframework.samples.petclinic.vet.Specialty
+java.org.springframework.samples.petclinic.model.BaseEntity,java.org.springframework.samples.petclinic.model.NamedEntity,,,
