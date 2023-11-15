@@ -10,6 +10,7 @@ from fuzzy_clustering.custom_cmeans import CustomFuzzyCMeans
 from fuzzy_clustering.hierarchical_clustering import hierarchical_clustering, determine_optimal_max_d
 from helpers.results_helpers import generate_microservices_clustering_results
 from helpers.class_helpers import get_number_of_classes
+import math
 
 ####################################################################################################
 # PHASE 3: MICROSERVICE IDENTIFICATION
@@ -61,7 +62,7 @@ def run_microservice_identification(version, system, phase1_model, phase2_model,
     dissimilarity_matrix = construct_dissimilarity_matrix(services_graph)
 
     if phase3_model == 'cmeans':
-        cluster_range = get_number_of_classes(system) / 2
+        cluster_range = range(2, math.floor(get_number_of_classes(system) / 2))
         optimal_clusters = determine_optimal_clusters(dissimilarity_matrix, cluster_range)
         print(f"Optimal number of clusters: {optimal_clusters}")
         memberships = fuzzy_cmeans_clustering(dissimilarity_matrix, nodes_list, optimal_clusters)
@@ -87,8 +88,8 @@ def run_microservice_identification(version, system, phase1_model, phase2_model,
 
     # Save the clusters to .txt and .csv files
     save_microservices_to_txt(clusters, communities_df, 
-                           f"generated_data/microservice_clusters/custom_cmeans/{version}_{system}_{phase2_model}_microservices.txt")
+                           f"generated_data/microservice_clusters/{phase3_model}/{version}_{system}_{phase2_model}_microservices.txt")
     save_microservices_to_csv(clusters, communities_df, 
-                           f"generated_data/microservice_clusters/custom_cmeans/{version}_{system}_{phase2_model}_microservices.csv")
+                           f"generated_data/microservice_clusters/{phase3_model}/{version}_{system}_{phase2_model}_microservices.csv")
     
     generate_microservices_clustering_results([phase3_model], phase2_model, phase1_model, version, system, matching_threshold=0.8)
