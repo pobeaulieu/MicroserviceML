@@ -1,37 +1,39 @@
 Microservice 1:
   - Service: Application Service 1
-      * Class: org.springframework.samples.petclinic.vet.VetController
+      * Class: org.springframework.samples.petclinic.owner.PetController
   - Service: Application Service 2
-      * Class: org.springframework.samples.petclinic.owner.VisitController
+      * Class: org.springframework.samples.petclinic.owner.OwnerController
+  - Service: Entity Service 1
+      * Class: org.springframework.samples.petclinic.owner.Visit
+      * Class: org.springframework.samples.petclinic.owner.PetType
+      * Class: org.springframework.samples.petclinic.owner.Pet
+      * Class: org.springframework.samples.petclinic.model.NamedEntity
   - Service: Entity Service 3
-      * Class: org.springframework.samples.petclinic.vet.Vets
-      * Class: org.springframework.samples.petclinic.vet.Specialty
-      * Class: org.springframework.samples.petclinic.vet.Vet
+      * Class: org.springframework.samples.petclinic.model.BaseEntity
+      * Class: org.springframework.samples.petclinic.owner.Owner
+      * Class: org.springframework.samples.petclinic.model.Person
   - Service: Entity Service 5
-      * Class: org.springframework.samples.petclinic.vet.VetRepository
+      * Class: org.springframework.samples.petclinic.owner.OwnerRepository
   - Service: Utility Service 1
-      * Class: org.springframework.samples.petclinic.system.CrashController
-  - Service: Utility Service 2
       * Class: org.springframework.samples.petclinic.owner.PetTypeFormatter
+  - Service: Utility Service 2
+      * Class: org.springframework.samples.petclinic.system.CrashController
 
 Microservice 2:
   - Service: Application Service 3
-      * Class: org.springframework.samples.petclinic.owner.OwnerController
-  - Service: Application Service 4
-      * Class: org.springframework.samples.petclinic.owner.PetController
-  - Service: Entity Service 1
-      * Class: org.springframework.samples.petclinic.model.NamedEntity
-      * Class: org.springframework.samples.petclinic.owner.PetType
-      * Class: org.springframework.samples.petclinic.owner.Pet
-      * Class: org.springframework.samples.petclinic.owner.Visit
+      * Class: org.springframework.samples.petclinic.vet.VetController
   - Service: Entity Service 2
-      * Class: org.springframework.samples.petclinic.owner.Owner
-      * Class: org.springframework.samples.petclinic.model.Person
-      * Class: org.springframework.samples.petclinic.model.BaseEntity
+      * Class: org.springframework.samples.petclinic.vet.Vets
+      * Class: org.springframework.samples.petclinic.vet.Specialty
+      * Class: org.springframework.samples.petclinic.vet.Vet
   - Service: Entity Service 4
-      * Class: org.springframework.samples.petclinic.owner.OwnerRepository
+      * Class: org.springframework.samples.petclinic.vet.VetRepository
 
 Microservice 3:
-  - Service: Application Service 5
+  - Service: Application Service 4
       * Class: org.springframework.samples.petclinic.owner.PetValidator
+
+Microservice 4:
+  - Service: Application Service 5
+      * Class: org.springframework.samples.petclinic.owner.VisitController
 

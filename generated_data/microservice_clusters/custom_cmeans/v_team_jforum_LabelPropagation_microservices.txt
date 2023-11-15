@@ -1,0 +1,482 @@
+Microservice 1:
+  - Service: Application Service 1
+      * Class: net.jforum.controllers.ForumController
+      * Class: net.jforum.security.ReplyTopicRule
+      * Class: net.jforum.controllers.PostController
+      * Class: net.jforum.controllers.TopicController
+      * Class: net.jforum.security.CreateNewTopicRule
+      * Class: net.jforum.plugins.post.PostEditInterceptor
+      * Class: net.jforum.security.RoleManager
+      * Class: net.jforum.core.SessionManager
+      * Class: net.jforum.services.GroupService
+      * Class: net.jforum.services.ModerationLogService
+      * Class: net.jforum.security.ChangePostRule
+      * Class: net.jforum.controllers.MessageController
+      * Class: net.jforum.actions.interceptors.SessionManagerInterceptor
+      * Class: net.jforum.plugins.post.ForumAdminExtension
+      * Class: net.jforum.controllers.GroupAdminController
+      * Class: net.jforum.services.ModerationService
+      * Class: net.jforum.security.DownloadAttachmentRule
+      * Class: net.jforum.services.MostUsersEverOnlineService
+      * Class: net.jforum.security.AdministrationRule
+      * Class: net.jforum.core.UserSessionListener
+      * Class: net.jforum.controllers.PostReportController
+      * Class: net.jforum.controllers.ModerationController
+  - Service: Application Service 2
+      * Class: net.jforum.security.AuthenticatedRule
+      * Class: net.jforum.actions.interceptors.SecurityInterceptor
+      * Class: net.jforum.actions.interceptors.MethodSecurityInterceptor
+      * Class: net.jforum.actions.interceptors.ControllerSecurityInterceptor
+      * Class: net.jforum.security.ModerationRule
+      * Class: net.jforum.security.AccessForumRule
+      * Class: net.jforum.security.EmptyRule
+      * Class: net.jforum.security.PrivateMessageEnabledRule
+      * Class: net.jforum.security.EditUserRule
+      * Class: net.jforum.security.AccessRule
+      * Class: net.jforum.security.PrivateMessageOwnerRule
+  - Service: Entity Service 1
+      * Class: net.jforum.entities.PrivateMessage
+      * Class: net.jforum.entities.Post
+      * Class: net.jforum.entities.Poll
+      * Class: net.jforum.entities.PostReportStatus
+      * Class: net.jforum.repository.UserRepository
+      * Class: net.jforum.repository.TopicRepository
+      * Class: net.jforum.entities.PostReport
+      * Class: net.jforum.entities.ModerationLog
+      * Class: net.jforum.entities.PollOption
+      * Class: net.jforum.entities.Topic
+      * Class: net.jforum.entities.User
+      * Class: net.jforum.entities.PollVoter
+      * Class: net.jforum.entities.TopicWatch
+      * Class: net.jforum.entities.Attachment
+      * Class: net.jforum.repository.PrivateMessageRepository
+      * Class: net.jforum.entities.Ranking
+      * Class: net.jforum.entities.util.Pagination
+  - Service: Entity Service 10
+      * Class: net.jforum.plugins.post.ForumLimitedTimeRepository
+  - Service: Entity Service 11
+      * Class: net.jforum.repository.SmilieRepository
+  - Service: Entity Service 12
+      * Class: net.jforum.repository.PostReportRepository
+  - Service: Entity Service 13
+      * Class: net.jforum.repository.GroupRepository
+  - Service: Entity Service 14
+      * Class: net.jforum.entities.MostUsersEverOnline
+  - Service: Entity Service 16
+      * Class: net.jforum.entities.Banlist
+  - Service: Entity Service 17
+      * Class: net.jforum.repository.PostRepository
+  - Service: Entity Service 19
+      * Class: net.jforum.repository.SessionRepository
+  - Service: Entity Service 20
+      * Class: net.jforum.repository.PollRepository
+  - Service: Entity Service 22
+      * Class: net.jforum.repository.ModerationLogRepository
+  - Service: Entity Service 23
+      * Class: net.jforum.repository.ConfigRepository
+  - Service: Entity Service 25
+      * Class: net.jforum.entities.Config
+  - Service: Entity Service 30
+      * Class: net.jforum.entities.ForumWatch
+  - Service: Entity Service 4
+      * Class: net.jforum.entities.Category
+      * Class: net.jforum.repository.CategoryRepository
+      * Class: net.jforum.entities.Theme
+  - Service: Entity Service 5
+      * Class: net.jforum.entities.AttachmentExtensionGroup
+      * Class: net.jforum.entities.AttachmentExtension
+  - Service: Entity Service 7
+      * Class: net.jforum.entities.ForumStats
+      * Class: net.jforum.repository.ForumRepository
+  - Service: Entity Service 8
+      * Class: net.jforum.entities.Role
+      * Class: net.jforum.entities.Group
+  - Service: Entity Service 9
+      * Class: net.jforum.repository.RankingRepository
+  - Service: Utility Service 1
+      * Class: net.jforum.util.mail.ActivationKeySpammer
+      * Class: net.jforum.util.I18n
+      * Class: net.jforum.util.mail.TopicReplySpammer
+      * Class: net.jforum.util.mail.PrivateMessageSpammer
+      * Class: net.jforum.controllers.UserAdminController
+      * Class: net.jforum.controllers.UserController
+      * Class: net.jforum.util.mail.SpammerFactory
+      * Class: net.jforum.core.tags.ImportFileTag
+      * Class: net.jforum.core.tags.ImportResponseWrapper
+      * Class: net.jforum.util.JForumConfig
+  - Service: Utility Service 11
+      * Class: net.jforum.core.exceptions.ForumException
+      * Class: net.jforum.util.ImageUtils
+  - Service: Utility Service 13
+      * Class: net.jforum.util.URLBuilder
+  - Service: Utility Service 14
+      * Class: net.jforum.util.CategoryOrderComparator
+  - Service: Utility Service 16
+      * Class: net.jforum.util.GroupInteractionFilter
+  - Service: Utility Service 17
+      * Class: net.jforum.controllers.AdminController
+  - Service: Utility Service 2
+      * Class: net.jforum.core.tags.JForumTag
+      * Class: net.jforum.core.tags.TemplateResourceTag
+      * Class: net.jforum.core.tags.URLTag
+      * Class: net.jforum.core.tags.DisplayFormattedMessageTag
+      * Class: net.jforum.core.tags.DisplayForumsTag
+      * Class: net.jforum.core.tags.SettingsTag
+      * Class: net.jforum.core.tags.I18nTag
+      * Class: net.jforum.formatters.PostFormatters
+      * Class: net.jforum.core.tags.FormatSignatureTag
+      * Class: net.jforum.core.tags.DisplayCategoriesTag
+  - Service: Utility Service 20
+      * Class: net.jforum.core.support.spring.RoleManagerFactoryBean
+  - Service: Utility Service 21
+      * Class: net.jforum.core.tags.Functions
+  - Service: Utility Service 22
+      * Class: net.jforum.actions.helpers.ApproveInfo
+  - Service: Utility Service 24
+      * Class: net.jforum.sso.SSOUtils
+  - Service: Utility Service 26
+      * Class: net.jforum.util.mail.MessageId
+  - Service: Utility Service 3
+      * Class: net.jforum.formatters.Formatter
+      * Class: net.jforum.formatters.SafeHtmlTagsFormatter
+      * Class: net.jforum.util.SafeHtml
+      * Class: net.jforum.formatters.SafeHtmlAttributesFormatter
+      * Class: net.jforum.formatters.HtmlEntitiesFormatter
+      * Class: net.jforum.formatters.NewLineToHtmlBreakFormatter
+  - Service: Utility Service 4
+      * Class: net.jforum.util.mail.LostPasswordSpammer
+      * Class: net.jforum.core.exceptions.MailException
+      * Class: net.jforum.util.mail.IdentifiableMimeMessage
+      * Class: net.jforum.util.mail.EmailSenderTask
+      * Class: net.jforum.util.mail.Spammer
+  - Service: Utility Service 6
+      * Class: net.jforum.formatters.PostOptions
+      * Class: net.jforum.formatters.SmiliesFormatter
+  - Service: Utility Service 7
+      * Class: net.jforum.sso.RemoteUserSSO
+      * Class: net.jforum.sso.SSO
+  - Service: Utility Service 8
+      * Class: net.jforum.formatters.BBConfigFormatter
+      * Class: net.jforum.formatters.BBCode
+  - Service: Utility Service 9
+      * Class: net.jforum.actions.helpers.PostFormOptions
+      * Class: net.jforum.actions.helpers.ActionUtils
+
+Microservice 10:
+  - Service: Application Service 18
+      * Class: net.jforum.controllers.BanlistAdminController
+  - Service: Entity Service 18
+      * Class: net.jforum.repository.BanlistRepository
+
+Microservice 11:
+  - Service: Application Service 19
+      * Class: net.jforum.events.EmptyCategoryEvent
+  - Service: Utility Service 15
+      * Class: net.jforum.core.events.category.NewCategoryGroupPermissionsEvent
+
+Microservice 12:
+  - Service: Application Service 1
+      * Class: net.jforum.controllers.ForumController
+      * Class: net.jforum.security.ReplyTopicRule
+      * Class: net.jforum.controllers.PostController
+      * Class: net.jforum.controllers.TopicController
+      * Class: net.jforum.security.CreateNewTopicRule
+      * Class: net.jforum.plugins.post.PostEditInterceptor
+      * Class: net.jforum.security.RoleManager
+      * Class: net.jforum.core.SessionManager
+      * Class: net.jforum.services.GroupService
+      * Class: net.jforum.services.ModerationLogService
+      * Class: net.jforum.security.ChangePostRule
+      * Class: net.jforum.controllers.MessageController
+      * Class: net.jforum.actions.interceptors.SessionManagerInterceptor
+      * Class: net.jforum.plugins.post.ForumAdminExtension
+      * Class: net.jforum.controllers.GroupAdminController
+      * Class: net.jforum.services.ModerationService
+      * Class: net.jforum.security.DownloadAttachmentRule
+      * Class: net.jforum.services.MostUsersEverOnlineService
+      * Class: net.jforum.security.AdministrationRule
+      * Class: net.jforum.core.UserSessionListener
+      * Class: net.jforum.controllers.PostReportController
+      * Class: net.jforum.controllers.ModerationController
+  - Service: Application Service 2
+      * Class: net.jforum.security.AuthenticatedRule
+      * Class: net.jforum.actions.interceptors.SecurityInterceptor
+      * Class: net.jforum.actions.interceptors.MethodSecurityInterceptor
+      * Class: net.jforum.actions.interceptors.ControllerSecurityInterceptor
+      * Class: net.jforum.security.ModerationRule
+      * Class: net.jforum.security.AccessForumRule
+      * Class: net.jforum.security.EmptyRule
+      * Class: net.jforum.security.PrivateMessageEnabledRule
+      * Class: net.jforum.security.EditUserRule
+      * Class: net.jforum.security.AccessRule
+      * Class: net.jforum.security.PrivateMessageOwnerRule
+
+Microservice 13:
+  - Service: Application Service 20
+      * Class: net.jforum.controllers.SearchController
+  - Service: Entity Service 3
+      * Class: net.jforum.repository.SearchRepository
+      * Class: net.jforum.entities.util.SearchParams
+      * Class: net.jforum.entities.util.SearchMatchType
+      * Class: net.jforum.entities.util.SearchSort
+      * Class: net.jforum.entities.util.SearchSortType
+
+Microservice 14:
+  - Service: Application Service 21
+      * Class: net.jforum.core.support.hibernate.CacheEvictionRules
+
+Microservice 15:
+  - Service: Application Service 22
+      * Class: net.jforum.controllers.BadWordAdminController
+  - Service: Entity Service 28
+      * Class: net.jforum.repository.BadWordRepository
+
+Microservice 16:
+  - Service: Application Service 23
+      * Class: net.jforum.core.VRaptorCustomPathResolver
+
+Microservice 17:
+  - Service: Application Service 24
+      * Class: net.jforum.controllers.ThemeController
+  - Service: Entity Service 27
+      * Class: net.jforum.repository.ThemeRepository
+
+Microservice 18:
+  - Service: Application Service 25
+      * Class: net.jforum.services.LostPasswordService
+
+Microservice 19:
+  - Service: Application Service 26
+      * Class: net.jforum.controllers.LuceneAdminController
+
+Microservice 2:
+  - Service: Application Service 10
+      * Class: net.jforum.extensions.PostReportCounterOperation
+      * Class: net.jforum.extensions.RequestOperation
+  - Service: Entity Service 12
+      * Class: net.jforum.repository.PostReportRepository
+
+Microservice 20:
+  - Service: Application Service 27
+      * Class: net.jforum.events.EmptyForumEvent
+  - Service: Utility Service 18
+      * Class: net.jforum.core.events.forum.NewForumGroupPermissionsEvent
+
+Microservice 21:
+  - Service: Application Service 28
+      * Class: net.jforum.services.MessageFormatService
+
+Microservice 22:
+  - Service: Application Service 3
+      * Class: net.jforum.actions.extensions.TopicWatchExtension
+      * Class: net.jforum.core.events.post.ForumPostEvent
+      * Class: net.jforum.core.events.post.TopicPostEvent
+      * Class: net.jforum.core.events.post.BadWordEvent
+      * Class: net.jforum.core.events.post.TopicWatchPostEvent
+      * Class: net.jforum.services.TopicWatchService
+      * Class: net.jforum.events.EmptyPostEvent
+      * Class: net.jforum.core.events.post.TopicReplyEvent
+  - Service: Entity Service 1
+      * Class: net.jforum.entities.PrivateMessage
+      * Class: net.jforum.entities.Post
+      * Class: net.jforum.entities.Poll
+      * Class: net.jforum.entities.PostReportStatus
+      * Class: net.jforum.repository.UserRepository
+      * Class: net.jforum.repository.TopicRepository
+      * Class: net.jforum.entities.PostReport
+      * Class: net.jforum.entities.ModerationLog
+      * Class: net.jforum.entities.PollOption
+      * Class: net.jforum.entities.Topic
+      * Class: net.jforum.entities.User
+      * Class: net.jforum.entities.PollVoter
+      * Class: net.jforum.entities.TopicWatch
+      * Class: net.jforum.entities.Attachment
+      * Class: net.jforum.repository.PrivateMessageRepository
+      * Class: net.jforum.entities.Ranking
+      * Class: net.jforum.entities.util.Pagination
+  - Service: Entity Service 15
+      * Class: net.jforum.entities.BadWord
+  - Service: Entity Service 28
+      * Class: net.jforum.repository.BadWordRepository
+  - Service: Entity Service 29
+      * Class: net.jforum.repository.TopicWatchRepository
+  - Service: Utility Service 25
+      * Class: net.jforum.util.mail.SpammerTaskExecutor
+
+Microservice 23:
+  - Service: Application Service 4
+      * Class: net.jforum.services.PostService
+      * Class: net.jforum.services.TopicService
+      * Class: net.jforum.services.PollService
+      * Class: net.jforum.services.AttachmentService
+  - Service: Entity Service 1
+      * Class: net.jforum.entities.PrivateMessage
+      * Class: net.jforum.entities.Post
+      * Class: net.jforum.entities.Poll
+      * Class: net.jforum.entities.PostReportStatus
+      * Class: net.jforum.repository.UserRepository
+      * Class: net.jforum.repository.TopicRepository
+      * Class: net.jforum.entities.PostReport
+      * Class: net.jforum.entities.ModerationLog
+      * Class: net.jforum.entities.PollOption
+      * Class: net.jforum.entities.Topic
+      * Class: net.jforum.entities.User
+      * Class: net.jforum.entities.PollVoter
+      * Class: net.jforum.entities.TopicWatch
+      * Class: net.jforum.entities.Attachment
+      * Class: net.jforum.repository.PrivateMessageRepository
+      * Class: net.jforum.entities.Ranking
+      * Class: net.jforum.entities.util.Pagination
+  - Service: Utility Service 5
+      * Class: net.jforum.actions.helpers.AttachedFile
+      * Class: net.jforum.util.UploadUtils
+
+Microservice 24:
+  - Service: Application Service 5
+      * Class: net.jforum.controllers.AvatarAdminController
+      * Class: net.jforum.services.UserService
+      * Class: net.jforum.services.AvatarService
+  - Service: Entity Service 1
+      * Class: net.jforum.entities.PrivateMessage
+      * Class: net.jforum.entities.Post
+      * Class: net.jforum.entities.Poll
+      * Class: net.jforum.entities.PostReportStatus
+      * Class: net.jforum.repository.UserRepository
+      * Class: net.jforum.repository.TopicRepository
+      * Class: net.jforum.entities.PostReport
+      * Class: net.jforum.entities.ModerationLog
+      * Class: net.jforum.entities.PollOption
+      * Class: net.jforum.entities.Topic
+      * Class: net.jforum.entities.User
+      * Class: net.jforum.entities.PollVoter
+      * Class: net.jforum.entities.TopicWatch
+      * Class: net.jforum.entities.Attachment
+      * Class: net.jforum.repository.PrivateMessageRepository
+      * Class: net.jforum.entities.Ranking
+      * Class: net.jforum.entities.util.Pagination
+  - Service: Entity Service 24
+      * Class: net.jforum.repository.AvatarRepository
+  - Service: Entity Service 6
+      * Class: net.jforum.entities.AvatarType
+      * Class: net.jforum.entities.Avatar
+  - Service: Utility Service 1
+      * Class: net.jforum.util.mail.ActivationKeySpammer
+      * Class: net.jforum.util.I18n
+      * Class: net.jforum.util.mail.TopicReplySpammer
+      * Class: net.jforum.util.mail.PrivateMessageSpammer
+      * Class: net.jforum.controllers.UserAdminController
+      * Class: net.jforum.controllers.UserController
+      * Class: net.jforum.util.mail.SpammerFactory
+      * Class: net.jforum.core.tags.ImportFileTag
+      * Class: net.jforum.core.tags.ImportResponseWrapper
+      * Class: net.jforum.util.JForumConfig
+  - Service: Utility Service 10
+      * Class: net.jforum.sso.DefaultLoginAuthenticator
+      * Class: net.jforum.sso.LoginAuthenticator
+  - Service: Utility Service 12
+      * Class: net.jforum.util.MD5
+  - Service: Utility Service 19
+      * Class: net.jforum.core.exceptions.ValidationException
+  - Service: Utility Service 23
+      * Class: net.jforum.util.ImageInfo
+
+Microservice 25:
+  - Service: Application Service 6
+      * Class: net.jforum.core.events.topic.TopicWatchTopicEvent
+      * Class: net.jforum.events.EmptyTopicEvent
+      * Class: net.jforum.core.events.topic.ForumTopicEvent
+  - Service: Entity Service 29
+      * Class: net.jforum.repository.TopicWatchRepository
+
+Microservice 26:
+  - Service: Application Service 7
+      * Class: net.jforum.controllers.RSSController
+      * Class: net.jforum.services.RSSService
+  - Service: Utility Service 1
+      * Class: net.jforum.util.mail.ActivationKeySpammer
+      * Class: net.jforum.util.I18n
+      * Class: net.jforum.util.mail.TopicReplySpammer
+      * Class: net.jforum.util.mail.PrivateMessageSpammer
+      * Class: net.jforum.controllers.UserAdminController
+      * Class: net.jforum.controllers.UserController
+      * Class: net.jforum.util.mail.SpammerFactory
+      * Class: net.jforum.core.tags.ImportFileTag
+      * Class: net.jforum.core.tags.ImportResponseWrapper
+      * Class: net.jforum.util.JForumConfig
+
+Microservice 27:
+  - Service: Application Service 8
+      * Class: net.jforum.controllers.RankingAdminController
+      * Class: net.jforum.services.RankingService
+  - Service: Entity Service 9
+      * Class: net.jforum.repository.RankingRepository
+
+Microservice 28:
+  - Service: Application Service 9
+      * Class: net.jforum.services.PrivateMessageService
+      * Class: net.jforum.controllers.PrivateMessageController
+
+Microservice 3:
+  - Service: Application Service 11
+      * Class: net.jforum.services.CategoryService
+      * Class: net.jforum.controllers.CategoryAdminController
+  - Service: Entity Service 4
+      * Class: net.jforum.entities.Category
+      * Class: net.jforum.repository.CategoryRepository
+      * Class: net.jforum.entities.Theme
+
+Microservice 4:
+  - Service: Application Service 12
+      * Class: net.jforum.core.support.hibernate.SpringSessionFactory
+      * Class: net.jforum.core.support.hibernate.SpringInterceptor
+
+Microservice 5:
+  - Service: Application Service 13
+      * Class: net.jforum.services.ConfigService
+      * Class: net.jforum.controllers.ConfigController
+  - Service: Entity Service 23
+      * Class: net.jforum.repository.ConfigRepository
+  - Service: Entity Service 25
+      * Class: net.jforum.entities.Config
+  - Service: Utility Service 1
+      * Class: net.jforum.util.mail.ActivationKeySpammer
+      * Class: net.jforum.util.I18n
+      * Class: net.jforum.util.mail.TopicReplySpammer
+      * Class: net.jforum.util.mail.PrivateMessageSpammer
+      * Class: net.jforum.controllers.UserAdminController
+      * Class: net.jforum.controllers.UserController
+      * Class: net.jforum.util.mail.SpammerFactory
+      * Class: net.jforum.core.tags.ImportFileTag
+      * Class: net.jforum.core.tags.ImportResponseWrapper
+      * Class: net.jforum.util.JForumConfig
+
+Microservice 6:
+  - Service: Application Service 14
+      * Class: net.jforum.extensions.ActionExtensionManager
+      * Class: net.jforum.actions.interceptors.ExtendsAnnotationInterceptor
+
+Microservice 7:
+  - Service: Application Service 15
+      * Class: net.jforum.services.ForumService
+      * Class: net.jforum.controllers.ForumAdminController
+  - Service: Entity Service 2
+      * Class: net.jforum.repository.RSSRepository
+      * Class: net.jforum.entities.Forum
+      * Class: net.jforum.entities.Session
+      * Class: net.jforum.entities.UserSession
+      * Class: net.jforum.plugins.post.ForumLimitedTime
+
+Microservice 8:
+  - Service: Application Service 16
+      * Class: net.jforum.controllers.RecentTopicsController
+      * Class: net.jforum.security.TopicFilter
+  - Service: Entity Service 26
+      * Class: net.jforum.repository.RecentTopicsRepository
+
+Microservice 9:
+  - Service: Application Service 17
+      * Class: net.jforum.services.SmilieService
+      * Class: net.jforum.controllers.SmilieAdminController
+  - Service: Entity Service 21
+      * Class: net.jforum.entities.Smilie
+

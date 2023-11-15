@@ -1,0 +1,178 @@
+Microservice 1:
+  - Service: Application Service 1
+      * Class: net.java.cargotracker.interfaces.booking.web.CargoDetails
+      * Class: net.java.cargotracker.interfaces.booking.web.ChangeDestination
+      * Class: net.java.cargotracker.interfaces.booking.web.ListCargo
+      * Class: net.java.cargotracker.interfaces.booking.facade.BookingServiceFacade
+      * Class: net.java.cargotracker.interfaces.booking.web.ItinerarySelection
+  - Service: Application Service 5
+      * Class: net.java.cargotracker.application.BookingService
+      * Class: net.java.cargotracker.interfaces.booking.facade.internal.DefaultBookingServiceFacade
+  - Service: Entity Service 11
+      * Class: net.java.cargotracker.interfaces.booking.facade.dto.RouteCandidate
+  - Service: Entity Service 2
+      * Class: net.java.cargotracker.interfaces.booking.facade.dto.Location
+      * Class: net.java.cargotracker.interfaces.booking.facade.dto.Leg
+      * Class: net.java.cargotracker.interfaces.booking.facade.dto.CargoRoute
+  - Service: Entity Service 4
+      * Class: net.java.cargotracker.domain.model.voyage.VoyageNumber
+      * Class: net.java.cargotracker.domain.model.voyage.SampleVoyages
+      * Class: net.java.cargotracker.domain.model.voyage.Voyage
+  - Service: Entity Service 9
+      * Class: net.java.cargotracker.domain.model.voyage.CarrierMovement
+      * Class: net.java.cargotracker.domain.model.voyage.Schedule
+  - Service: Utility Service 1
+      * Class: net.java.cargotracker.domain.model.handling.UnknownVoyageException
+      * Class: net.java.cargotracker.domain.model.handling.UnknownCargoException
+      * Class: net.java.cargotracker.domain.model.handling.UnknownLocationException
+      * Class: net.java.cargotracker.domain.model.handling.CannotCreateHandlingEventException
+  - Service: Utility Service 5
+      * Class: net.java.cargotracker.interfaces.handling.HandlingEventRegistrationAttempt
+  - Service: Utility Service 6
+      * Class: net.java.cargotracker.application.util.SampleDataGenerator
+
+Microservice 2:
+  - Service: Application Service 2
+      * Class: net.java.cargotracker.application.ApplicationEvents
+      * Class: net.java.cargotracker.interfaces.handling.rest.HandlingReportService
+      * Class: net.java.cargotracker.interfaces.handling.file.EventItemWriter
+      * Class: net.java.cargotracker.infrastructure.messaging.jms.JmsApplicationEvents
+  - Service: Entity Service 1
+      * Class: net.java.cargotracker.domain.model.location.Location
+      * Class: net.java.cargotracker.domain.model.cargo.Itinerary
+      * Class: net.java.cargotracker.domain.model.cargo.TrackingId
+      * Class: net.java.cargotracker.domain.model.handling.HandlingHistory
+      * Class: net.java.cargotracker.domain.model.cargo.Delivery
+      * Class: net.java.cargotracker.domain.model.cargo.Cargo
+      * Class: net.java.cargotracker.domain.model.handling.HandlingEvent
+      * Class: net.java.cargotracker.domain.model.cargo.TransportStatus
+      * Class: net.java.cargotracker.domain.model.cargo.RouteSpecification
+      * Class: net.java.cargotracker.domain.model.cargo.HandlingActivity
+      * Class: net.java.cargotracker.domain.model.cargo.RoutingStatus
+      * Class: net.java.cargotracker.domain.model.cargo.Leg
+  - Service: Entity Service 4
+      * Class: net.java.cargotracker.domain.model.voyage.VoyageNumber
+      * Class: net.java.cargotracker.domain.model.voyage.SampleVoyages
+      * Class: net.java.cargotracker.domain.model.voyage.Voyage
+  - Service: Entity Service 9
+      * Class: net.java.cargotracker.domain.model.voyage.CarrierMovement
+      * Class: net.java.cargotracker.domain.model.voyage.Schedule
+  - Service: Utility Service 1
+      * Class: net.java.cargotracker.domain.model.handling.UnknownVoyageException
+      * Class: net.java.cargotracker.domain.model.handling.UnknownCargoException
+      * Class: net.java.cargotracker.domain.model.handling.UnknownLocationException
+      * Class: net.java.cargotracker.domain.model.handling.CannotCreateHandlingEventException
+  - Service: Utility Service 3
+      * Class: net.java.cargotracker.interfaces.handling.rest.HandlingReport
+  - Service: Utility Service 5
+      * Class: net.java.cargotracker.interfaces.handling.HandlingEventRegistrationAttempt
+  - Service: Utility Service 6
+      * Class: net.java.cargotracker.application.util.SampleDataGenerator
+
+Microservice 3:
+  - Service: Application Service 3
+      * Class: net.java.cargotracker.domain.service.RoutingService
+      * Class: net.java.cargotracker.infrastructure.routing.ExternalRoutingService
+  - Service: Entity Service 3
+      * Class: net.java.cargotracker.domain.model.voyage.VoyageRepository
+      * Class: net.java.cargotracker.infrastructure.persistence.jpa.JpaVoyageRepository
+      * Class: net.java.cargotracker.domain.model.handling.HandlingEventFactory
+  - Service: Entity Service 4
+      * Class: net.java.cargotracker.domain.model.voyage.VoyageNumber
+      * Class: net.java.cargotracker.domain.model.voyage.SampleVoyages
+      * Class: net.java.cargotracker.domain.model.voyage.Voyage
+  - Service: Entity Service 5
+      * Class: net.java.pathfinder.api.TransitEdge
+      * Class: net.java.pathfinder.api.TransitPath
+  - Service: Entity Service 6
+      * Class: net.java.cargotracker.infrastructure.persistence.jpa.JpaLocationRepository
+      * Class: net.java.cargotracker.domain.model.location.LocationRepository
+  - Service: Entity Service 7
+      * Class: net.java.cargotracker.domain.model.location.UnLocode
+      * Class: net.java.cargotracker.domain.model.location.SampleLocations
+  - Service: Entity Service 9
+      * Class: net.java.cargotracker.domain.model.voyage.CarrierMovement
+      * Class: net.java.cargotracker.domain.model.voyage.Schedule
+  - Service: Utility Service 1
+      * Class: net.java.cargotracker.domain.model.handling.UnknownVoyageException
+      * Class: net.java.cargotracker.domain.model.handling.UnknownCargoException
+      * Class: net.java.cargotracker.domain.model.handling.UnknownLocationException
+      * Class: net.java.cargotracker.domain.model.handling.CannotCreateHandlingEventException
+  - Service: Utility Service 5
+      * Class: net.java.cargotracker.interfaces.handling.HandlingEventRegistrationAttempt
+  - Service: Utility Service 6
+      * Class: net.java.cargotracker.application.util.SampleDataGenerator
+
+Microservice 4:
+  - Service: Application Service 4
+      * Class: net.java.cargotracker.application.CargoInspectionService
+      * Class: net.java.cargotracker.infrastructure.messaging.jms.CargoHandledConsumer
+
+Microservice 5:
+  - Service: Application Service 1
+      * Class: net.java.cargotracker.interfaces.booking.web.CargoDetails
+      * Class: net.java.cargotracker.interfaces.booking.web.ChangeDestination
+      * Class: net.java.cargotracker.interfaces.booking.web.ListCargo
+      * Class: net.java.cargotracker.interfaces.booking.facade.BookingServiceFacade
+      * Class: net.java.cargotracker.interfaces.booking.web.ItinerarySelection
+  - Service: Application Service 5
+      * Class: net.java.cargotracker.application.BookingService
+      * Class: net.java.cargotracker.interfaces.booking.facade.internal.DefaultBookingServiceFacade
+  - Service: Entity Service 1
+      * Class: net.java.cargotracker.domain.model.location.Location
+      * Class: net.java.cargotracker.domain.model.cargo.Itinerary
+      * Class: net.java.cargotracker.domain.model.cargo.TrackingId
+      * Class: net.java.cargotracker.domain.model.handling.HandlingHistory
+      * Class: net.java.cargotracker.domain.model.cargo.Delivery
+      * Class: net.java.cargotracker.domain.model.cargo.Cargo
+      * Class: net.java.cargotracker.domain.model.handling.HandlingEvent
+      * Class: net.java.cargotracker.domain.model.cargo.TransportStatus
+      * Class: net.java.cargotracker.domain.model.cargo.RouteSpecification
+      * Class: net.java.cargotracker.domain.model.cargo.HandlingActivity
+      * Class: net.java.cargotracker.domain.model.cargo.RoutingStatus
+      * Class: net.java.cargotracker.domain.model.cargo.Leg
+  - Service: Entity Service 10
+      * Class: net.java.cargotracker.infrastructure.persistence.jpa.JpaHandlingEventRepository
+      * Class: net.java.cargotracker.domain.model.handling.HandlingEventRepository
+  - Service: Entity Service 3
+      * Class: net.java.cargotracker.domain.model.voyage.VoyageRepository
+      * Class: net.java.cargotracker.infrastructure.persistence.jpa.JpaVoyageRepository
+      * Class: net.java.cargotracker.domain.model.handling.HandlingEventFactory
+  - Service: Entity Service 8
+      * Class: net.java.cargotracker.infrastructure.persistence.jpa.JpaCargoRepository
+      * Class: net.java.cargotracker.domain.model.cargo.CargoRepository
+  - Service: Utility Service 2
+      * Class: net.java.cargotracker.interfaces.booking.facade.internal.assembler.CargoRouteDtoAssembler
+      * Class: net.java.cargotracker.interfaces.booking.facade.internal.assembler.ItineraryCandidateDtoAssembler
+      * Class: net.java.cargotracker.interfaces.booking.facade.internal.assembler.LocationDtoAssembler
+
+Microservice 6:
+  - Service: Application Service 6
+      * Class: net.java.cargotracker.interfaces.tracking.web.Track
+  - Service: Entity Service 10
+      * Class: net.java.cargotracker.infrastructure.persistence.jpa.JpaHandlingEventRepository
+      * Class: net.java.cargotracker.domain.model.handling.HandlingEventRepository
+  - Service: Entity Service 8
+      * Class: net.java.cargotracker.infrastructure.persistence.jpa.JpaCargoRepository
+      * Class: net.java.cargotracker.domain.model.cargo.CargoRepository
+  - Service: Utility Service 7
+      * Class: net.java.cargotracker.interfaces.tracking.web.CargoTrackingViewAdapter
+
+Microservice 7:
+  - Service: Application Service 7
+      * Class: net.java.cargotracker.interfaces.handling.file.EventItemReader
+  - Service: Utility Service 4
+      * Class: net.java.cargotracker.interfaces.handling.file.EventLineParseException
+  - Service: Utility Service 8
+      * Class: net.java.cargotracker.interfaces.handling.file.EventFilesCheckpoint
+
+Microservice 8:
+  - Service: Application Service 8
+      * Class: net.java.cargotracker.application.HandlingEventService
+
+Microservice 9:
+  - Service: Application Service 9
+      * Class: net.java.pathfinder.api.GraphTraversalService
+  - Service: Entity Service 12
+      * Class: net.java.pathfinder.internal.GraphDao
+

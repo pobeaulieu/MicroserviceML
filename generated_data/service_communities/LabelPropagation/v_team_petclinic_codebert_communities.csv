@@ -1,0 +1,20 @@
+class_name,service
+org.springframework.samples.petclinic.owner.PetController,Application Service 1
+org.springframework.samples.petclinic.owner.OwnerController,Application Service 2
+org.springframework.samples.petclinic.owner.PetValidator,Application Service 3
+org.springframework.samples.petclinic.vet.VetController,Application Service 4
+org.springframework.samples.petclinic.owner.VisitController,Application Service 5
+org.springframework.samples.petclinic.model.Person,Entity Service 1
+org.springframework.samples.petclinic.owner.PetType,Entity Service 1
+org.springframework.samples.petclinic.model.BaseEntity,Entity Service 1
+org.springframework.samples.petclinic.owner.Visit,Entity Service 1
+org.springframework.samples.petclinic.vet.Vet,Entity Service 1
+org.springframework.samples.petclinic.vet.Specialty,Entity Service 1
+org.springframework.samples.petclinic.owner.Owner,Entity Service 1
+org.springframework.samples.petclinic.vet.Vets,Entity Service 1
+org.springframework.samples.petclinic.model.NamedEntity,Entity Service 1
+org.springframework.samples.petclinic.owner.Pet,Entity Service 1
+org.springframework.samples.petclinic.vet.VetRepository,Entity Service 2
+org.springframework.samples.petclinic.owner.OwnerRepository,Entity Service 3
+org.springframework.samples.petclinic.system.CrashController,Utility Service 1
+org.springframework.samples.petclinic.owner.PetTypeFormatter,Utility Service 2
