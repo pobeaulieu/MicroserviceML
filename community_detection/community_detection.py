@@ -64,7 +64,7 @@ class CommunityDetection:
             communities_reindexed = list(nx.community.label_propagation_communities(subgraph_reindexed))
         else:
             # If the graph is disconnected and the algorithm is Infomap or FastGreedy, skip the algorithm.
-            if (not nx.is_connected(subgraph_reindexed) and (algorithm == 'Infomap' or algorithm == 'FastGreedy' or algorithm == 'Leiden')):
+            if (not nx.is_connected(subgraph_reindexed) and (algorithm == 'Infomap' or algorithm == 'FastGreedy' or algorithm == 'Leiden' or algorithm == 'Walktrap')):
                 print(f"Graph is disconnected. Skipping {algorithm}.")
                 return [[inverse_mapping[node]] for node in subgraph_reindexed.nodes()]  # Treat each node as its own community
             else:
