@@ -1,6 +1,7 @@
 import skfuzzy as fuzz
 import matplotlib.pyplot as plt
 from config.constants import FUZZINESS, ERROR_THRESHOLD, MAX_ITERATIONS
+from helpers.optimization_helpers import detect_elbow
 
 
 def fuzzy_cmeans_clustering(data, node_labels, optimal_clusters):
@@ -45,6 +46,7 @@ def determine_optimal_clusters(data, cluster_range):
         )
         fpc_values.append(fpc)
 
+    # Plotting the FPC values - this can be optional based on your need
     plt.figure()
     plt.plot(cluster_range, fpc_values)
     plt.title('Fuzzy Partition Coefficient (FPC) for different cluster numbers')
@@ -52,3 +54,8 @@ def determine_optimal_clusters(data, cluster_range):
     plt.ylabel('FPC')
     plt.grid(True)
     plt.show()
+
+    # Using the detect_elbow function to find the optimal number of clusters
+    elbow_index = detect_elbow(fpc_values)
+    optimal_clusters = cluster_range[elbow_index]
+    return optimal_clusters
