@@ -1,0 +1,2 @@
+Model,Microservice Ground Truth Count,Microservice Generated Count,TP,FP,FN,Precision,Recall,F-measure
+custom_cmeans,43,23,1,22,42,0.043478260869565216,0.023255813953488372,0.030303030303030304
