@@ -1,4 +1,12 @@
 
+# function `clone_and_prepare_src_code`
+## Params: 
+- Github url to github repos
+
+## Returns
+
+- Boolean (True = succes, False = error)
+
 # function `execute_phase_1`
 ## Params: 
 - Enum embeding model
@@ -18,13 +26,13 @@ JSON
 }
 ```
 
-# fonction `execute_phase_2` 
+# function `execute_phase_2` 
 ## Params: 
 - JSON returned from execute_phase_1
 - Enum phase 2 model
 
 ## Returns
-JSON 
+- JSON 
 
 ```
 {
@@ -69,7 +77,7 @@ JSON
 }
 ```
 
-# Function `execute_phase_3` 
+# function `execute_phase_3` 
 ## Params: 
 - JSON returned from execute_phase_2
 - Enum model phase 3
