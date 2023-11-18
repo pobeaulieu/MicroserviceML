@@ -61,7 +61,7 @@ def write_embeddings_to_csv(version, system, model_type, class_embeddings, class
 # class_embeddings = {'class1': [0.5, 0.5], 'class2': [0.7, 0.3]}
 # save_embeddings_to_csv('v1', 'system1', 'modelA', class_embeddings)  # This will default all labels to -1
 
-def create_class_embeddings_for_system(version, system, model_type, model, tokenizer, isPipeline = False):
+def create_class_embeddings_for_system(system, model_type, model, tokenizer, isPipeline = False):
     """
     Creates embeddings for all classes in a system.
 
