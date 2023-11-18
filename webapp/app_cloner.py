@@ -6,7 +6,7 @@ from datetime import datetime
 import shutil
 import subprocess
   
-app = Flask(__name__)
+app = Flask(__name__, static_url_path='/static')
 
 @app.route('/')
 def index():
@@ -45,9 +45,9 @@ def copy_and_execute_script(repo_folder):
 
 
 @app.route('/pipeline', methods=['POST'])
-def pipeline_executed():
+def pipeline():
     repo_url = request.form.get('repo_url')
-
+    
     # Create a timestamped folder within 'src_code' for each cloned repository
     timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
     destination = os.path.join('src_code', timestamp)
