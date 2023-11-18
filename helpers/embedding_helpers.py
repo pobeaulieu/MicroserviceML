@@ -61,7 +61,7 @@ def write_embeddings_to_csv(version, system, model_type, class_embeddings, class
 # class_embeddings = {'class1': [0.5, 0.5], 'class2': [0.7, 0.3]}
 # save_embeddings_to_csv('v1', 'system1', 'modelA', class_embeddings)  # This will default all labels to -1
 
-def create_class_embeddings_for_system(version, system, model_type, model, tokenizer):
+def create_class_embeddings_for_system(version, system, model_type, model, tokenizer, isPipeline = False):
     """
     Creates embeddings for all classes in a system.
 
@@ -72,7 +72,7 @@ def create_class_embeddings_for_system(version, system, model_type, model, token
     :return: Dictionary containing embeddings for each class.
     """
     # If embeddings already exist, load them from CSV, skip the rest
-    class_code = load_class_code_from_directory(system)
+    class_code = load_class_code_from_directory(system, isPipeline)
     if model_type == "word2vec":
         class_embeddings = {class_name: generate_word_embeddings_for_java_code(code, model, tokenizer) for class_name, code in class_code.items()}
     else:
