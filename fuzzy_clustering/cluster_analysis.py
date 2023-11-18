@@ -60,11 +60,9 @@ def calculate_overlap(cluster_a, cluster_b):
 def merge_overlapping_clusters(cluster_assignments, overlap_threshold=0.5):
     """
     Merge clusters that have significant overlap in services, and then renumber clusters sequentially.
-
     Parameters:
     - cluster_assignments (dict): A dictionary mapping services to their cluster memberships.
     - overlap_threshold (float): Threshold to determine significant overlap.
-
     Returns:
     - dict: Updated cluster assignments after merging overlapping clusters and renumbering.
     """
@@ -99,6 +97,11 @@ def merge_overlapping_clusters(cluster_assignments, overlap_threshold=0.5):
     # Step 4: Renumber clusters sequentially
     cluster_renumbering_map = {original: new for new, original in enumerate(sorted(cluster_service_map), start=1)}
 
+    # Add a check for any missing cluster IDs
+    all_cluster_ids = set(range(1, max(cluster_service_map.keys()) + 1))
+    for missing_id in all_cluster_ids - set(cluster_renumbering_map.keys()):
+        cluster_renumbering_map[missing_id] = missing_id
+
     # Step 5: Update and consolidate cluster memberships
     updated_cluster_assignments = {}
     for service, memberships in cluster_assignments.items():
@@ -106,7 +109,8 @@ def merge_overlapping_clusters(cluster_assignments, overlap_threshold=0.5):
         for cluster_name, membership in memberships:
             cluster_id = int(cluster_name[7:])
             merged_cluster_id = final_merges.get(cluster_id, cluster_id)
-            new_cluster_id = cluster_renumbering_map[merged_cluster_id]
+            # Use get method to avoid KeyError
+            new_cluster_id = cluster_renumbering_map.get(merged_cluster_id, merged_cluster_id)
             updated_cluster_name = f"cluster{new_cluster_id}"
             updated_memberships[updated_cluster_name] = max(updated_memberships.get(updated_cluster_name, 0), membership)
         updated_cluster_assignments[service] = list(updated_memberships.items())
