@@ -1,14 +1,15 @@
-import interface
-from typing import List, Dict, Union
 
-class MockImplementation(interface.MicroMinerInterface):
-    def clone_and_prepare_src_code(self, github_url: str) -> bool:
-        print(f"Mock: Cloning and preparing source code from {github_url}")
+from typing import List, Dict, Union
+import time 
+
+class MockImplementation():
+    def clone_and_prepare_src_code(self) -> bool:
         # Simulate successful operation
         return True
 
-    def execute_phase_1(self, embedding_model: str, ml_model: str, src_code_path: str) -> Dict[str, List[Dict[str, str]]]:
-        print(f"Mock: Executing Phase 1 with embedding_model={embedding_model}, ml_model={ml_model}, src_code_path={src_code_path}")
+    def execute_phase_1(self) -> Dict[str, List[Dict[str, str]]]:
+        # Sleep for 2 seconds
+        #time.sleep(2)
         # Simulate phase 1 result
         return {
             "applicationClasses": [
@@ -17,9 +18,9 @@ class MockImplementation(interface.MicroMinerInterface):
             ]
         }
 
-    def execute_phase_2(self, phase1_result: Dict[str, List[Dict[str, str]]], phase2_model: str) -> Dict[str, Union[Dict[str, List[Dict[str, str]]], Dict[str, List[Dict[str, str]]]]]:
-        print(f"Mock: Executing Phase 2 with phase1_result={phase1_result}, phase2_model={phase2_model}")
+    def execute_phase_2(self) -> Dict[str, Union[Dict[str, List[Dict[str, str]]], Dict[str, List[Dict[str, str]]]]]:
         # Simulate phase 2 result
+        #time.sleep(2)
         return {
             "applicationServices": {
                 "service": [
@@ -45,9 +46,9 @@ class MockImplementation(interface.MicroMinerInterface):
             }
         }
 
-    def execute_phase_3(self, phase2_result: Dict[str, Union[Dict[str, List[Dict[str, str]]], Dict[str, List[Dict[str, str]]]]], phase3_model: str) -> Dict[str, Dict[str, Dict[str, List[Dict[str, str]]]]]:
-        print(f"Mock: Executing Phase 3 with phase2_result={phase2_result}, phase3_model={phase3_model}")
+    def execute_phase_3(self)-> Dict[str, Dict[str, Dict[str, List[Dict[str, str]]]]]:
         # Simulate phase 3 result
+        #time.sleep(2)
         return {
             "microservices": {
                 "microservice": {

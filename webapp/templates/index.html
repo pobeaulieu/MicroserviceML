@@ -15,76 +15,75 @@
             <h1>MicroMiner</h1>
             <h2>Tool for Microservice Generation!</h2>
         </header>
-
-        <label for="repo_url">GitHub URL to monolith (public repository only):</label>
-        <input type="text" id="repo_url" name="repo_url" required>
-        <br>
-
-        <!-- File Selector for Call Graph -->
-        <label for="call_graph_file">Choose a call graph file:</label>
-        <input type="file" id="call_graph_file" name="call_graph_file" accept=".txt">
-        <br>
-
-        <button type="submit">Generate Microservices</button>
+        <form id="main_form">
+            <label for="repo_url">GitHub URL to monolith (public repository only):</label>
+            <input type="text" id="repo_url" name="repo_url" required>
+            <br>
+            <!-- File Selector for Call Graph -->
+            <label for="call_graph_file">Choose a call graph file:</label>
+            <input type="file" id="call_graph_file" name="call_graph_file" accept=".txt">
+            <br>
+        </form>
+        <button type="submit" id="genms" onclick="submitForm(event)">Generate Microservices</button>
 
     </div>
 
     <main>
-        <!-- Phase 1 Model Dropdown -->
-        <h5>Phase 1: Class typing</h5>
+        <form id="optionnal_params">
+            <!-- Phase 1 Model Dropdown -->
+            <h5>Phase 1: Class typing</h5>
 
-        <label for="phase1_model_llm">LLM (semantic code analysis):</label>
-        <select id="phase1_model_llm" name="phase1_model_llm">
-            <option value="ft_codebert">FT Codebert</option>
-            <option value="word2vec">Word2Vec</option>
-            <option value="albert">Albert</option>
-            <option value="codebert">Codebert</option>
-            <option value="roberta">Roberta</option>
-            <option value="bert">Bert</option>
-        </select>
+            <label for="phase1_model_llm">LLM (semantic code analysis):</label>
+            <select id="phase1_model_llm" name="phase1_model_llm">
+                <option value="ft_codebert">FT Codebert</option>
+                <option value="word2vec">Word2Vec</option>
+                <option value="albert">Albert</option>
+                <option value="codebert">Codebert</option>
+                <option value="roberta">Roberta</option>
+                <option value="bert">Bert</option>
+            </select>
 
-        <!-- Phase 1 Model Dropdown -->
-        <label for="phase1_model_ml">ML model:</label>
-        <select id="phase1_model_ml" name="phase1_model_ml">
-            <option value="svm">SVM</option>
-            <option value="knn">KNN</option>
-            <option value="decision_tree">Decision Tree</option>
-            <option value="logistic_regression">Logistic Regression</option>
-            <option value="naive_bayes">Naive Bayes</option>
-            <option value="ensemble">Ensemble</option>
-        </select>
+            <!-- Phase 1 Model Dropdown -->
+            <label for="phase1_model_ml">ML model:</label>
+            <select id="phase1_model_ml" name="phase1_model_ml">
+                <option value="svm">SVM</option>
+                <option value="knn">KNN</option>
+                <option value="decision_tree">Decision Tree</option>
+                <option value="logistic_regression">Logistic Regression</option>
+                <option value="naive_bayes">Naive Bayes</option>
+                <option value="ensemble">Ensemble</option>
+            </select>
 
-        <br>
+            <br>
 
-        <h5>Phase 2: Typed Service Identification</h5>
-        <!-- Phase 2 Model Dropdown -->
-        <label for="phase2_model">Clustering algorithm:</label>
-        <select id="phase2_model" name="phase2_model">
-            <option value="Louvain">Louvain</option>
-            <option value="Infomap">Infomap</option>
-            <option value="LabelPropagation">Label Propagation</option>
-            <option value="FastGreedy">Fast Greedy</option>
-            <option value="GirvanNewman">Girvan Newman</option>
-            <option value="Leiden">Leiden</option>
-            <option value="Walktrap">Walktrap</option>
-        </select>
-        <br>
+            <h5>Phase 2: Typed Service Identification</h5>
+            <!-- Phase 2 Model Dropdown -->
+            <label for="phase2_model">Clustering algorithm:</label>
+            <select id="phase2_model" name="phase2_model">
+                <option value="Louvain">Louvain</option>
+                <option value="Infomap">Infomap</option>
+                <option value="LabelPropagation">Label Propagation</option>
+                <option value="FastGreedy">Fast Greedy</option>
+                <option value="GirvanNewman">Girvan Newman</option>
+                <option value="Leiden">Leiden</option>
+                <option value="Walktrap">Walktrap</option>
+            </select>
+            <br>
 
-        <h5>Phase 3: Microservice Generation</h5>
-        <!-- Phase 3 Model Dropdown -->
-        <!-- Optional Number of Microservices Parameter -->
-        <label for="num_microservices">Number of Microservices:</label>
-        <input type="number" id="num_microservices" name="num_microservices" min="1" placeholder="Automatic">
-        <label for="phase3_model">Clustering algorithm:</label>
-        <select id="phase3_model" name="phase3_model">
-            <option value="cmeans">C-Means</option>
-            <option value="custom_cmeans">Custom C-Means</option>
-            <option value="hierarchical">Hierarchical</option>
-        </select>
-
-        <div id="spinner"></div>
-        <p id="status"></p>
+            <h5>Phase 3: Microservice Generation</h5>
+            <!-- Phase 3 Model Dropdown -->
+            <!-- Optional Number of Microservices Parameter -->
+            <label for="num_microservices">Number of Microservices:</label>
+            <input type="number" id="num_microservices" name="num_microservices" min="1" placeholder="Automatic">
+            <label for="phase3_model">Clustering algorithm:</label>
+            <select id="phase3_model" name="phase3_model">
+                <option value="cmeans">C-Means</option>
+                <option value="custom_cmeans">Custom C-Means</option>
+                <option value="hierarchical">Hierarchical</option>
+            </select>
+        </form>
     </main>
+
     <script src="/static/client.js"></script>
 </body>
 

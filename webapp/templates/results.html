@@ -1,0 +1,39 @@
+<!-- templates/result.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Result</title>
+    <link rel="stylesheet" href='/static/style.css' />
+</head>
+
+<div class="bodyResult">
+    <div>
+        <div class= "result_box">
+            <h5>Results for phase 1: Class typing</h5>
+            <p>Model (LLM): {{ phase1_model_llm }}</p>
+            <p>Model (ML): {{ phase1_model_ml }}</p>
+            <p>Result 1: {{ result1 }}</p>
+
+        </div>
+         <div class= "result_box">
+            <h5>Results for phase 2: Typed Service Identification</h5>
+            <p>Model: {{ phase2_model }}</p>
+            <p>Result 2: {{ result2 }}</p>
+        </div >
+    
+    
+        <div class= "result_box">
+            <h5>Results for phase 3: Microservice Generatioon</h5>
+            <p>Number of Microservices: {{ num_microservices }}</p>
+            <p>Model: {{ phase3_model }}</p>
+            <p>Result 3: {{ result3 }}</p>
+        </div>
+    </div>
+
+</div>
+
+</html>
