@@ -26,6 +26,14 @@ class Phase1Model(Enum):
     roberta = 5
     bert = 6
 
+# Create enum for phase 1 classifier model (svm, knn, decision_tree, logistic_regression, naives_bayes)
+class Phase1ClassifierModel(Enum):
+    svm = 1
+    knn = 2
+    decision_tree = 3
+    logistic_regression = 4
+    naives_bayes = 5
+
 # Create enum for phase 2 model (Louvain, Infomap, LabelPropagation, FastGreedy, GirvanNewman, Leiden, Walktrap)
 class Phase2Model(Enum):
     Louvain = 1
@@ -35,6 +43,9 @@ class Phase2Model(Enum):
     GirvanNewman = 5
     Leiden = 6
     Walktrap = 7
+
+class Phase2EmbeddingsModel(Enum):
+    word2vec = 1
 
 # Create enum for phase 3 model (cmeans, custom_cmeans, hierarchical)
 class Phase3Model(Enum):
