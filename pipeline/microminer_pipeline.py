@@ -1,4 +1,4 @@
-import interface
+from pipeline import interface
 from typing import List, Dict, Union
 
 # from config.device_setup import set_device
@@ -17,7 +17,6 @@ from typing import List, Dict, Union
 
 
 class MicroMinerPipeline(interface.MicroMinerInterface):
-
     # # Phase 1 attributes
     # embeddings_model_name_phase_3 = "bert"
     # classification_model_name = "svm"
@@ -40,6 +39,7 @@ class MicroMinerPipeline(interface.MicroMinerInterface):
         raise NotImplementedError("This method must be implemented by the subclass.")
 
     def execute_phase_1(self) -> Dict[str, List[Dict[str, str]]]:
+        print("Phase 1 is working !")
         # tokenizer, model = select_model_and_tokenizer(embedding_model)
         # model = model.to(set_device())
 
@@ -53,7 +53,12 @@ class MicroMinerPipeline(interface.MicroMinerInterface):
 
         # # TODO : Format data and return in the good format
         
-        raise NotImplementedError("This method must be implemented by the subclass.")
+        return {
+            "applicationClasses": [
+                {"className": "x"},
+                {"className": "x"}
+            ]
+        }
 
     def execute_phase_2(self) -> Dict[str, Union[Dict[str, List[Dict[str, str]]], Dict[str, List[Dict[str, str]]]]]:
         
