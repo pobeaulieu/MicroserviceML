@@ -16,12 +16,12 @@ system_names = [system.name for system in System]
 # PHASE 1: CLASS TYPING
 ####################################################################################################
 
-def run_class_typing(training_systems, version, test_system, model_type, selected_classifier):
+def run_class_typing(version, test_system, training_systems, model_type, selected_classifier):
     tokenizer, model = select_model_and_tokenizer(model_type)
     model = model.to(set_device())
 
     # Flag to check if test_system is also used for training
-    is_test_system_in_training = test_system in training_systems
+    is_test_system_in_training = any(ts in training_systems for ts in test_system)
 
     # Create embeddings and ground truth labels
     for system in training_systems:
