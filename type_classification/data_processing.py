@@ -55,6 +55,9 @@ def resample_training_data(Xtrain, ytrain):
     threshold = 0.7  # 70% of the mean_count
     classes_to_resample = {cls: int(mean_count) for cls, count in class_freq.items() if count < mean_count * threshold}
 
+    # make sure there are at least 2 instances of each class to resample
+    classes_to_resample = {cls: count for cls, count in classes_to_resample.items() if count > 1}
+
     # Apply SMOTE
     if classes_to_resample:
         sm = SMOTE(sampling_strategy=classes_to_resample, k_neighbors=1, random_state=42)
