@@ -16,13 +16,13 @@ import math
 # PHASE 3: MICROSERVICE IDENTIFICATION
 ####################################################################################################
 
-def run_microservice_identification(version, system, phase1_model, phase2_model, phase3_model):
+def run_microservice_identification(version, system, phase2_embedding_model, phase2_clustering_model, phase3_model):
     filename = f"generated_data/graphs/service/{version}_{system}_service_graph.csv"
 
     # Load the data from CSV files
-    communities_df = pd.read_csv(f"generated_data/service_communities/{phase2_model}/{version}_{system}_{phase1_model}_communities.csv")
+    communities_df = pd.read_csv(f"generated_data/service_communities/{phase2_clustering_model}/{version}_{system}_{phase2_embedding_model}_communities.csv")
     class_graph_df = pd.read_csv(f"generated_data/graphs/class/{version}_{system}_class_graph.csv")
-    embeddings_df = pd.read_csv(f"generated_data/class_embeddings/{version}_{system}_{phase1_model}_embeddings.csv")
+    embeddings_df = pd.read_csv(f"generated_data/class_embeddings/{version}_{system}_{phase2_embedding_model}_embeddings.csv")
 
     # Extract class names and their embeddings from the embeddings DataFrame
     class_names = embeddings_df.iloc[:, 0].str.split(';', expand=True)[0]
@@ -88,8 +88,8 @@ def run_microservice_identification(version, system, phase1_model, phase2_model,
 
     # Save the clusters to .txt and .csv files
     save_microservices_to_txt(clusters, communities_df, 
-                           f"generated_data/microservice_clusters/{phase3_model}/{version}_{system}_{phase2_model}_microservices.txt")
+                           f"generated_data/microservice_clusters/{phase3_model}/{version}_{system}_{phase2_clustering_model}_microservices.txt")
     save_microservices_to_csv(clusters, communities_df, 
-                           f"generated_data/microservice_clusters/{phase3_model}/{version}_{system}_{phase2_model}_microservices.csv")
+                           f"generated_data/microservice_clusters/{phase3_model}/{version}_{system}_{phase2_clustering_model}_microservices.csv")
     
-    generate_microservices_clustering_results([phase3_model], phase2_model, phase1_model, version, system, matching_threshold=0.8)
+    generate_microservices_clustering_results([phase3_model], phase2_clustering_model, phase2_embedding_model, version, system, matching_threshold=0.8)

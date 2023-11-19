@@ -1,10 +1,7 @@
 import os
 
-def load_class_code_from_directory(system_path, is_full_path = False):
-    if not is_full_path:
-        root_folder = './src_code/' + system_path + '/src_code_formatted/'
-    else:
-        root_folder = system_path
+def load_class_code_from_directory(system):
+    root_folder = f"./src_code/{system}/src_code_formatted/"
 
     def read_java_file(file_path):
         with open(file_path, encoding="ISO-8859-1", errors="ignore") as java_file:

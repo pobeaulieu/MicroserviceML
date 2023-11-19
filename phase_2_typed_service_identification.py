@@ -4,18 +4,32 @@ from common.visualization import visualize_class_distance_heatmap
 from common.normalization import filter_and_normalize_distances
 from community_detection.community_tuning import fine_tune_all_services
 from helpers.results_helpers import generate_services_clustering_results
-from helpers.embedding_helpers import load_embeddings_from_csv
+from helpers.embedding_helpers import load_embeddings_from_csv, write_embeddings_to_csv, create_class_embeddings_for_system
 import networkx as nx
 from community_detection.community_detection import CommunityDetection
 from common.utils import load_call_graph
+import os
+from config.device_setup import set_device
+from embedding.embedding_model import select_model_and_tokenizer
+
 
 ####################################################################################################
 # PHASE 2: TYPE-BASED SERVICE CLUSTERING
 ####################################################################################################
 
-def run_typed_service_identification(version, system, phase1_model, phase2_model):
-    filename = f"generated_data/class_embeddings/{version}_{system}_{phase1_model}_embeddings.csv"
+def run_typed_service_identification(version, system, phase2_embedding_model, phase2_clustering_model):
+    filename = f"generated_data/class_embeddings/{version}_{system}_{phase2_embedding_model}_embeddings.csv"
 
+    tokenizer, model = select_model_and_tokenizer(phase2_embedding_model)
+    model = model.to(set_device())
+
+    # if embeddings are already generated, load them from CSV, else generate them
+    if not os.path.exists(filename):
+        # Generate embeddings
+        print(f"Generating embeddings for {system}...")
+        class_embeddings = create_class_embeddings_for_system(system, phase2_embedding_model, model, tokenizer, is_phase2=True)
+        write_embeddings_to_csv(version, system, phase2_embedding_model, class_embeddings)
+    
     class_names, class_labels, class_embeddings = load_embeddings_from_csv(filename)
     class_labels_dict, class_embeddings_dict = dict(zip(class_names, class_labels)), dict(zip(class_names, class_embeddings))
     static_df = load_call_graph(system)
@@ -41,12 +55,12 @@ def run_typed_service_identification(version, system, phase1_model, phase2_model
     # Fine-tuning clusters using static distance
     distances = [(row['class1'], row['class2'], row['static_distance']) for _, row in class_graph.iterrows()]  # OR other distances
 
-    print(f"Running {phase2_model} algorithm...")
+    print(f"Running {phase2_clustering_model} algorithm...")
     
     communities = {
-        'Application': cd.detect_communities('Application', phase2_model),
-        'Entity': cd.detect_communities('Entity', phase2_model),
-        'Utility': cd.detect_communities('Utility', phase2_model)
+        'Application': cd.detect_communities('Application', phase2_clustering_model),
+        'Entity': cd.detect_communities('Entity', phase2_clustering_model),
+        'Utility': cd.detect_communities('Utility', phase2_clustering_model)
     }
 
     fine_tuned_communities = {
@@ -58,6 +72,6 @@ def run_typed_service_identification(version, system, phase1_model, phase2_model
     for label_type, services in fine_tuned_communities.items():
         print_communities(label_type, services)
 
-    save_communities_to_csv(fine_tuned_communities, version, system, phase1_model, phase2_model)
-    generate_services_clustering_results([phase2_model], phase1_model, version, system, matching_threshold= 0.8)
+    save_communities_to_csv(fine_tuned_communities, version, system, phase2_embedding_model, phase2_clustering_model)
+    generate_services_clustering_results([phase2_clustering_model], phase2_clustering_model, version, system, matching_threshold= 0.8)
 
