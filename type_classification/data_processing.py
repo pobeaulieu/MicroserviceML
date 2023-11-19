@@ -12,20 +12,24 @@ def aggregate_training_data(version, model_type, training_systems, test_system=N
         filename = f"./generated_data/class_embeddings/{version}_{system}_{model_type}_embeddings.csv"
         class_names, labels, embeddings = load_embeddings_from_csv(filename)
 
+        # Filter out classes with label -1
+        filtered_data = [(cn, lbl, emb) for cn, lbl, emb in zip(class_names, labels, embeddings) if lbl != -1]
+        filtered_class_names, filtered_labels, filtered_embeddings = zip(*filtered_data)
+
         # Check if the system is the test_system and split data if needed
         if system == test_system:
-            split_index = int(0.8 * len(embeddings))  # 80% for training
-            training_embeddings.extend(embeddings[:split_index])
-            training_labels.extend(labels[:split_index])
-            training_class_names.extend(class_names[:split_index])
+            split_index = int(0.8 * len(filtered_embeddings))  # 80% for training
+            training_embeddings.extend(filtered_embeddings[:split_index])
+            training_labels.extend(filtered_labels[:split_index])
+            training_class_names.extend(filtered_class_names[:split_index])
 
-            test_embeddings.extend(embeddings[split_index:])
-            test_labels.extend(labels[split_index:])
-            test_class_names.extend(class_names[split_index:])
+            test_embeddings.extend(filtered_embeddings[split_index:])
+            test_labels.extend(filtered_labels[split_index:])
+            test_class_names.extend(filtered_class_names[split_index:])
         else:
-            training_embeddings.extend(embeddings)
-            training_labels.extend(labels)
-            training_class_names.extend(class_names)
+            training_embeddings.extend(filtered_embeddings)
+            training_labels.extend(filtered_labels)
+            training_class_names.extend(filtered_class_names)
 
     Xtrain = np.array(training_embeddings)
     ytrain = np.array(training_labels)
@@ -36,38 +40,10 @@ def aggregate_training_data(version, model_type, training_systems, test_system=N
 
 
 def prepare_training_data(version, model_type, training_systems, test_system=None):
-    Xtrain, ytrain, training_class_names, Xtest, ytest, _ = aggregate_training_data(version, model_type, training_systems, test_system)
-    Xtrain, ytrain = ensure_minimum_class_instances(Xtrain, ytrain, training_class_names)
+    Xtrain, ytrain, _, Xtest, ytest, _ = aggregate_training_data(version, model_type, training_systems, test_system)
     Xtrain, ytrain = resample_training_data(Xtrain, ytrain)
     return Xtrain, ytrain, Xtest, ytest
 
-
-def ensure_minimum_class_instances(Xtrain: np.ndarray, ytrain: np.ndarray, labels: list) -> (np.ndarray, np.ndarray):
-    """
-    Ensures that there are at least two instances of each class in the training data.
-
-    :param Xtrain: The training data embeddings.
-    :param ytrain: The training data labels.
-    :param labels: A list of all unique labels/classes in the dataset.
-    :return: Modified training data and labels.
-    """
-    unique_classes = set(labels)
-    for cls in unique_classes:
-        cls_indices = [i for i, x in enumerate(labels) if x == cls]
-
-        # If there are no instances in the training set, add two instances if available, otherwise add one
-        if cls not in ytrain:
-            indices_to_add = cls_indices[:2]  # Take the first two indices or less
-            for idx in indices_to_add:
-                Xtrain = np.vstack([Xtrain, Xtrain[idx]])
-                ytrain = np.append(ytrain, cls)
-        # If there is only one instance, add one more if available
-        elif np.count_nonzero(ytrain == cls) == 1 and len(cls_indices) > 1:
-            second_instance_idx = cls_indices[1]
-            Xtrain = np.vstack([Xtrain, Xtrain[second_instance_idx]])
-            ytrain = np.append(ytrain, cls)
-
-    return Xtrain, ytrain
 
 
 def resample_training_data(Xtrain, ytrain):
