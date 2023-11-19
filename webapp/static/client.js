@@ -13,6 +13,10 @@ document.addEventListener('DOMContentLoaded', function () {
 function submitForm(event) {
     event.preventDefault();
 
+    // Show modal
+    document.getElementById('modal').style.display = 'flex';
+
+      
     // Get form data for the main form
     var mainForm = new FormData(document.getElementById('main_form'));
 

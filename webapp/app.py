@@ -3,6 +3,9 @@ from flask import Flask, render_template, request, redirect, url_for
 import sys
 from pipeline.mock import MockImplementation
 from pipeline.interface import MicroMinerInterface
+import os
+
+
 app = Flask(__name__)
 
 @app.route('/')
@@ -42,4 +45,5 @@ def pipeline():
                            result3=result3)
                            
 if __name__ == '__main__':
-    app.run(debug=True)
+    port = int(os.environ.get('PORT', 5001))
+    app.run(debug=True, port=port, host='0.0.0.0')

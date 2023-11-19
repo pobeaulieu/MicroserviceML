@@ -9,7 +9,7 @@ class MockImplementation():
 
     def execute_phase_1(self) -> Dict[str, List[Dict[str, str]]]:
         # Sleep for 2 seconds
-        #time.sleep(2)
+        time.sleep(3)
         # Simulate phase 1 result
         return {
             "applicationClasses": [
