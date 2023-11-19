@@ -39,13 +39,6 @@ def aggregate_training_data(version, model_type, training_systems, test_system=N
     return Xtrain, ytrain, training_class_names, Xtest, ytest, test_class_names
 
 
-def prepare_training_data(version, model_type, training_systems, test_system=None):
-    Xtrain, ytrain, _, Xtest, ytest, _ = aggregate_training_data(version, model_type, training_systems, test_system)
-    Xtrain, ytrain = resample_training_data(Xtrain, ytrain)
-    return Xtrain, ytrain, Xtest, ytest
-
-
-
 def resample_training_data(Xtrain, ytrain):
     # Calculate class frequencies and mean frequency
     class_freq = Counter(ytrain)
@@ -63,6 +56,12 @@ def resample_training_data(Xtrain, ytrain):
         sm = SMOTE(sampling_strategy=classes_to_resample, k_neighbors=1, random_state=42)
         Xtrain, ytrain = sm.fit_resample(Xtrain, ytrain)
     return Xtrain, ytrain
+
+
+def prepare_training_data(version, model_type, training_systems, test_system=None):
+    Xtrain, ytrain, _, Xtest, ytest, _ = aggregate_training_data(version, model_type, training_systems, test_system)
+    Xtrain, ytrain = resample_training_data(Xtrain, ytrain)
+    return Xtrain, ytrain, Xtest, ytest
 
 
 def balance_class_distribution(Xtrain, ytrain, Xtest, ytest):
