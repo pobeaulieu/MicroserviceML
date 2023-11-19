@@ -21,7 +21,7 @@ def run_class_typing(version, test_system, training_systems, model_type, selecte
     model = model.to(set_device())
 
     # Flag to check if test_system is also used for training
-    is_test_system_in_training = any(ts in training_systems for ts in test_system)
+    is_test_system_in_training = test_system in training_systems
 
     # Create embeddings and ground truth labels
     for system in training_systems:
