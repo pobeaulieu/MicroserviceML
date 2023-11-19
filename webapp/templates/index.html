@@ -27,10 +27,10 @@
             <br>
             <!-- File Selector for Call Graph -->
             <label for="call_graph_file">Choose a call graph file:</label>
-            <input type="file" id="call_graph_file" name="call_graph_file" accept=".txt">
+            <input type="file" id="call_graph_file" name="call_graph_file" accept=".csv" required>
             <br>
         </form>
-        <button type="submit" id="genms" onclick="submitForm(event)">Generate Microservices</button>
+        <button type="submit" id="genms" onmouseup="submitForm(event)">Generate Microservices</button>
 
     </div>
 
