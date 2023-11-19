@@ -1,4 +1,4 @@
-from pipeline import interface
+from pipeline.interface import MicroMinerInterface
 from typing import List, Dict, Union
 
 from config.device_setup import set_device
@@ -15,7 +15,7 @@ from community_detection.community_tuning import fine_tune_all_services
 from common.utils import format_services
 
 
-class MicroMinerPipeline(interface.MicroMinerInterface):
+class MicroMinerPipeline(MicroMinerInterface):
 
     def clone_and_prepare_src_code(self, github_url: str) -> bool:
         raise NotImplementedError("This method must be implemented by the subclass.")

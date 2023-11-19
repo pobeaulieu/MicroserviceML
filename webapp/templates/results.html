@@ -1,0 +1,80 @@
+<!-- templates/result.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Result</title>
+    <link rel="stylesheet" href='/static/style.css' />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.2/styles/vs2015.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.2/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+</head>
+<body>
+
+    <div class="bodyResult">
+            <button id="homeButton" class="button_home"> < Back to Home</button>
+        <div class="result_box">
+            <div class="title-container">
+                <h2>Phase 1: Class typing</h2>
+                <!-- Put the button to the right of h2 and when I click on the button, I want to toggle the show of the next div -->
+                <button class="button_title" onclick="toggleResults(this)">Show Results</button>
+            </div>
+            <div class="hidden">
+                <h3>Parameters</h3>
+                <p><code>Model (LLM): {{ phase1_model_llm }}</code></p>
+                <p><code>Model (ML): {{ phase1_model_ml }}</code></p>
+                <h3>Results</h3>
+                <pre><code class="json">{{ result1|tojson(indent=2) }}</code></pre>
+            </div>
+        </div>
+
+        <div class="result_box">
+            <div class="title-container">
+            <h2>Phase 2: Typed Service Identification</h2>
+            <button class="button_title" onclick="toggleResults(this)">Show Results</button>
+            </div>
+            <div class="hidden">
+                <h3>Parameters</h3>
+                <p><code>Model: {{ phase2_model }}</code></p>
+                <h3>Results</h3>
+                <pre><code class="json">{{ result2|tojson(indent=2) }}</code></pre>
+            </div>
+        </div>
+        
+        
+            <div class= "result_box">
+                <div class="title-container">
+                <h2>Phase 3: Microservice Generation</h2>
+                <button class="button_title" onclick="toggleResults(this)">Show Results</button>
+                </div>
+                <div class="hidden">
+                 <h3>Parameters</h3>
+                <p><code>Number of Microservices: {{ num_microservices }}</code></p>
+                <p><code>Model: {{ phase3_model }}</code></p>
+                <h3>Results</h3>
+                <pre><code class="json">{{ result3|tojson(indent=2) }}</code></pre>
+            </div>
+            </div>
+    </div>
+
+    <script>
+        function toggleResults(button) {
+            // Find the next sibling element (the div containing the results)
+            var resultsDiv = button.parentElement.nextElementSibling;
+
+            // Toggle the 'hidden' class to show/hide the results
+            resultsDiv.classList.toggle('hidden');
+        }
+                // Add event listener to the home button for redirection
+                document.getElementById('homeButton').addEventListener('click', function() {
+            // Redirect to the home page
+            window.location.href = '/';
+    });
+    </script>
+</body>
+
+
+</html>

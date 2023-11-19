@@ -26,7 +26,19 @@ class MicroMinerInterface:
         self.max_d = max_d
         self.service_graph = {}
 
-
+    def __str__(self) -> str:
+        return (
+            f"GitHub URL: {self.github_url}\n"
+            f"Phase 1 - Embeddings Model: {self.embeddings_model_name_phase_1}\n"
+            f"Phase 1 - Classification Model: {self.classification_model_name_phase_1}\n"
+            f"Phase 2 - Clustering Model: {self.clustering_model_name_phase_2}\n"
+            f"Phase 2 - Embeddings Model: {self.embeddings_model_name_phase_2}\n"
+            f"Phase 2 - Call Graph: {self.call_graph}\n"
+            f"Phase 3 - Clustering Model: {self.clustering_model_name_phase_3}\n"
+            f"Phase 3 - Number of Clusters: {self.num_clusters}\n"
+            f"Phase 3 - Max Distance: {self.max_d}\n"
+    )
+    
     def clone_and_prepare_src_code(self) -> bool:
         """
         Clones and prepares source code from a GitHub repository.
