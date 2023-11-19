@@ -52,16 +52,18 @@ def run_class_typing(version, test_system, training_systems, model_type, selecte
 
         predictions = predict_class(classifiers, list(class_embeddings.values()))
 
-        # Map predictions to class_embeddings keys
-        mapped_predictions = {key: predictions[i] for i, key in enumerate(class_embeddings.keys())}
+        # Extract the predictions for the selected classifier
+        selected_classifier_predictions = predictions[selected_classifier]
+
+        mapped_predictions = {key: selected_classifier_predictions[i] for i, key in enumerate(class_embeddings.keys())}
 
         # Write embeddings with predictions for selected classifier to CSV for next phase
-        write_embeddings_to_csv(version, test_system, model_type, class_embeddings, class_labels=mapped_predictions[selected_classifier])
+        write_embeddings_to_csv(version, test_system, model_type, class_embeddings, class_labels=mapped_predictions)
 
         y_evaluation = None
 
-    # Generate evaluation metrics and reports
-    if y_evaluation.any():
+    # if y_evaluation is not None:
+    if y_evaluation is not None:
         for classifier_name, prediction in predictions.items():
             prediction = [int(pred) for pred in prediction]
             print(zip(y_evaluation, prediction))
