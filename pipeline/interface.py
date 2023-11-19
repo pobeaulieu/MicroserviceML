@@ -10,6 +10,7 @@ class MicroMinerInterface:
         self.embeddings_model_name_phase_1 = embeddings_model_name_phase_1
         self.classification_model_name_phase_1 = classification_model_name_phase_1
         self.embeddings_phase_1 = {}
+        self.result_phase_1 = {}
 
         # Phase 2 parameters
         self.clustering_model_name_phase_2 = clustering_model_name_phase_2

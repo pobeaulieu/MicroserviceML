@@ -6,13 +6,13 @@ from embedding.embedding_model import select_model_and_tokenizer
 from helpers.embedding_helpers import create_class_embeddings_for_system
 from type_classification.classifiers import load_classifier_from_pickle
 
-# from common.utils import load_call_graph
-# from common.distances import compute_semantic_distances_for_class_pairs
-# from common.normalization import filter_and_normalize_distances
-# import networkx as nx
-# from community_detection.community_detection import CommunityDetection
-# from community_detection.community_tuning import fine_tune_all_services
-# from helpers.service_community_helpers import save_communities_to_csv
+from common.utils import load_call_graph
+from common.distances import compute_semantic_distances_for_class_pairs
+from common.normalization import filter_and_normalize_distances
+import networkx as nx
+from community_detection.community_detection import CommunityDetection
+from community_detection.community_tuning import fine_tune_all_services
+from common.utils import format_services
 
 
 class MicroMinerPipeline(interface.MicroMinerInterface):
@@ -33,13 +33,16 @@ class MicroMinerPipeline(interface.MicroMinerInterface):
         classifier = load_classifier_from_pickle(self.embeddings_model_name_phase_1, self.classification_model_name_phase_1)
         prediction = classifier.predict(list(self.embeddings_phase_1.values()))
 
-        class_name_label_pairs = zip(self.embeddings_phase_1.keys(), prediction)
+        # TODO Extract this in a mapper function
+        # TODO not use 2 variables for the same thing, but lazy rn
+        pair_class_label = zip(self.embeddings_phase_1.keys(), prediction)
+        self.result_phase_1 = list(zip(self.embeddings_phase_1.keys(), prediction))
 
         application_classes = []
         entity_classes = []
         utility_classes = []
 
-        for class_name, class_label in class_name_label_pairs:
+        for class_name, class_label in pair_class_label:
             class_info = {"className": class_name}
             if class_label == '0':
                 application_classes.append(class_info)
@@ -58,62 +61,39 @@ class MicroMinerPipeline(interface.MicroMinerInterface):
 
     def execute_phase_2(self) -> Dict[str, Union[Dict[str, List[Dict[str, str]]], Dict[str, List[Dict[str, str]]]]]:
         print("Phase 2 started...")
-        # class_names, class_labels, class_embeddings = load_embeddings_from_csv(embeddings_path)
-        # class_labels_dict, class_embeddings_dict = dict(zip(class_names, class_labels)), dict(zip(class_names, class_embeddings))
-        # static_df = load_call_graph(call_graph_path)
 
-        # semantic_df = compute_semantic_distances_for_class_pairs(class_embeddings_dict)
-        # static_df = filter_and_normalize_distances(static_df, class_labels_dict)
-        # semantic_df = filter_and_normalize_distances(semantic_df, class_labels_dict)
-        # merged_df = static_df.merge(semantic_df, on=['class1', 'class2'], how='outer')
-        # class_graph = merged_df.fillna({'static_distance': 0, 'semantic_distance': 0})
+        class_names, class_labels = zip(*self.result_phase_1)
+        class_labels = [int(label) for label in class_labels]
 
-        # G = nx.from_pandas_edgelist(class_graph[class_graph['static_distance'] != 0], 'class1', 'class2', ['static_distance'])
-        # cd = CommunityDetection(G, class_labels_dict, optimize_hyperparameters_flag=False)
+        class_labels_dict, class_embeddings_dict = dict(zip(class_names, class_labels)), dict(zip(class_names, self.embeddings_phase_1.values()))
+        print("Load call graph...")
+        static_df = load_call_graph("pos") # static values for debug purposes
 
-        # distances = [(row['class1'], row['class2'], row['static_distance']) for _, row in class_graph.iterrows()]  # OR other distances
+        # TODO : Refacto some shit cause there is a lot of useless things here
+        print("Create class graph base on static distances...")
+        semantic_df = compute_semantic_distances_for_class_pairs(class_embeddings_dict)
+        static_df = filter_and_normalize_distances(static_df, class_labels_dict)
+        semantic_df = filter_and_normalize_distances(semantic_df, class_labels_dict)
+        merged_df = static_df.merge(semantic_df, on=['class1', 'class2'], how='outer')
+        self.class_graph = merged_df.fillna({'static_distance': 0, 'semantic_distance': 0})
 
-        # communities = {
-        # 'Application': cd.detect_communities('Application', phase2_model),
-        # 'Entity': cd.detect_communities('Entity', phase2_model),
-        # 'Utility': cd.detect_communities('Utility', phase2_model)
-        # }
+        G = nx.from_pandas_edgelist(self.class_graph[self.class_graph['static_distance'] != 0], 'class1', 'class2', ['static_distance'])
+        cd = CommunityDetection(G, class_labels_dict, optimize_hyperparameters_flag=False)
 
-        # fine_tuned_communities = {
-        #     label_type: fine_tune_all_services(services, distances)
-        #     for label_type, services in communities.items()
-        # }
+        distances = [(row['class1'], row['class2'], row['static_distance']) for _, row in self.class_graph.iterrows()]  # OR other distances
 
-        # # TODO : Save communities
-        # # save_communities_to_csv(fine_tuned_communities, version, system, phase1_model, phase2_model)
-
-
-        # # TODO : Format data and return in the good format
-        
-        return {
-            "applicationServices": {
-                "service": [
-                    {"className": "x"},
-                    {"className": "x"}
-                ],
-                "service": [
-                    {"className": "x"},
-                    {"className": "x"}
-                ]
-            },
-            "utilityServices": {
-                "service": [
-                    {"className": "x"},
-                    {"className": "x"}
-                ]
-            },
-            "entityServices": {
-                "service": [
-                    {"className": "x"},
-                    {"className": "x"}
-                ]
-            }
+        communities = {
+        'Application': cd.detect_communities('Application', self.clustering_model_name_phase_2),
+        'Entity': cd.detect_communities('Entity', self.clustering_model_name_phase_2),
+        'Utility': cd.detect_communities('Utility', self.clustering_model_name_phase_2)
         }
 
-def execute_phase_3(self) -> Dict[str, Dict[str, Dict[str, List[Dict[str, str]]]]]:
+        self.communities = {
+            label_type: fine_tune_all_services(services, distances)
+            for label_type, services in communities.items()
+        }
+
+        return format_services(self.communities)
+
+    def execute_phase_3(self) -> Dict[str, Dict[str, Dict[str, List[Dict[str, str]]]]]:
         raise NotImplementedError("This method must be implemented by the subclass.")
