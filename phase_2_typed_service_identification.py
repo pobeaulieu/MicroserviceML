@@ -21,7 +21,7 @@ def run_typed_service_identification(version, system, phase2_embedding_model, ph
     filename = f"generated_data/class_embeddings/{version}_{system}_{phase2_embedding_model}_embeddings.csv"
 
     tokenizer, model = select_model_and_tokenizer(phase2_embedding_model)
-    model = model.to(set_device())
+    if phase2_embedding_model != 'word2vec': model.to(set_device())
 
     # if embeddings are already generated, load them from CSV, else generate them
     if not os.path.exists(filename):
@@ -73,5 +73,5 @@ def run_typed_service_identification(version, system, phase2_embedding_model, ph
         print_communities(label_type, services)
 
     save_communities_to_csv(fine_tuned_communities, version, system, phase2_embedding_model, phase2_clustering_model)
-    generate_services_clustering_results([phase2_clustering_model], phase2_clustering_model, version, system, matching_threshold= 0.8)
+    generate_services_clustering_results([phase2_clustering_model], phase2_embedding_model, version, system, matching_threshold= 0.8)
 
