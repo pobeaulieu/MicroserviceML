@@ -1,167 +1,96 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MicroMiner Microservice Generator</title>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400&display=swap">
+    <link rel="stylesheet" href='/static/style.css' />
     <script defer src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
-    <style>
-        body {
-            font-family: 'Helvetica Neue', sans-serif;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-            background-color: #121212; /* Dark background color */
-            color: #ffffff; /* Light text color */
-        }
-
-        main {
-            background-color: #121212; /* Dark background color */
-            padding: 40px; /* Larger padding */
-            border-radius: 8px;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
-            width: 100%;
-            max-width: 900px; /* Larger max-width */
-            box-sizing: border-box;
-        }
-
-        h1 {
-            color: #e3e0e0; /* White header color */
-            text-align: center;
-            margin-bottom: 20px;
-            font-size: 60px; /* Larger font size */
-        }
-
-        h4 {
-            color: #e7e4e4;/* Light grey label color */
-            text-align: center;
-            font-size: 20px; /* Larger font size */
-            display: block;
-
-        }
-
-        label {
-            display: block;
-            margin-bottom: 12px; /* Larger margin-bottom */
-            color: #b3b3b3; /* Light grey label color */
-            font-size: 16px; /* Larger font size */
-        }
-
-        input {
-            width: 100%;
-            padding: 16px; /* Larger padding */
-            margin-bottom: 20px; /* Larger margin-bottom */
-            box-sizing: border-box;
-            border: 1px solid #282828; /* Dark border color */
-            border-radius: 4px;
-            background-color: #282828; /* Dark background color for input */
-            color: #ffffff;
-        }
-
-        button {
-            background-color:  #1c4dff;
-            color: #ffffff;
-            padding: 18px; /* Larger padding */
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            width: 100%; /* Set the button width to 60% */
-            box-sizing: border-box;
-            font-size: 14px; /* Adjust font size to make it smaller */
-            display: block; /* Ensure block-level display to center the button */
-            margin-left: auto; /* Center the button horizontally */
-            margin-right: 2px;
-            font-size: 18px; /* Larger font size */
-            font-family: 'Helvetica Neue', sans-serif;
-        }
-
-        button:hover {
-            background-color: #1337b9; /* Darker blue button hover color */
-        }
-
-
-        #status {
-            margin-top: 20px;
-            text-align: center;
-            font-size: 14px;
-        }
-
-        #spinner {
-            display: none;
-            margin: 20px auto;
-            border: 4px solid rgba(255, 255, 255, 0.3);
-            border-radius: 50%;
-            border-top: 4px solid #ffffff;
-            width: 40px;
-            height: 40px;
-            animation: spin 1s linear infinite;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-    </style>
 </head>
-<body>
-    <main>
+
+<body style="height: 100vh;">
+    <div id="modal">
+        <div id="modal-content">
+            <div id="spinner"></div>
+            <p id="modal-message">Generating Results, Please Wait...</p>
+        </div>
+    </div>
+    <div>
         <header>
             <h1>MicroMiner</h1>
-            <h4>Tool for Microservice Generation!</h4>
+            <h2>Tool for Microservice Generation!</h2>
         </header>
-        <form id="cloneForm" onsubmit="submitForm(event)">
+        <form id="main_form">
             <label for="repo_url">GitHub URL to monolith (public repository only):</label>
             <input type="text" id="repo_url" name="repo_url" required>
             <br>
-            <button type="submit">Generate Microservices</button>
+            <!-- File Selector for Call Graph -->
+            <label for="call_graph_file">Choose a call graph file:</label>
+            <input type="file" id="call_graph_file" name="call_graph_file" accept=".txt">
+            <br>
         </form>
-        <div id="spinner"></div>
-        <p id="status"></p>
+        <button type="submit" id="genms" onclick="submitForm(event)">Generate Microservices</button>
+
+    </div>
+
+    <main>
+        <form id="optionnal_params">
+            <!-- Phase 1 Model Dropdown -->
+            <h5>Phase 1: Class typing</h5>
+
+            <label for="phase1_model_llm">LLM (semantic code analysis):</label>
+            <select id="phase1_model_llm" name="phase1_model_llm">
+                <option value="ft_codebert">FT Codebert</option>
+                <option value="word2vec">Word2Vec</option>
+                <option value="albert">Albert</option>
+                <option value="codebert">Codebert</option>
+                <option value="roberta">Roberta</option>
+                <option value="bert">Bert</option>
+            </select>
+
+            <!-- Phase 1 Model Dropdown -->
+            <label for="phase1_model_ml">ML model:</label>
+            <select id="phase1_model_ml" name="phase1_model_ml">
+                <option value="svm">SVM</option>
+                <option value="knn">KNN</option>
+                <option value="decision_tree">Decision Tree</option>
+                <option value="logistic_regression">Logistic Regression</option>
+                <option value="naive_bayes">Naive Bayes</option>
+                <option value="ensemble">Ensemble</option>
+            </select>
+
+            <br>
+
+            <h5>Phase 2: Typed Service Identification</h5>
+            <!-- Phase 2 Model Dropdown -->
+            <label for="phase2_model">Clustering algorithm:</label>
+            <select id="phase2_model" name="phase2_model">
+                <option value="Louvain">Louvain</option>
+                <option value="Infomap">Infomap</option>
+                <option value="LabelPropagation">Label Propagation</option>
+                <option value="FastGreedy">Fast Greedy</option>
+                <option value="GirvanNewman">Girvan Newman</option>
+                <option value="Leiden">Leiden</option>
+                <option value="Walktrap">Walktrap</option>
+            </select>
+            <br>
+
+            <h5>Phase 3: Microservice Generation</h5>
+            <!-- Phase 3 Model Dropdown -->
+            <!-- Optional Number of Microservices Parameter -->
+            <label for="num_microservices">Number of Microservices:</label>
+            <input type="number" id="num_microservices" name="num_microservices" min="1" placeholder="Automatic">
+            <label for="phase3_model">Clustering algorithm:</label>
+            <select id="phase3_model" name="phase3_model">
+                <option value="cmeans">C-Means</option>
+                <option value="custom_cmeans">Custom C-Means</option>
+                <option value="hierarchical">Hierarchical</option>
+            </select>
+        </form>
     </main>
-    <script>
-    function submitForm(event) {
-        event.preventDefault();
 
-        // Clear previous status
-        document.getElementById('status').innerHTML = '';
-
-        // Show spinner
-        document.getElementById('spinner').style.display = 'block';
-
-        // Get form data
-        var formData = new FormData(document.getElementById('cloneForm'));
-
-        // Send asynchronous POST request
-        fetch('/pipeline', {
-            method: 'POST',
-            body: formData
-        })
-        .then(response => response.text())
-        .then(data => {
-            // Hide spinner
-            document.getElementById('spinner').style.display = 'none';
-            
-            // Update status
-            document.getElementById('status').innerHTML = data;
-        })
-        .catch(error => console.error('Error:', error));
-    }
-
-        document.addEventListener("DOMContentLoaded", function() {
-            var socket = io.connect('http://' + document.domain + ':' + location.port);
-
-            socket.on('update', function(data) {
-                // Update status
-                document.getElementById('status').innerHTML = data.message;
-                
-                // Hide spinner
-                document.getElementById('spinner').style.display = 'none';
-            });
-        });
-    </script>
+    <script src="/static/client.js"></script>
 </body>
+
 </html>

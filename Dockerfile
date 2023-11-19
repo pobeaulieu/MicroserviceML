@@ -19,4 +19,4 @@ COPY ./webapp ./webapp
 
 # Command to run on container start
 WORKDIR /app/webapp
-CMD ["python", "microminer.py"]
+CMD ["python", "app.py"]

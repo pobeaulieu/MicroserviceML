@@ -5,7 +5,7 @@
 
 ## Start WebApp Locally
 - `cd webapp`
-- `python3.8 microminer.py`
+- `python3.8 app.py`
 - MicroMiner will be available at `http://127.0.0.1:5001`
 
 ## Start WebApp with Docker
