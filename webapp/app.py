@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request
 
 import sys, os
 parent_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
@@ -16,12 +16,10 @@ app = Flask(__name__)
 def index():
     return render_template('index.html')
 
-@app.route('/pipeline')  # Assuming you are submitting a form with POST method
+@app.route('/pipeline') 
 def pipeline():
     repo_url = request.args.get('repo_url')
     graph_path = request.args.get('call_graph_file')
-
-    # Get values from optional parameters form
     phase1_model_llm = request.args.get('phase1_model_llm')
     phase1_model_ml = request.args.get('phase1_model_ml')
     phase2_model = request.args.get('phase2_model')
@@ -35,15 +33,15 @@ def pipeline():
         embeddings_model_name_phase_1=phase1_model_llm, 
         classification_model_name_phase_1= phase1_model_ml, 
         clustering_model_name_phase_2= phase2_model, 
-        embeddings_model_name_phase_2= None, #TODO
         call_graph= graph_path, 
         clustering_model_name_phase_3= phase3_model, 
         num_clusters= num_microservices, 
-        max_d= None #TODO
+        max_d= None, #TODO
+        embeddings_model_name_phase_2= None, #TODO
     )
 
     print(pipeline)
-    
+
     result1 = pipeline.execute_phase_1()
     result2 = pipeline.execute_phase_2()
     result3 = pipeline.execute_phase_3()
