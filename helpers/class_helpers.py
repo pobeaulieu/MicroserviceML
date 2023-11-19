@@ -1,7 +1,7 @@
 import os
 
-def load_class_code_from_directory(system_path, isFullPath = False):
-    if not isFullPath:
+def load_class_code_from_directory(system_path, is_full_path = False):
+    if not is_full_path:
         root_folder = './src_code/' + system_path + '/src_code_formatted/'
     else:
         root_folder = system_path
