@@ -52,6 +52,11 @@ def load_classifiers_from_pickle(model_type):
         classifiers[classifier_name] = pickle.load(open(filename, 'rb'))
     return classifiers
 
+def load_classifier_from_pickle(model_type, classifier_name):
+    filename = f"./generated_data/classification_models/{model_type}_{classifier_name}.pkl"
+    classifier = pickle.load(open(filename, 'rb'))
+    return classifier
+
 def predict_class(classifiers, Xtest):
     predictions = {}
     for classifier_name, classifier in classifiers.items():

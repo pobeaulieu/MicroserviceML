@@ -1,16 +1,17 @@
-
+from pipeline.interface import MicroMinerInterface
 from typing import List, Dict, Union
-import time 
+import time
 
-class MockImplementation():
+class MockImplementation(MicroMinerInterface):
     def clone_and_prepare_src_code(self) -> bool:
+        # print(f"Mock: Cloning and preparing source code from {github_url}")
         # Simulate successful operation
         return True
 
     def execute_phase_1(self) -> Dict[str, List[Dict[str, str]]]:
-        # Sleep for 2 seconds
-        time.sleep(3)
+        # print(f"Mock: Executing Phase 1 with embedding_model={embedding_model}, ml_model={ml_model}, src_code_path={src_code_path}")
         # Simulate phase 1 result
+        time.sleep(2)
         return {
             "applicationClasses": [
                 {"className": "x"},
@@ -19,6 +20,7 @@ class MockImplementation():
         }
 
     def execute_phase_2(self) -> Dict[str, Union[Dict[str, List[Dict[str, str]]], Dict[str, List[Dict[str, str]]]]]:
+        # print(f"Mock: Executing Phase 2 with phase1_result={phase1_result}, phase2_model={phase2_model}")
         # Simulate phase 2 result
         #time.sleep(2)
         return {
@@ -46,7 +48,8 @@ class MockImplementation():
             }
         }
 
-    def execute_phase_3(self)-> Dict[str, Dict[str, Dict[str, List[Dict[str, str]]]]]:
+    def execute_phase_3(self) -> Dict[str, Dict[str, Dict[str, List[Dict[str, str]]]]]:
+        # print(f"Mock: Executing Phase 3 with phase2_result={phase2_result}, phase3_model={phase3_model}")
         # Simulate phase 3 result
         #time.sleep(2)
         return {

@@ -1,17 +1,6 @@
-from flask import Flask, render_template, request
+
 import pygit2
-
-import os
-from datetime import datetime
-import shutil
-import subprocess
-  
-app = Flask(__name__, static_url_path='/static')
-
-@app.route('/')
-def index():
-    return render_template('index.html')
-
+import os, shutil, subprocess, datetime
 
 def copy_and_execute_script(repo_folder):
     # Copy format_code.sh into the repository folder
@@ -44,9 +33,9 @@ def copy_and_execute_script(repo_folder):
             os.remove(item_path)
 
 
-@app.route('/pipeline', methods=['POST'])
+
 def pipeline():
-    repo_url = request.form.get('repo_url')
+    repo_url = 'HERE'
     
     # Create a timestamped folder within 'src_code' for each cloned repository
     timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
@@ -57,13 +46,9 @@ def pipeline():
 
     try:
 
-        repo = pygit2.clone_repository(repo_url, destination, checkout_branch="master")
+        repo = pygit2.clone_repository(repo_url, destination)
 
         copy_and_execute_script(destination)
         return f"Repository cloned successfully to {destination} and script executed."
     except Exception as e:
         return f"Error cloning repository: {e}"
-
-if __name__ == '__main__':
-    port = int(os.environ.get('PORT', 5001))
-    app.run(debug=True, port=port, host='0.0.0.0')

@@ -1,9 +1,13 @@
 from flask import Flask, render_template, request, redirect, url_for
 
-import sys
+import sys, os
+parent_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+
+# Add the parent directory to sys.path
+sys.path.append(parent_dir)
+
+# Set the current working directory to the 'pipeline' directory
 from pipeline.mock import MockImplementation
-from pipeline.interface import MicroMinerInterface
-import os
 
 
 app = Flask(__name__)
@@ -24,10 +28,22 @@ def pipeline():
     num_microservices = request.args.get('num_microservices')
     phase3_model = request.args.get('phase3_model')
 
-    # Perform any processing with the form data if needed
+    print(num_microservices)
 
-    pipeline = MockImplementation()
+    pipeline = MockImplementation(
+        github_url=repo_url, 
+        embeddings_model_name_phase_1=phase1_model_llm, 
+        classification_model_name_phase_1= phase1_model_ml, 
+        clustering_model_name_phase_2= phase2_model, 
+        embeddings_model_name_phase_2= None, #TODO
+        call_graph= graph_path, 
+        clustering_model_name_phase_3= phase3_model, 
+        num_clusters= num_microservices, 
+        max_d= None #TODO
+    )
 
+    print(pipeline)
+    
     result1 = pipeline.execute_phase_1()
     result2 = pipeline.execute_phase_2()
     result3 = pipeline.execute_phase_3()
