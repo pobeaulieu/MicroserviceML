@@ -5,15 +5,16 @@ from config.constants import java_stopwords
 
 def generate_embeddings_for_java_code(code, model, tokenizer, device, is_phase2_model=False):
     '''Generate embeddings for the provided java file.'''
+
+    if is_phase2_model:
+        # Split the code into words, remove stopwords, and rejoin into a string
+        words = re.findall(r'\b\w+\b', code)
+        filtered_code = ' '.join(word for word in words if word not in java_stopwords)
+    else:
+        filtered_code = code
     
     # Tokenize the code
-    all_code_tokens = tokenizer.tokenize(code)
-
-    # Filter out stopwords for phase 2 models : bert, albert, and roberta
-    if is_phase2_model:
-        # Tokenize each stopword and create a set for efficient lookup
-        tokenized_stopwords = set(token for stopword in java_stopwords for token in tokenizer.tokenize(stopword))
-        all_code_tokens = [token for token in all_code_tokens if token not in tokenized_stopwords]
+    all_code_tokens = tokenizer.tokenize(filtered_code)
 
     # Initialize an empty list to store the embeddings
     embeddings_for_file = []
