@@ -4,6 +4,7 @@ from microminer.config.enums import Phase1EmbeddingModel, Phase1ClassifierModel,
 # Create interface object with all desired parameters 
 pipeline = MicroMinerPipeline(
     github_url='https://github.com/sadatrafsanjani/JavaFX-Point-of-Sales.git',
+    path_to_call_graph = 'call_graphs/pos_call_graph.csv',
     embeddings_model_name_phase_1=Phase1EmbeddingModel.codebert.name, 
     classification_model_name_phase_1=Phase1ClassifierModel.svm.name,
     embeddings_model_name_phase_2=Phase2EmbeddingModel.word2vec.name,

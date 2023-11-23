@@ -3,11 +3,13 @@ from typing import List, Dict, Union
 
 from microminer.helpers.app_cloner import clone_and_copy_java_contents
 
+# Imports for phase 1
 from microminer.embedding.embedding_model import select_model_and_tokenizer
 from microminer.embedding.embeddings import create_class_embeddings_for_system
 from microminer.helpers.mapper import map_class_labels_to_categories
 from microminer.classification.classifiers import load_classifier_from_pickle
 
+# Imports for phase 2
 from microminer.helpers.reader import load_call_graph
 from microminer.common.distances import compute_semantic_distances_for_class_pairs
 from microminer.common.normalization import filter_and_normalize_distances
@@ -16,6 +18,7 @@ from microminer.community_detection.community_tuning import fine_tune_communitie
 from microminer.common.graphs import construct_class_graph
 from microminer.helpers.formatter import format_services, format_microservices
 
+# Imports for phase 3
 from microminer.common.graphs import construct_dissimilarity_matrix, construct_service_graph
 from microminer.clustering.cluster_analysis import assign_clusters_based_on_comparative_ratios, merge_overlapping_clusters, identify_standalone_services
 from microminer.common.normalization import normalize_memberships
@@ -35,13 +38,16 @@ class MicroMinerPipeline(MicroMinerInterface):
         tokenizer, model = select_model_and_tokenizer(self.embeddings_model_name_phase_1)
 
         print("Creating embeddings...")
-        self.embeddings_phase_1 = create_class_embeddings_for_system(self.system_name, self.embeddings_model_name_phase_1, model, tokenizer)
+        self.embeddings_phase_1 = create_class_embeddings_for_system(self.embeddings_model_name_phase_1, model, tokenizer)
 
         print("Load classifier and predict...")
         classifier = load_classifier_from_pickle(self.embeddings_model_name_phase_1, self.classification_model_name_phase_1)
-        prediction = classifier.predict(list(self.embeddings_phase_1.values()))
 
-        self.labels = dict(zip(self.embeddings_phase_1.keys(), prediction))
+        print("Predicting class type...")
+        predictions = classifier.predict(list(self.embeddings_phase_1.values()))
+
+        self.labels = dict(zip(self.embeddings_phase_1.keys(), predictions))
+
         result = map_class_labels_to_categories(self.labels)
 
         return result
@@ -54,7 +60,6 @@ class MicroMinerPipeline(MicroMinerInterface):
 
         print("Creating embeddings...")
         self.embeddings_phase_2 = create_class_embeddings_for_system(
-            self.system_name, 
             self.embeddings_model_name_phase_2,
             model, 
             tokenizer, 
@@ -67,7 +72,7 @@ class MicroMinerPipeline(MicroMinerInterface):
 
         # Load static distances
         print("Loading static distances...")
-        static_distances_df = load_call_graph(self.system_name)
+        static_distances_df = load_call_graph(self.path_to_call_graph)
 
         # Normalize and filter distances based on class labels
         print("Normalizing and filtering distances...")

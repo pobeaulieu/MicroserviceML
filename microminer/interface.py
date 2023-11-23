@@ -4,12 +4,12 @@ from microminer.config.enums import Phase1EmbeddingModel, Phase1ClassifierModel,
 
 class MicroMinerInterface:
 
-    def __init__(self, github_url: str = None, 
+    def __init__(self, github_url: str = None,
+                 path_to_call_graph: str = None, 
                  embeddings_model_name_phase_1: Phase1EmbeddingModel = None, 
                  classification_model_name_phase_1: Phase1ClassifierModel = None, 
                  clustering_model_name_phase_2: Phase2ClusteringModel = None, 
                  embeddings_model_name_phase_2: Phase2EmbeddingModel = None, 
-                 call_graph: str = None, 
                  alpha_phase_2: float = 0.5,
                  clustering_model_name_phase_3: Phase3ClusteringModel = None, 
                  num_clusters: int = -1, 
@@ -17,9 +17,7 @@ class MicroMinerInterface:
                  alpha_phase_3: float = 0.5):
         
         self.github_url = github_url
-
-        # Preprocessing parameters
-        self.system_name = None
+        self.path_to_call_graph = path_to_call_graph
         
         # Phase 1 parameters
         self.embeddings_model_name_phase_1 = embeddings_model_name_phase_1
@@ -32,7 +30,6 @@ class MicroMinerInterface:
         self.embeddings_model_name_phase_2 = embeddings_model_name_phase_2
         self.embeddings_phase_2 = {}
         self.alpha_phase_2 = alpha_phase_2
-        self.call_graph = call_graph
         self.normalized_static_distances_between_classes = pd.DataFrame()
         self.normalized_semantic_distances_between_classes = pd.DataFrame()
         self.communities = {}

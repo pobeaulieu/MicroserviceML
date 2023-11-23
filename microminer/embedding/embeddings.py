@@ -64,7 +64,7 @@ def generate_word_embeddings_for_java_code(code, model, lemmatizer, stopwords=ja
     return np.mean(embeddings, axis=0) if embeddings else None
 
 
-def create_class_embeddings_for_system(system, model_type, model, tokenizer, is_phase_2=False):
+def create_class_embeddings_for_system(model_type, model, tokenizer, is_phase_2=False):
     """
     Creates embeddings for all classes in a system.
 
@@ -75,7 +75,7 @@ def create_class_embeddings_for_system(system, model_type, model, tokenizer, is_
     :return: Dictionary containing embeddings for each class.
     """
     # If embeddings already exist, load them from CSV, skip the rest
-    class_code = load_class_code_from_directory(system)
+    class_code = load_class_code_from_directory()
 
     if model_type == "word2vec":
         class_embeddings = {class_name: generate_word_embeddings_for_java_code(code, model, tokenizer) for class_name, code in class_code.items()}
