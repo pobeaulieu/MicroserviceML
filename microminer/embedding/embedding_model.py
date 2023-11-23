@@ -2,7 +2,7 @@ from transformers import AutoTokenizer, AutoModel, AlbertTokenizer, AlbertModel,
 import nltk
 from nltk.stem import WordNetLemmatizer
 import gensim.downloader as api
-from config.device_setup import set_device
+from microminer.config.device_setup import set_device
 
 def select_model_and_tokenizer(model_type):
   # Select the model and tokenizer

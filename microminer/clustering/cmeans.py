@@ -1,7 +1,7 @@
 import skfuzzy as fuzz
 import matplotlib.pyplot as plt
-from common.constants import FUZZINESS, ERROR_THRESHOLD, MAX_ITERATIONS
-from clustering.parameter_detection import detect_elbow
+from microminer.common.constants import FUZZINESS, ERROR_THRESHOLD, MAX_ITERATIONS
+from microminer.clustering.parameter_detection import detect_elbow
 
 
 def fuzzy_cmeans_clustering(data, node_labels, optimal_clusters):

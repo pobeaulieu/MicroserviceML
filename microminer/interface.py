@@ -1,6 +1,6 @@
 from typing import List, Dict, Union
 import pandas as pd
-from config.enums import Phase1EmbeddingModel, Phase1ClassifierModel, Phase2EmbeddingModel, Phase2ClusteringModel, Phase3ClusteringModel
+from microminer.config.enums import Phase1EmbeddingModel, Phase1ClassifierModel, Phase2EmbeddingModel, Phase2ClusteringModel, Phase3ClusteringModel
 
 class MicroMinerInterface:
 

@@ -1,7 +1,7 @@
-from clustering.cmeans import determine_optimal_clusters, fuzzy_cmeans_clustering
-from clustering.custom_cmeans import CustomFuzzyCMeans
-from clustering.hierarchical_clustering import hierarchical_clustering, determine_optimal_max_d
-from helpers.reader import get_number_of_classes
+from microminer.clustering.cmeans import determine_optimal_clusters, fuzzy_cmeans_clustering
+from microminer.clustering.custom_cmeans import CustomFuzzyCMeans
+from microminer.clustering.hierarchical_clustering import hierarchical_clustering, determine_optimal_max_d
+from microminer.helpers.reader import get_number_of_classes
 
 def cluster_services(dissimilarity_matrix, nodes_list, clustering_model, system_name, num_clusters=-1, max_d=-1):
     """

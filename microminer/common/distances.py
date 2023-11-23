@@ -1,6 +1,6 @@
 # Functions for calculating distances
 from scipy.spatial import distance as sp_distance
-from common.normalization import normalize_distances
+from microminer.common.normalization import normalize_distances
 import pandas as pd
 
 

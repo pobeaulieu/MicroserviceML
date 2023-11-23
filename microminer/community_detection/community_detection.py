@@ -1,9 +1,9 @@
 import networkx as nx
 from cdlib import algorithms
 # from karateclub import EdMot
-from community_detection.parameter_optimization import optimize_parameters_for_community_detection
-from common.graphs import remove_self_loops
-from common.constants import LABEL_MAPPING
+from microminer.community_detection.parameter_optimization import optimize_parameters_for_community_detection
+from microminer.common.graphs import remove_self_loops
+from microminer.common.constants import LABEL_MAPPING
 
 
 def remove_duplicate_single_node_communities(communities):

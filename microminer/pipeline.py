@@ -1,34 +1,34 @@
 from microminer.interface import MicroMinerInterface
 from typing import List, Dict, Union
 
-from embedding.embedding_model import select_model_and_tokenizer
-from embedding.embeddings import create_class_embeddings_for_system
-from helpers.mapper import map_class_labels_to_categories
-from classification.classifiers import load_classifier_from_pickle
+from microminer.helpers.app_cloner import clone_and_copy_java_contents
 
-from helpers.reader import load_call_graph
-from common.distances import compute_semantic_distances_for_class_pairs
-from common.normalization import filter_and_normalize_distances
-from community_detection.community_detection import CommunityDetection
-from community_detection.community_tuning import fine_tune_communities
-from common.graphs import construct_class_graph
-from helpers.formatter import format_services, format_microservices
+from microminer.embedding.embedding_model import select_model_and_tokenizer
+from microminer.embedding.embeddings import create_class_embeddings_for_system
+from microminer.helpers.mapper import map_class_labels_to_categories
+from microminer.classification.classifiers import load_classifier_from_pickle
 
-from common.graphs import construct_dissimilarity_matrix, construct_service_graph
-from clustering.cluster_analysis import assign_clusters_based_on_comparative_ratios, merge_overlapping_clusters, identify_standalone_services
-from common.normalization import normalize_memberships
-from common.distances import compute_static_distances_for_service_pairs, compute_semantic_distances_for_service_pairs
-from clustering.clustering import cluster_services
-from helpers.mapper import map_classes_to_services
+from microminer.helpers.reader import load_call_graph
+from microminer.common.distances import compute_semantic_distances_for_class_pairs
+from microminer.common.normalization import filter_and_normalize_distances
+from microminer.community_detection.community_detection import CommunityDetection
+from microminer.community_detection.community_tuning import fine_tune_communities
+from microminer.common.graphs import construct_class_graph
+from microminer.helpers.formatter import format_services, format_microservices
+
+from microminer.common.graphs import construct_dissimilarity_matrix, construct_service_graph
+from microminer.clustering.cluster_analysis import assign_clusters_based_on_comparative_ratios, merge_overlapping_clusters, identify_standalone_services
+from microminer.common.normalization import normalize_memberships
+from microminer.common.distances import compute_static_distances_for_service_pairs, compute_semantic_distances_for_service_pairs
+from microminer.clustering.clustering import cluster_services
+from microminer.helpers.mapper import map_classes_to_services
 
 
 
 class MicroMinerPipeline(MicroMinerInterface):
 
     def clone_and_prepare_src_code(self) -> bool:
-        # TODO: Clone and prepare src code
-        self.system_name = "pos"
-        return True
+        return clone_and_copy_java_contents(self.github_url)
 
     def execute_phase_1(self) -> Dict[str, List[Dict[str, str]]]:
         print("Phase 1 started...")

@@ -1,23 +1,24 @@
 import numpy as np
 from collections import Counter
 from imblearn.over_sampling import SMOTE
-from helpers.reader import load_embeddings_from_csv
 
 
-def aggregate_training_data(version, model_type, training_systems, test_system=None):
+def aggregate_training_data(training_systems, test_system=None):
     training_embeddings, training_labels, training_class_names = [], [], []
     test_embeddings, test_labels, test_class_names = [], [], []
 
-    for system in training_systems:
-        filename = f"./generated_data/class_embeddings/{version}_{system}_{model_type}_embeddings.csv"
-        class_names, labels, embeddings = load_embeddings_from_csv(filename)
+    for system_data in training_systems:
+        class_names = system_data['class_names']
+        labels = system_data['labels']
+        embeddings = system_data['embeddings']
 
         # Filter out classes with label -1
         filtered_data = [(cn, lbl, emb) for cn, lbl, emb in zip(class_names, labels, embeddings) if lbl != -1]
         filtered_class_names, filtered_labels, filtered_embeddings = zip(*filtered_data)
 
+        system_name = system_data['system_name']  # Assuming each dictionary has a 'system_name' key
         # Check if the system is the test_system and split data if needed
-        if system == test_system:
+        if system_name == test_system:
             split_index = int(0.8 * len(filtered_embeddings))  # 80% for training
             training_embeddings.extend(filtered_embeddings[:split_index])
             training_labels.extend(filtered_labels[:split_index])
@@ -39,6 +40,7 @@ def aggregate_training_data(version, model_type, training_systems, test_system=N
     return Xtrain, ytrain, training_class_names, Xtest, ytest, test_class_names
 
 
+
 def resample_training_data(Xtrain, ytrain):
     # Calculate class frequencies and mean frequency
     class_freq = Counter(ytrain)
@@ -58,8 +60,8 @@ def resample_training_data(Xtrain, ytrain):
     return Xtrain, ytrain
 
 
-def prepare_training_data(version, model_type, training_systems, test_system=None):
-    Xtrain, ytrain, _, Xtest, ytest, _ = aggregate_training_data(version, model_type, training_systems, test_system)
+def prepare_training_data(training_systems, test_system=None):
+    Xtrain, ytrain, _, Xtest, ytest, _ = aggregate_training_data(training_systems, test_system)
     Xtrain, ytrain = resample_training_data(Xtrain, ytrain)
     return Xtrain, ytrain, Xtest, ytest
 

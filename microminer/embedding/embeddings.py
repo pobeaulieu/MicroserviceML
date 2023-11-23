@@ -1,9 +1,9 @@
 import torch
 import numpy as np
 import re
-from common.constants import java_stopwords
-from helpers.reader import load_class_code_from_directory
-from config.device_setup import set_device
+from microminer.common.constants import java_stopwords
+from microminer.helpers.reader import load_class_code_from_directory
+from microminer.config.device_setup import set_device
 
 def generate_embeddings_for_java_code(code, model, tokenizer, is_phase_2_model=False):
     '''Generate embeddings for the provided java file.'''

@@ -1,8 +1,9 @@
-from pipeline.microminer_pipeline import MicroMinerPipeline
-from config.constants import Phase1EmbeddingModel, Phase1ClassifierModel, Phase2EmbeddingModel, Phase2ClusteringModel, Phase3ClusteringModel
+from microminer.pipeline import MicroMinerPipeline
+from microminer.config.enums import Phase1EmbeddingModel, Phase1ClassifierModel, Phase2EmbeddingModel, Phase2ClusteringModel, Phase3ClusteringModel
 
 # Create interface object with all desired parameters 
 pipeline = MicroMinerPipeline(
+    github_url='https://github.com/sadatrafsanjani/JavaFX-Point-of-Sales.git',
     embeddings_model_name_phase_1=Phase1EmbeddingModel.codebert.name, 
     classification_model_name_phase_1=Phase1ClassifierModel.svm.name,
     embeddings_model_name_phase_2=Phase2EmbeddingModel.word2vec.name,

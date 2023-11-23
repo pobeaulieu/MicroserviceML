@@ -2,7 +2,7 @@ import numpy as np
 from scipy.cluster.hierarchy import linkage, fcluster
 from scipy.spatial.distance import squareform
 import matplotlib.pyplot as plt
-from clustering.parameter_detection import detect_elbow, calculate_wcss
+from microminer.clustering.parameter_detection import detect_elbow, calculate_wcss
 
 
 def perform_clustering(dissimilarity_matrix, max_d):

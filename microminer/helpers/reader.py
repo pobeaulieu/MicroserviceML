@@ -1,21 +1,18 @@
 import pandas as pd
 import os
-import csv
-import numpy as np
 
-def load_call_graph(system):
+def load_call_graph(path_to_call_graph: str) -> pd.DataFrame:
     """Load the call graph."""
-    file_path = f"./generated_data/graphs/call/{system}_call_graph.csv"
     call_graph = pd.read_csv(
-        file_path,
+        path_to_call_graph,
         delimiter=';',
         header=None,
         names=['class1', 'class2', 'static_distance']
     )
     return call_graph
 
-def load_class_code_from_directory(system):
-    root_folder = f"./src_code/{system}/src_code_formatted/"
+def load_class_code_from_directory():
+    root_folder = f"./src_code/tmp/src_code_formatted/"
 
     def read_java_file(file_path):
         with open(file_path, encoding="ISO-8859-1", errors="ignore") as java_file:
@@ -28,32 +25,6 @@ def load_class_code_from_directory(system):
 
     return class_code
 
-def get_number_of_classes(system):
+def get_number_of_classes():
     """Returns the number of classes in the system."""
-    return len(load_class_code_from_directory(system))
-
-
-def load_embeddings_from_csv(filename):
-    """
-    Loads embeddings and labels from a CSV file.
-
-    :param filename: Name of the CSV file to load.
-    :return: class_names, class_labels, class_embeddings
-    """
-    # First column is class name, second column is label, third column is embedding
-    class_names, class_labels, class_embeddings = [], [], []
-
-    with open(filename, 'r') as f:
-        reader = csv.reader(f, delimiter=';', quotechar='"')
-        for row in reader:
-            class_names.append(row[0])
-            class_labels.append(row[1])
-            class_embeddings.append(row[2])
-
-    # Convert class_labels to integers
-    class_labels = [int(label) for label in class_labels]
-
-    # Convert class_embeddings to numpy arrays
-    class_embeddings = [np.array(embedding.split(','), dtype=np.float32) for embedding in class_embeddings]
-
-    return class_names, class_labels, class_embeddings
+    return len(load_class_code_from_directory())

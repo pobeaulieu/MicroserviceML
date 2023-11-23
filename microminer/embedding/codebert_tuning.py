@@ -1,12 +1,12 @@
 import optuna
 import torch
-from transformers import AutoTokenizer, AutoModelForSequenceClassification, Trainer, TrainingArguments, AutoModel
+from transformers import AutoTokenizer, AutoModelForSequenceClassification, Trainer, TrainingArguments
 from torch.utils.data import Dataset, DataLoader
 from sklearn.model_selection import train_test_split
 import accelerate # leave here
-from helpers.mapper import map_classes_to_type_labels
-from helpers.reader import load_class_code_from_directory
-from config.device_setup import set_device
+from microminer.helpers.mapper import map_classes_to_type_labels
+from microminer.helpers.reader import load_class_code_from_directory
+from microminer.config.device_setup import set_device
 
 # Add argument to tune hyperparameters to the script (False by default)
 import argparse
