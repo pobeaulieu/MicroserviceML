@@ -1,30 +1,47 @@
 from typing import List, Dict, Union
-from config.constants import Phase1Model, Phase1ClassifierModel, Phase2EmbeddingsModel, Phase2Model, Phase3Model
+import pandas as pd
+from config.constants import Phase1EmbeddingModel, Phase1ClassifierModel, Phase2EmbeddingModel, Phase2ClusteringModel, Phase3ClusteringModel
 
 class MicroMinerInterface:
 
-    def __init__(self, github_url: str = None, embeddings_model_name_phase_1: Phase1Model = None, classification_model_name_phase_1: Phase1ClassifierModel = None, clustering_model_name_phase_2: Phase2Model = None, embeddings_model_name_phase_2: Phase2EmbeddingsModel = None, call_graph: str = None, clustering_model_name_phase_3: Phase3Model = None, num_clusters: int = -1, max_d: int = -1):
+    def __init__(self, github_url: str = None, 
+                 embeddings_model_name_phase_1: Phase1EmbeddingModel = None, 
+                 classification_model_name_phase_1: Phase1ClassifierModel = None, 
+                 clustering_model_name_phase_2: Phase2ClusteringModel = None, 
+                 embeddings_model_name_phase_2: Phase2EmbeddingModel = None, 
+                 call_graph: str = None, 
+                 alpha_phase_2: float = 0.5,
+                 clustering_model_name_phase_3: Phase3ClusteringModel = None, 
+                 num_clusters: int = -1, 
+                 max_d: int = -1,
+                 alpha_phase_3: float = 0.5):
+        
         self.github_url = github_url
+
+        # Preprocessing parameters
+        self.system_name = None
         
         # Phase 1 parameters
         self.embeddings_model_name_phase_1 = embeddings_model_name_phase_1
         self.classification_model_name_phase_1 = classification_model_name_phase_1
         self.embeddings_phase_1 = {}
-        self.result_phase_1 = {}
+        self.labels = {}
 
         # Phase 2 parameters
         self.clustering_model_name_phase_2 = clustering_model_name_phase_2
         self.embeddings_model_name_phase_2 = embeddings_model_name_phase_2
-        self.call_graph = call_graph
         self.embeddings_phase_2 = {}
+        self.alpha_phase_2 = alpha_phase_2
+        self.call_graph = call_graph
+        self.normalized_static_distances_between_classes = pd.DataFrame()
+        self.normalized_semantic_distances_between_classes = pd.DataFrame()
         self.communities = {}
-        self.class_graph = {}
 
         # Phase 3 parameters
         self.clustering_model_name_phase_3 = clustering_model_name_phase_3
         self.num_clusters = num_clusters
         self.max_d = max_d
-        self.service_graph = {}
+        self.alpha_phase_3 = alpha_phase_3
 
     def __str__(self) -> str:
         return (

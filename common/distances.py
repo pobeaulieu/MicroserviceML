@@ -1,6 +1,6 @@
 # Functions for calculating distances
-from scipy import spatial
-from embedding.embeddings import compute_service_embeddings
+from scipy.spatial import distance as sp_distance
+from common.normalization import normalize_distances
 import pandas as pd
 
 
@@ -9,49 +9,72 @@ def compute_semantic_distances_for_class_pairs(embeddings_dict):
     distances = []
     for class_name1, embedding1 in embeddings_dict.items():
         for class_name2, embedding2 in embeddings_dict.items():
-            distance = 1 - spatial.distance.cosine(embedding1, embedding2)
+            distance = 1 - sp_distance.cosine(embedding1, embedding2)
             distances.append([class_name1, class_name2, distance])
     return pd.DataFrame(distances, columns=['class1', 'class2', 'semantic_distance'])
 
 
-def compute_static_distances_for_service_pairs(class_graph, communities):
+def compute_static_distances_for_service_pairs(static_distances_df, class_to_service_map):
     """
-    Compute static distances between service pairs based on class graph distances.
-    
+    Compute and normalize static distances between distinct service pairs.
+
     Parameters:
-    - class_graph (DataFrame): DataFrame containing class graph data.
-    - communities (DataFrame): DataFrame containing community data for each class.
-    
+    - static_distances_df (pd.DataFrame): DataFrame with columns 'class1', 'class2', 'static_distance'.
+    - class_to_service_map (dict): Mapping of class names to service names.
+
     Returns:
-    - dict: Dictionary of static distances between service pairs.
+    - dict: Dictionary of normalized static distances between distinct service pairs.
     """
-    # Merge class graph and communities DataFrames and filter inter-service pairs
-    merged_df = class_graph.merge(communities, left_on='class1', right_on='class_name').merge(
-        communities, left_on='class2', right_on='class_name', suffixes=('_1', '_2')
-    )
-    inter_service_df = merged_df[merged_df['service_1'] != merged_df['service_2']]
-    return inter_service_df.groupby(['service_1', 'service_2'])['static_distance'].sum().to_dict()
+    service_pairs_distances = {}
+    for _, row in static_distances_df.iterrows():
+        class1_service = class_to_service_map.get(row['class1'])
+        class2_service = class_to_service_map.get(row['class2'])
+
+        if class1_service and class2_service and class1_service != class2_service:
+            service_pair = (class1_service, class2_service)
+            static_distance = row['static_distance']
+
+            if service_pair not in service_pairs_distances:
+                service_pairs_distances[service_pair] = static_distance
+            else:
+                service_pairs_distances[service_pair] += static_distance
+
+    return normalize_distances(service_pairs_distances)
 
 
-def compute_semantic_distances_for_service_pairs(embeddings_dict, communities):
+def compute_semantic_distances_for_service_pairs(semantic_distances_df, class_to_service_map):
     """
-    Compute semantic distances between service pairs based on their embeddings.
-    
+    Compute mean semantic distances between distinct service pairs.
+
     Parameters:
-    - embeddings_dict (dict): Dictionary mapping class names to their embeddings.
-    - communities (DataFrame): DataFrame containing community data for each class.
-    
+    - semantic_distances_df (pd.DataFrame): DataFrame with columns 'class1', 'class2', 'semantic_distance'.
+    - class_to_service_map (dict): Mapping of class names to service names.
+
     Returns:
-    - dict: Dictionary of semantic distances between service pairs.
+    - dict: Dictionary of mean semantic distances between distinct service pairs.
     """
-    service_embeddings = compute_service_embeddings(embeddings_dict, communities)
-    
-    services = list(service_embeddings.keys())
-    semantic_distances = {}
-    for i, s1 in enumerate(services):
-        for j, s2 in enumerate(services):
-            if i != j:
-                distance = 1 - spatial.distance.cosine(service_embeddings[s1], service_embeddings[s2])
-                semantic_distances[(s1, s2)] = distance
-    
-    return semantic_distances
+    service_pairs_distances = {}
+    service_pairs_counts = {}
+    for _, row in semantic_distances_df.iterrows():
+        class1_service = class_to_service_map.get(row['class1'])
+        class2_service = class_to_service_map.get(row['class2'])
+
+        if class1_service and class2_service:
+            service_pair = tuple(sorted([class1_service, class2_service]))  # Order is not important
+
+            if class1_service != class2_service:
+                semantic_distance = row['semantic_distance']
+
+                if service_pair not in service_pairs_distances:
+                    service_pairs_distances[service_pair] = semantic_distance
+                    service_pairs_counts[service_pair] = 1
+                else:
+                    service_pairs_distances[service_pair] += semantic_distance
+                    service_pairs_counts[service_pair] += 1
+
+    for service_pair in service_pairs_distances:
+        service_pairs_distances[service_pair] /= service_pairs_counts[service_pair]
+
+    return service_pairs_distances
+
+

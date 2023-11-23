@@ -3,10 +3,10 @@ import numpy as np
 import re
 from config.constants import java_stopwords
 
-def generate_embeddings_for_java_code(code, model, tokenizer, device, is_phase2_model=False):
+def generate_embeddings_for_java_code(code, model, tokenizer, device, is_phase_2_model=False):
     '''Generate embeddings for the provided java file.'''
 
-    if is_phase2_model:
+    if is_phase_2_model:
         # Split the code into words, remove stopwords, and rejoin into a string
         words = re.findall(r'\b\w+\b', code)
         filtered_code = ' '.join(word for word in words if word not in java_stopwords)
@@ -62,20 +62,26 @@ def generate_word_embeddings_for_java_code(code, model, lemmatizer, stopwords=ja
     return np.mean(embeddings, axis=0) if embeddings else None
 
 
-def compute_service_embeddings(embeddings_dict, communities):
+def compute_service_embeddings(embeddings, communities):
     """
     Compute service embeddings by averaging the embeddings of classes within each service.
-    
+
     Parameters:
     - embeddings_dict (dict): Dictionary mapping class names to their embeddings.
-    - communities (DataFrame): DataFrame containing community data for each class.
-    
+    - communities (dict): Dictionary containing nested lists of class names for each service.
+
     Returns:
     - dict: Dictionary of computed service embeddings.
     """
     service_embeddings = {}
-    for service, class_group in communities.groupby('service')['class_name']:
-        class_embeddings = [embeddings_dict[class_name] for class_name in class_group if class_name in embeddings_dict]
+    for service_type, class_groups in communities.items():
+        # Flatten the list of class name lists
+        flattened_class_names = [class_name for group in class_groups for class_name in group]
+
+        # Compute embeddings
+        class_embeddings = [embeddings[class_name] for class_name in flattened_class_names if class_name in embeddings]
         if class_embeddings:
-            service_embeddings[service] = np.mean(class_embeddings, axis=0)
+            service_embeddings[service_type] = np.mean(class_embeddings, axis=0)
+
     return service_embeddings
+

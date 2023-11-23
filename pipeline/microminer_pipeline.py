@@ -1,99 +1,153 @@
 from pipeline.interface import MicroMinerInterface
 from typing import List, Dict, Union
 
-from config.device_setup import set_device
 from embedding.embedding_model import select_model_and_tokenizer
 from helpers.embedding_helpers import create_class_embeddings_for_system
+from helpers.class_helpers import map_class_labels_to_categories
 from type_classification.classifiers import load_classifier_from_pickle
 
-from common.utils import load_call_graph
+from common.import_utils import load_call_graph
 from common.distances import compute_semantic_distances_for_class_pairs
 from common.normalization import filter_and_normalize_distances
-import networkx as nx
 from community_detection.community_detection import CommunityDetection
-from community_detection.community_tuning import fine_tune_all_services
-from common.utils import format_services
+from community_detection.community_tuning import fine_tune_communities
+from common.graphs import construct_class_graph
+from common.format_utils import format_services, format_microservices
+
+from common.graphs import construct_dissimilarity_matrix, construct_service_graph
+from fuzzy_clustering.cluster_analysis import assign_clusters_based_on_comparative_ratios, merge_overlapping_clusters, identify_standalone_services
+from common.normalization import normalize_memberships
+from common.distances import compute_static_distances_for_service_pairs, compute_semantic_distances_for_service_pairs
+from fuzzy_clustering.clustering import cluster_services
+from helpers.service_community_helpers import map_classes_to_services
+
 
 
 class MicroMinerPipeline(MicroMinerInterface):
 
-    def clone_and_prepare_src_code(self, github_url: str) -> bool:
-        raise NotImplementedError("This method must be implemented by the subclass.")
+    def clone_and_prepare_src_code(self) -> bool:
+        # TODO: Clone and prepare src code
+        self.system_name = "pos"
+        return True
 
     def execute_phase_1(self) -> Dict[str, List[Dict[str, str]]]:
         print("Phase 1 started...")
-
         tokenizer, model = select_model_and_tokenizer(self.embeddings_model_name_phase_1)
-        model = model.to(set_device())
 
         print("Creating embeddings...")
-        self.embeddings_phase_1 = create_class_embeddings_for_system("pos", self.embeddings_model_name_phase_1, model, tokenizer)
+        self.embeddings_phase_1 = create_class_embeddings_for_system(self.system_name, self.embeddings_model_name_phase_1, model, tokenizer)
 
         print("Load classifier and predict...")
         classifier = load_classifier_from_pickle(self.embeddings_model_name_phase_1, self.classification_model_name_phase_1)
         prediction = classifier.predict(list(self.embeddings_phase_1.values()))
 
-        # TODO Extract this in a mapper function
-        # TODO not use 2 variables for the same thing, but lazy rn
-        pair_class_label = zip(self.embeddings_phase_1.keys(), prediction)
-        self.result_phase_1 = list(zip(self.embeddings_phase_1.keys(), prediction))
-
-        application_classes = []
-        entity_classes = []
-        utility_classes = []
-
-        for class_name, class_label in pair_class_label:
-            class_info = {"className": class_name}
-            if class_label == '0':
-                application_classes.append(class_info)
-            elif class_label == '1':
-                utility_classes.append(class_info)
-            elif class_label == '2':
-                entity_classes.append(class_info)
-
-        result = {
-            "applicationClasses": application_classes,
-            "entityClasses": entity_classes,
-            "utilityClasses": utility_classes
-        }
+        self.labels = dict(zip(self.embeddings_phase_1.keys(), prediction))
+        result = map_class_labels_to_categories(self.labels)
 
         return result
 
     def execute_phase_2(self) -> Dict[str, Union[Dict[str, List[Dict[str, str]]], Dict[str, List[Dict[str, str]]]]]:
         print("Phase 2 started...")
 
-        class_names, class_labels = zip(*self.result_phase_1)
-        class_labels = [int(label) for label in class_labels]
+        # Initialize tokenizer and model
+        tokenizer, model = select_model_and_tokenizer(self.embeddings_model_name_phase_2)
 
-        class_labels_dict, class_embeddings_dict = dict(zip(class_names, class_labels)), dict(zip(class_names, self.embeddings_phase_1.values()))
-        print("Load call graph...")
-        static_df = load_call_graph("pos") # static values for debug purposes
+        print("Creating embeddings...")
+        self.embeddings_phase_2 = create_class_embeddings_for_system(
+            self.system_name, 
+            self.embeddings_model_name_phase_2,
+            model, 
+            tokenizer, 
+            is_phase_2=True
+        )
 
-        # TODO : Refacto some shit cause there is a lot of useless things here
-        print("Create class graph base on static distances...")
-        semantic_df = compute_semantic_distances_for_class_pairs(class_embeddings_dict)
-        static_df = filter_and_normalize_distances(static_df, class_labels_dict)
-        semantic_df = filter_and_normalize_distances(semantic_df, class_labels_dict)
-        merged_df = static_df.merge(semantic_df, on=['class1', 'class2'], how='outer')
-        self.class_graph = merged_df.fillna({'static_distance': 0, 'semantic_distance': 0})
+        # Compute semantic distances
+        print("Computing semantic distances...")
+        semantic_distances_df = compute_semantic_distances_for_class_pairs(self.embeddings_phase_2)
 
-        G = nx.from_pandas_edgelist(self.class_graph[self.class_graph['static_distance'] != 0], 'class1', 'class2', ['static_distance'])
-        cd = CommunityDetection(G, class_labels_dict, optimize_hyperparameters_flag=False)
+        # Load static distances
+        print("Loading static distances...")
+        static_distances_df = load_call_graph(self.system_name)
 
-        distances = [(row['class1'], row['class2'], row['static_distance']) for _, row in self.class_graph.iterrows()]  # OR other distances
+        # Normalize and filter distances based on class labels
+        print("Normalizing and filtering distances...")
+        self.normalized_static_distances_between_classes = filter_and_normalize_distances(static_distances_df, self.labels)
+        self.normalized_semantic_distances_between_classes = filter_and_normalize_distances(semantic_distances_df, self.labels)
 
-        communities = {
-        'Application': cd.detect_communities('Application', self.clustering_model_name_phase_2),
-        'Entity': cd.detect_communities('Entity', self.clustering_model_name_phase_2),
-        'Utility': cd.detect_communities('Utility', self.clustering_model_name_phase_2)
-        }
+        # Create the graph for community detection
+        print("Creating class graph...")
+        class_graph = construct_class_graph(
+            self.normalized_static_distances_between_classes, 
+            self.normalized_semantic_distances_between_classes, 
+            self.alpha_phase_2
+        )
 
-        self.communities = {
-            label_type: fine_tune_all_services(services, distances)
-            for label_type, services in communities.items()
-        }
+        # Community detection
+        print("Detecting communities...")
+        cd = CommunityDetection(class_graph, self.labels, optimize_hyperparameters_flag=False)
+        communities = {label: cd.detect_communities(label, self.clustering_model_name_phase_2) 
+                       for label in ['Application', 'Entity', 'Utility']}
 
-        return format_services(self.communities)
+        # Community tuning
+        print("Tuning communities...")
+        self.communities = {label_type: fine_tune_communities(services, class_graph.edges(data='weight')) 
+                            for label_type, services in communities.items()}
+
+        # Format the result
+        result = format_services(self.communities)
+
+        return result
 
     def execute_phase_3(self) -> Dict[str, Dict[str, Dict[str, List[Dict[str, str]]]]]:
-        raise NotImplementedError("This method must be implemented by the subclass.")
+        print("Phase 3 started...")
+
+        print("Computing class to service mapping...")
+        class_to_service_map = map_classes_to_services(self.communities)
+
+        print("Computing static and semantic distances...")
+        normalized_static_distances_between_services = compute_static_distances_for_service_pairs(
+            self.normalized_static_distances_between_classes, class_to_service_map)
+        normalized_semantic_distances_between_services = compute_semantic_distances_for_service_pairs(
+            self.normalized_semantic_distances_between_classes, class_to_service_map)
+
+        # Construct the service graph
+        print("Constructing service graph...")
+        service_graph, nodes_list = construct_service_graph(normalized_static_distances_between_services, 
+                                                 normalized_semantic_distances_between_services, 
+                                                 self.alpha_phase_3)
+
+        # Construct the dissimilarity matrix
+        print("Constructing dissimilarity matrix...")
+        dissimilarity_matrix = construct_dissimilarity_matrix(service_graph)
+
+        # Cluster the services
+        print("Clustering services...")
+        memberships = cluster_services(
+            dissimilarity_matrix, 
+            nodes_list, 
+            self.clustering_model_name_phase_3, 
+            self.system_name, 
+            self.num_clusters, 
+            self.max_d
+        )
+        
+        # Normalize the memberships
+        print("Normalizing memberships...")
+        normalized_memberships = normalize_memberships(memberships)
+
+        # Assign services to clusters based on comparative ratios
+        print("Assigning services to clusters...")
+        clusters = assign_clusters_based_on_comparative_ratios(normalized_memberships)
+
+        # Identify standalone services
+        print("Identifying standalone services...")
+        clusters = identify_standalone_services(clusters)
+
+        # Merge overlapping clusters
+        print("Merging overlapping clusters...")
+        clusters = merge_overlapping_clusters(clusters)
+
+        # Format the result
+        result = format_microservices(clusters, class_to_service_map)
+
+        return result

@@ -79,7 +79,6 @@ def merge_overlapping_clusters(cluster_assignments, overlap_threshold=0.5):
         for cluster1, cluster2 in combinations(cluster_service_map.keys(), 2)
         if calculate_overlap(cluster_service_map[cluster1], cluster_service_map[cluster2]) >= overlap_threshold
     }
-    print(f"Overlapping clusters: {overlapping_clusters}")
 
     # Step 3: Decide final merges
     final_merges = {}
@@ -136,8 +135,6 @@ def identify_standalone_services(cluster_assignments, occurrence_threshold=0.5):
 
     # Identify services in more clusters than the threshold
     standalone_candidates = {service for service, memberships in cluster_assignments.items() if len(memberships) > max_clusters_per_service}
-
-    print(f"Standalone candidates: {standalone_candidates}")
 
     # Create standalone microservices for these candidates
     standalone_cluster_id = max(int(cluster[7:]) for memberships in cluster_assignments.values() for cluster, _ in memberships) + 1

@@ -58,4 +58,6 @@ def determine_optimal_clusters(data, cluster_range):
     # Using the detect_elbow function to find the optimal number of clusters
     elbow_index = detect_elbow(fpc_values)
     optimal_clusters = cluster_range[elbow_index]
+
+    print(f"Optimal number of clusters: {optimal_clusters}")
     return optimal_clusters

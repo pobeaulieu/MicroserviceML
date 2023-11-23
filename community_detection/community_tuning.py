@@ -17,7 +17,7 @@ def fine_tune_cluster(service, services, distance_map):
 
     return services
 
-def fine_tune_all_services(services_list, distances):
+def fine_tune_communities(services_list, distances):
     distance_map = {s1: {s2: d} for s1, s2, d in distances}
     
     for i, s in enumerate(services_list):

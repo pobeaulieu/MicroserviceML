@@ -21,19 +21,19 @@ def filter_and_normalize_distances(df, class_labels_dict):
     return filtered_df
 
 
-def normalize_data(data):
+def normalize_distances(distances):
     """
-    Normalize a dictionary of data values to a range of 0 to 1.
+    Normalize a dictionary of distance values to a range of 0 to 1.
     
     Parameters:
-    - data (dict): Dictionary of data values to normalize.
+    - distances (dict): Dictionary of distance values to normalize.
     
     Returns:
-    - dict: Normalized data.
+    - dict: Normalized distances.
     """
-    min_val, max_val = min(data.values()), max(data.values())
+    min_val, max_val = min(distances.values()), max(distances.values())
     range_val = max_val - min_val
-    return {k: (v - min_val) / range_val for k, v in data.items()} if range_val else {k: 0 for k, v in data.items()}
+    return {k: (v - min_val) / range_val for k, v in distances.items()} if range_val else {k: 0 for k, v in distances.items()}
 
 
 def normalize_memberships(memberships):
