@@ -40,6 +40,10 @@ class MicroMinerInterface:
         self.max_d = max_d
         self.alpha_phase_3 = alpha_phase_3
 
+        # Training parameters
+        self.version = 'v_imen'
+        self.training_system_names = ["pos", "jforum", "petclinic", "cargotracker"]
+
     def __str__(self) -> str:
         return (
             f"GitHub URL: {self.github_url}\n"

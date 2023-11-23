@@ -24,4 +24,9 @@ result_phase_2 = pipeline.execute_phase_2()
 print(result_phase_2)
 
 # Call Phase 3
-pipeline.execute_phase_3()
+result_phase_3 = pipeline.execute_phase_3()
+print(result_phase_3)
+
+pipeline.clean_up()
+
+# pipeline.execute_training_phase()

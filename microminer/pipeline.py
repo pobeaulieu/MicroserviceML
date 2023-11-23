@@ -1,7 +1,7 @@
 from microminer.interface import MicroMinerInterface
 from typing import List, Dict, Union
 
-from microminer.helpers.app_cloner import clone_and_copy_java_contents
+from microminer.helpers.app_cloner import clone_and_copy_java_contents, remove_tmp_dir
 
 # Imports for phase 1
 from microminer.embedding.embedding_model import select_model_and_tokenizer
@@ -26,6 +26,11 @@ from microminer.common.distances import compute_static_distances_for_service_pai
 from microminer.clustering.clustering import cluster_services
 from microminer.helpers.mapper import map_classes_to_services
 
+# Imports for training models
+from microminer.classification.data_processing import prepare_training_data
+from microminer.helpers.mapper import map_classes_to_type_labels
+from microminer.classification.classifiers import create_classifiers, train_classifiers, save_classifiers_to_pickle
+
 
 
 class MicroMinerPipeline(MicroMinerInterface):
@@ -45,6 +50,7 @@ class MicroMinerPipeline(MicroMinerInterface):
 
         print("Predicting class type...")
         predictions = classifier.predict(list(self.embeddings_phase_1.values()))
+        print(predictions)
 
         self.labels = dict(zip(self.embeddings_phase_1.keys(), predictions))
 
@@ -131,7 +137,6 @@ class MicroMinerPipeline(MicroMinerInterface):
             dissimilarity_matrix, 
             nodes_list, 
             self.clustering_model_name_phase_3, 
-            self.system_name, 
             self.num_clusters, 
             self.max_d
         )
@@ -156,3 +161,31 @@ class MicroMinerPipeline(MicroMinerInterface):
         result = format_microservices(clusters, class_to_service_map)
 
         return result
+    
+    
+    def execute_training_phase(self):
+        tokenizer, model = select_model_and_tokenizer(self.embeddings_model_name_phase_1)
+        training_systems = []
+
+        for system_name in self.training_system_names:
+            system_labels = map_classes_to_type_labels(self.version, system_name)  # dict of class names to labels
+            system_embeddings = create_class_embeddings_for_system(self.embeddings_model_name_phase_1, model, tokenizer, is_phase_2=False, training_system_name=system_name)  # dict of class names to embeddings
+
+            system_data = {
+                'system_name': system_name,
+                'class_names': list(system_labels.keys()),
+                'labels': list(system_labels.values()),
+                'embeddings': list(system_embeddings.values())
+            }
+
+            training_systems.append(system_data)
+
+        Xtrain, ytrain, Xtest, ytest = prepare_training_data(training_systems)
+
+        classifiers = create_classifiers()
+        classifiers = train_classifiers(classifiers, Xtrain, ytrain)
+        save_classifiers_to_pickle(classifiers, self.embeddings_model_name_phase_1)
+
+
+    def clean_up(self):
+        remove_tmp_dir()

@@ -11,8 +11,11 @@ def load_call_graph(path_to_call_graph: str) -> pd.DataFrame:
     )
     return call_graph
 
-def load_class_code_from_directory():
-    root_folder = f"src_code/tmp/src_code_formatted/"
+def load_class_code_from_directory(training_system_name=None):
+    if training_system_name:
+        root_folder = f"src_code/{training_system_name}/src_code_formatted/"
+    else:
+        root_folder = f"src_code/tmp/src_code_formatted/"
 
     def read_java_file(file_path):
         with open(file_path, encoding="ISO-8859-1", errors="ignore") as java_file:
