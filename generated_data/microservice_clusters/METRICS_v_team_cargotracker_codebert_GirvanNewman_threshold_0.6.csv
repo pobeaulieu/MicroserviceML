@@ -1,4 +1,0 @@
-Model,Microservice Ground Truth Count,Microservice Generated Count,TP,FP,FN,Precision,Recall,F-measure
-cmeans,8,19,0,19,8,0.0,0.0,0.0
-custom_cmeans,8,8,1,7,7,0.125,0.125,0.125
-hierarchical,8,18,0,18,8,0.0,0.0,0.0

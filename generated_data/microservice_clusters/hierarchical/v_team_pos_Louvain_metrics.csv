@@ -1,4 +1,0 @@
-Model,TP,FP,FN,Precision,Recall,F-measure
-custom_cmeans,0,8,11,0.0,0.0,0.0
-cmeans,0,12,11,0.0,0.0,0.0
-hierarchical,1,9,10,0.1,0.09090909090909091,0.09523809523809525
