@@ -1,5 +1,0 @@
-Service Type,Nb ground truths,Nb clusters,TP,FP,FN,Precision,Recall,F-measure
-Application Services,7,5,0,5,7,0.0,0.0,0.0
-Entity Services,6,4,1,3,5,0.25,0.16666666666666666,0.2
-Utility Services,5,2,0,2,5,0.0,0.0,0.0
-Average,,,NULL,NULL,NULL,0.08333333333333333,0.05555555555555555,0.06666666666666667
