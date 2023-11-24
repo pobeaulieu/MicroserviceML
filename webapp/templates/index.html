@@ -6,7 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MicroMiner Microservice Generator</title>
     <link rel="stylesheet" href='/static/style.css' />
-    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.1.1/socket.io.js"></script>
 </head>
 
 <body style="height: 100vh;">
@@ -30,7 +31,7 @@
             <input type="file" id="call_graph_file" name="call_graph_file" accept=".csv" required>
             <br>
         </form>
-        <button type="submit" id="genms" onmouseup="submitForm(event)">Generate Microservices</button>
+        <button type="submit" id="genms" onmouseup="start()">Generate Microservices</button>
 
     </div>
 
@@ -89,8 +90,54 @@
             </select>
         </form>
     </main>
+<!-- Separate script tag for custom JavaScript -->
+<script>
+    if (typeof io !== 'undefined') {
+        // Function to create WebSocket connection and emit event
+        function start() {
+            // Get data from the form
+            var repo_url = document.getElementById('repo_url').value;
+            var call_graph_file = document.getElementById('call_graph_file').value;
+            var phase1_model_llm = document.getElementById('phase1_model_llm').value;
+            var phase1_model_ml = document.getElementById('phase1_model_ml').value;
+            var phase2_model = document.getElementById('phase2_model').value;
+            var num_microservices = document.getElementById('num_microservices').value;
+            var phase3_model = document.getElementById('phase3_model').value;
 
-    <script src="/static/client.js"></script>
+            // Emit 'pipeline' event with form data
+            socket.emit('pipeline', {
+                repo_url: repo_url,
+                call_graph_file: call_graph_file,
+                phase1_model_llm: phase1_model_llm,
+                phase1_model_ml: phase1_model_ml,
+                phase2_model: phase2_model,
+                num_microservices: num_microservices,
+                phase3_model: phase3_model
+            });
+
+            // Display modal or perform other UI actions
+            document.getElementById('modal').style.display = 'flex';
+        }
+
+        // Existing script for WebSocket event listeners
+        var socket = io.connect('http://' + document.domain + ':' + location.port, { transports: ['websocket'] });
+
+        // Event listener for pipeline completion
+        socket.on('pipeline_complete', function (data) {
+            window.location.href = '/results'
+        });
+
+        // Event listener for pipeline progress updates
+        socket.on('pipeline_progress', function (data) {
+            console.log("Pipeline Progress:", data);
+            var modalMessage = document.getElementById('modal-message');
+            modalMessage.innerHTML = data.message;
+        });
+    } else {
+        console.error('Socket.IO is not defined. Make sure the Socket.IO script is loaded.');
+    }
+</script>
+   
 </body>
 
 </html>

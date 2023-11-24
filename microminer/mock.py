@@ -1,4 +1,4 @@
-from pipeline.interface import MicroMinerInterface
+from microminer.interface import MicroMinerInterface
 from typing import List, Dict, Union
 import time
 
@@ -10,8 +10,7 @@ class MockImplementation(MicroMinerInterface):
 
     def execute_phase_1(self) -> Dict[str, List[Dict[str, str]]]:
         # print(f"Mock: Executing Phase 1 with embedding_model={embedding_model}, ml_model={ml_model}, src_code_path={src_code_path}")
-        # Simulate phase 1 result
-        time.sleep(2)
+
         return {
             "applicationClasses": [
                 {"className": "x"},
