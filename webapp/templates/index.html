@@ -97,7 +97,7 @@
         function start() {
             // Get data from the form
             var repo_url = document.getElementById('repo_url').value;
-            var call_graph_file = document.getElementById('call_graph_file').value;
+            var call_graph_file = document.getElementById('call_graph_file').files[0];
             var phase1_model_llm = document.getElementById('phase1_model_llm').value;
             var phase1_model_ml = document.getElementById('phase1_model_ml').value;
             var phase2_model = document.getElementById('phase2_model').value;
