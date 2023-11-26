@@ -98,7 +98,10 @@ def remove_tmp_dir():
     """
     try:
         shutil.rmtree('src_code/tmp')
+        shutil.rmtree('temp_repo')
+
     except Exception as e:
         # If removal fails, log the exception and attempt a force removal
         # print(f"Failed to remove src_code/tmp: {e}")
         subprocess.run(['rm', '-rf', 'src_code/tmp'], shell=True)
+        subprocess.run(['rm', '-rf', 'temp_repo'], shell=True)
