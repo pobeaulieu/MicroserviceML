@@ -15,7 +15,10 @@
 <body>
 
     <div class="bodyResult">
+        <div style="display: flex; justify-content: space-between; margin-top: 20px;">
             <button id="homeButton" class="button_home"> < Back to Home</button>
+            <button type="button" class="button_download" id="downloadBtn" onclick="downloadResults('{}')">Download Results</button>
+        </div>
         <div class="result_box">
             <div class="title-container">
                 <h2>Phase 1: Class typing</h2>
@@ -73,6 +76,32 @@
             // Redirect to the home page
             window.location.href = '/';
     });
+    function downloadResults(run_id) {
+        // Use URLSearchParams to get the run_id from the current URL
+        var urlSearchParams = new URLSearchParams(window.location.search);
+        var run_id = urlSearchParams.get('run_id');
+        // Make a GET request to the download_results route
+        fetch('/download_results/' + run_id)
+            .then(response => {
+                if (response.ok) {
+                    // If the response is successful, trigger the download
+                    return response.blob();
+                } else {
+                    // If the response is not successful, handle the error
+                    throw new Error('Failed to download results');
+                }
+            })
+            .then(blob => {
+                // Create a link and trigger the download
+                var link = document.createElement('a');
+                link.href = window.URL.createObjectURL(blob);
+                link.download = 'results.zip';
+                link.click();
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+    }
     </script>
 </body>
 

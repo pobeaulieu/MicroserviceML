@@ -63,7 +63,17 @@ main {
     margin-top: 30px;
     padding: 15px 1px; /* Adjust the padding to reduce the size */
     margin-right: auto; /* Move the button to the right */
-    max-width: 10%;
+    max-width: 20%;
+    font-size: 15px; /* Adjusted font size for better aesthetics */
+    font-family: 'Helvetica Neue', sans-serif;
+
+}
+
+.button_download {
+    margin-top: 30px;
+    margin-left: auto; /* Move the button to the right */
+    margin-right: 30px;
+    max-width: 20%;
     font-size: 15px; /* Adjusted font size for better aesthetics */
     font-family: 'Helvetica Neue', sans-serif;
 

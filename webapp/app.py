@@ -1,8 +1,7 @@
 import asyncio
 import threading
-from flask import Flask, render_template, request, jsonify, redirect, url_for
-import os, sys
-import uuid
+from flask import Flask, render_template, request, jsonify, redirect, url_for, send_file
+import os, sys, uuid, zipfile, io
 
 app = Flask(__name__)
 parent_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
@@ -14,7 +13,8 @@ sys.path.append(parent_dir)
 from microminer.pipeline import MicroMinerPipeline
 from microminer.config.enums import Phase1EmbeddingModel, Phase1ClassifierModel, Phase2EmbeddingModel, Phase2ClusteringModel, Phase3ClusteringModel
 
-global_results = {}
+# Dictionnary runid -> Result
+results_by_run_id_dict = {}
 
 def generate_run_id():
     return str(uuid.uuid4())
@@ -51,7 +51,7 @@ def run_pipeline(data):
 
     pipeline.clean_up()
 
-    global_results[run_id] = {
+    results_by_run_id_dict[run_id] = {
     'repo_url': repo_url,
     'phase1_model_llm': phase1_model_llm,
     'phase1_model_ml': phase1_model_ml,
@@ -71,16 +71,14 @@ def index():
 
 @app.route('/results')
 def results():
-
     run_id = request.args.get('run_id')
-
-    if run_id in global_results:
-        result_data = global_results[run_id]
+    if run_id in results_by_run_id_dict:
+        result_data = results_by_run_id_dict[run_id]
         return render_template('results.html', **result_data)
     else:
         # Redirect to a page indicating that the run ID is not found
         return redirect(url_for('index'))
-    
+
 @app.route('/pipeline', methods=['POST'])
 def handle_pipeline():
     repo_url = request.form.get('repo_url')
@@ -103,6 +101,31 @@ def handle_pipeline():
 
     run_id = run_pipeline(data)
     return jsonify({'run_id': run_id})
+
+
+@app.route('/download_results/<run_id>', methods=['GET'])
+def download_results(run_id):
+    if run_id in results_by_run_id_dict:
+        result_data = results_by_run_id_dict[run_id]
+        
+        # Create a BytesIO object to store the zip file in memory
+        zip_buffer = io.BytesIO()
+
+        # Create a ZipFile object
+        with zipfile.ZipFile(zip_buffer, 'w') as zip_file:
+            for i, (result_key, result_content) in enumerate(result_data.items()):
+                # Convert the result_content (dictionary) to a string
+                result_content_str = str(result_content)
+                zip_file.writestr(f'{result_key}.txt', result_content_str)
+
+        # Set the BytesIO object position to the beginning
+        zip_buffer.seek(0)
+
+        # Return the zip file as a response
+        return send_file(zip_buffer, download_name=f'results_{run_id}.zip', as_attachment=True)
+    else:
+        # Redirect to a page indicating that the run ID is not found
+        return redirect(url_for('index'))
 
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 5001))
