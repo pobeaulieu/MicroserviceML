@@ -12,6 +12,8 @@ pipeline = MicroMinerPipeline(
     clustering_model_name_phase_3=Phase3ClusteringModel.custom_cmeans.name,
 )
 
+pipeline.clean_up()
+
 # Call preprocessing step
 pipeline.clone_and_prepare_src_code()
 

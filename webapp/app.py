@@ -61,6 +61,8 @@ def pipeline(data):
         clustering_model_name_phase_3=Phase3ClusteringModel.custom_cmeans.name,
     )
 
+    pipeline.clean_up()
+
     #socketio.emit('pipeline_progress', {'message': 'Cloning Repository'})
     pipeline.clone_and_prepare_src_code()
     #socketio.sleep(30)
