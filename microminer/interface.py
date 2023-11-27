@@ -18,6 +18,7 @@ class MicroMinerInterface:
                  num_clusters: int = -1, 
                  max_d: int = -1,
                  alpha_phase_3: float = 0.5):
+
         
         self.run_id = str(uuid.uuid4())
         self.timestamp = datetime.now().strftime("%Y-%m-%d-%H:%M:%S")
