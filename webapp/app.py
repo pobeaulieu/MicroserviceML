@@ -12,7 +12,6 @@ sys.path.append(parent_dir)
 
 # Set the current working directory to the 'pipeline' directory
 from microminer.pipeline import MicroMinerPipeline
-from microminer.config.enums import Phase1EmbeddingModel, Phase1ClassifierModel, Phase2EmbeddingModel, Phase2ClusteringModel, Phase3ClusteringModel
 
 # Dictionnary runid -> Result
 results_by_run_id_dict = {}
@@ -127,19 +126,20 @@ def download_results(run_id):
         # results['config']['run_id'] = result_data['run_id']
         # results['config']['timestamp'] = result_data['timestamp']
         # results['config']['github_url'] = result_data['repo_url']
-        # # results['config']['path_to_call_graph'] = pipeline.path_to_call_graph
-        # # results['config']['embeddings_model_name_phase_1'] = pipeline.embeddings_model_name_phase_1
-        # # results['config']['classification_model_name_phase_1'] = pipeline.classification_model_name_phase_1
-        # # results['config']['alpha_phase_2'] = pipeline.alpha_phase_2
-        # # results['config']['embeddings_model_name_phase_2'] = pipeline.embeddings_model_name_phase_2
-        # # results['config']['clustering_model_name_phase_2'] = pipeline.clustering_model_name_phase_2
-        # # results['config']['clustering_model_name_phase_3'] = pipeline.clustering_model_name_phase_3
-        # # results['config']['num_clusters'] = pipeline.num_clusters
-        # # results['config']['max_d'] = pipeline.max_d
-        # # results['config']['alpha_phase_3'] = pipeline.alpha_phase_3
-        # # results['phase_1'] = result_phase_1
-        # # results['phase_2'] = result_phase_2
-        # # results['phase_3'] = result_phase_3
+        # results['config']['path_to_call_graph'] = pipeline.path_to_call_graph
+        # results['config']['embeddings_model_name_phase_1'] = pipeline.embeddings_model_name_phase_1
+        # results['config']['classification_model_name_phase_1'] = pipeline.classification_model_name_phase_1
+        # results['config']['alpha_phase_2'] = pipeline.alpha_phase_2
+        # results['config']['embeddings_model_name_phase_2'] = pipeline.embeddings_model_name_phase_2
+        # results['config']['clustering_model_name_phase_2'] = pipeline.clustering_model_name_phase_2
+        # results['config']['clustering_model_name_phase_3'] = pipeline.clustering_model_name_phase_3
+        # results['config']['num_clusters'] = pipeline.num_clusters
+        # results['config']['max_d'] = pipeline.max_d
+        # results['config']['alpha_phase_3'] = pipeline.alpha_phase_3
+        # results['phase_1'] = result_phase_1
+        # results['phase_2'] = result_phase_2
+        # results['phase_3'] = result_phase_3
+
         result_data = results_by_run_id_dict[run_id]
 
         # Create a BytesIO object to store the zip file in memory

@@ -16,6 +16,7 @@ class MicroMinerInterface:
                  num_clusters: int = -1, 
                  max_d: int = -1,
                  alpha_phase_3: float = 0.5):
+
         
         self.github_url = github_url
         self.path_to_call_graph = path_to_call_graph
