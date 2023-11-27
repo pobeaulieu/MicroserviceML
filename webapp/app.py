@@ -55,18 +55,26 @@ def pipeline():
         alpha_phase_2 = float(alpha_phase_2) if alpha_phase_2 else 0.5
         alpha_phase_3 = float(alpha_phase_3) if alpha_phase_3 else 0.5
 
-        print("num_microservices", num_microservices)
-        print("max_d", max_d)
-        print("alpha_phase_2", alpha_phase_2)
-        print("alpha_phase_3", alpha_phase_3)
-
-            
         # Save the file to disk
-        call_graph_file.save("graph.csv")
+        graph_path = "graph.csv"
+        call_graph_file.save(graph_path)
+
+        print("Running pipeline with parameters: ")
+        print('repo_url', repo_url)
+        print('call_graph_file', call_graph_file)
+        print('phase1_model_embedding', phase1_model_embedding)
+        print('phase1_model_ml', phase1_model_ml)
+        print('phase2_model', phase2_model)
+        print('phase2_model_embedding', phase2_model_embedding)
+        print('alpha_phase_2', alpha_phase_2)
+        print('phase3_model', phase3_model)
+        print('num_microservices', num_microservices)
+        print('max_d', max_d)
+        print('alpha_phase_3', alpha_phase_3)
 
         pipeline = MicroMinerPipeline(
             github_url=repo_url, 
-            path_to_call_graph="graph.csv", 
+            path_to_call_graph=graph_path, 
             embeddings_model_name_phase_1=phase1_model_embedding, 
             classification_model_name_phase_1=phase1_model_ml,
             embeddings_model_name_phase_2= phase2_model_embedding,

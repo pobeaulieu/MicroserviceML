@@ -155,17 +155,18 @@
     var formData = new FormData();
     formData.append('repo_url', repo_url);
     formData.append('call_graph_file', call_graph_file);
+
     formData.append('phase1_model_embedding', phase1_model_embedding);
     formData.append('phase1_model_ml', phase1_model_ml);
+
     formData.append('phase2_model', phase2_model);
     formData.append('phase2_model_embedding', phase2_model_embedding);
-    formData.append('num_microservices', num_microservices);
-    formData.append('phase3_model', phase3_model);
     formData.append('alpha_phase_2', alpha_phase_2);
-    formData.append('alpha_phase_3', alpha_phase_3);
 
-    console.log("alpha_phase_2", alpha_phase_2)
-    console.log(alpha_phase_3)
+    formData.append('phase3_model', phase3_model);
+    formData.append('max_d', max_d);
+    formData.append('num_microservices', num_microservices);
+    formData.append('alpha_phase_3', alpha_phase_3);
 
 
     // Make the POST request
