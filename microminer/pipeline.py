@@ -28,7 +28,7 @@ from microminer.helpers.mapper import map_classes_to_services
 
 # Imports for training models
 from microminer.classification.data_processing import prepare_training_data
-from microminer.helpers.mapper import map_classes_to_type_labels
+from microminer.helpers.reader import load_class_labels
 from microminer.classification.classifiers import create_classifiers, train_classifiers, save_classifiers_to_pickle
 
 
@@ -164,7 +164,7 @@ class MicroMinerPipeline(MicroMinerInterface):
         training_systems = []
 
         for system_name in self.training_system_names:
-            system_labels = map_classes_to_type_labels(self.version, system_name)  # dict of class names to labels
+            system_labels = load_class_labels(system_name, self.version)  # dict of class names to labels
             system_embeddings = create_class_embeddings_for_system(self.embeddings_model_name_phase_1, model, tokenizer, is_phase_2=False, training_system_name=system_name)  # dict of class names to embeddings
 
             system_data = {

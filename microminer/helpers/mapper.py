@@ -39,24 +39,3 @@ def map_classes_to_services(communities):
             for class_name in service_classes:
                 class_to_service_map[class_name] = service_name
     return class_to_service_map
-
-
-def map_classes_to_type_labels(version, system):
-    def process_file(filepath, label):
-        with open(filepath, 'r') as f:
-            for line in f:
-                class_labels[line.strip()] = label
-
-    class_labels = {}
-    
-    base_path = "ground_truths/{}/{}".format(version, system)
-    files = [
-        ("/classes/application.txt", 0),
-        ("/classes/utility.txt", 1),
-        ("/classes/entity.txt", 2)
-    ]
-
-    for file_path, label in files:
-        process_file(base_path + file_path, label)
-
-    return class_labels
