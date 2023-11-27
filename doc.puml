@@ -1,0 +1,66 @@
+@startuml
+
+actor User
+participant WebServer
+participant MicroMinerPipeline
+participant "Map<run_id, Result>" as ResultsDict
+participant CallGraphFile
+participant ZipFile
+participant FileSystem
+
+User -> WebServer: GET /
+activate WebServer
+WebServer --> User: Render index.html
+
+User -> WebServer: POST /pipeline
+activate WebServer
+WebServer -> MicroMinerPipeline: createPipelineInstance()
+activate MicroMinerPipeline
+WebServer -> CallGraphFile: saveCallGraphFile()
+activate CallGraphFile
+WebServer -> FileSystem: saveToDisk(graph.csv)
+activate FileSystem
+FileSystem --> CallGraphFile: Save successful
+deactivate FileSystem
+deactivate CallGraphFile
+WebServer -> MicroMinerPipeline: initializeWithParameters(params)
+WebServer -> MicroMinerPipeline: cloneAndPrepareSourceCode()
+WebServer -> MicroMinerPipeline: executePhase1()
+WebServer -> MicroMinerPipeline: executePhase2()
+WebServer -> MicroMinerPipeline: executePhase3()
+WebServer -> MicroMinerPipeline: cleanUp()
+deactivate MicroMinerPipeline
+WebServer -> ResultsDict: saveResultData(run_id, result_data)
+activate ResultsDict
+ResultsDict --> WebServer: Save successful
+deactivate ResultsDict
+WebServer --> User: Return run_id
+deactivate WebServer
+
+User -> WebServer: GET /results?run_id=<run_id>
+activate WebServer
+WebServer -> ResultsDict: getResultData(run_id)
+activate ResultsDict
+ResultsDict --> WebServer: Result found
+WebServer --> User: Render results.html with result_data
+deactivate WebServer
+deactivate ResultsDict
+
+User -> WebServer: GET /download_results/<run_id>
+activate WebServer
+WebServer -> ResultsDict: getResultData(run_id)
+activate ResultsDict
+ResultsDict --> WebServer: Result found
+WebServer -> ZipFile: createZipFile(result_data)
+activate ZipFile
+WebServer -> ZipFile: addToZip(result_data)
+WebServer -> FileSystem: saveToDisk(zip_file)
+activate FileSystem
+FileSystem --> ZipFile: Save successful
+deactivate FileSystem
+deactivate ZipFile
+WebServer --> User: Download zip file
+deactivate ResultsDict
+deactivate WebServer
+
+@enduml
