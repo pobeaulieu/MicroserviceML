@@ -47,8 +47,8 @@ def tune_codebert(optimize_hyperparameters=False):
         # Fine-tune and save the model
         train_model(model, train_examples, tokenizer, set_device())
 
-    model.save_pretrained("./codebert_finetuned")
-    tokenizer.save_pretrained("./codebert_finetuned")
+    model.save_pretrained("microminer/embedding/codebert_finetuned")
+    tokenizer.save_pretrained("microminer/embedding/codebert_finetuned")
 
 
 # Implement a PyTorch Dataset

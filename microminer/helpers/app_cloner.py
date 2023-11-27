@@ -89,40 +89,18 @@ def format_and_copy_java_files(src_dir):
 
 def remove_tmp_dir():
     """
-    Removes the contents of 'tmp' directory inside 'src_code' and 'temp_repo'.
+    Removes the 'tmp' directory inside 'src_code' and 'temp_repo'.
     """
     try:
-        tmp_dir = 'src_code/tmp'
-        temp_repo_dir = 'temp_repo'
+        directories_to_remove = ['src_code/tmp', 'temp_repo']
 
-        # Remove the contents of 'tmp' directory
-        if os.path.exists(tmp_dir) and os.path.isdir(tmp_dir):
-            for file_name in os.listdir(tmp_dir):
-                file_path = os.path.join(tmp_dir, file_name)
-                try:
-                    if os.path.isfile(file_path) or os.path.islink(file_path):
-                        os.unlink(file_path)
-                    elif os.path.isdir(file_path):
-                        shutil.rmtree(file_path)
-                except Exception as e:
-                    print(f"Failed to remove {file_path}: {e}")
-
-        # Remove the contents of 'temp_repo' directory
-        if os.path.exists(temp_repo_dir) and os.path.isdir(temp_repo_dir):
-            for file_name in os.listdir(temp_repo_dir):
-                file_path = os.path.join(temp_repo_dir, file_name)
-                try:
-                    if os.path.isfile(file_path) or os.path.islink(file_path):
-                        os.unlink(file_path)
-                    elif os.path.isdir(file_path):
-                        shutil.rmtree(file_path)
-                except Exception as e:
-                    print(f"Failed to remove {file_path}: {e}")
+        for directory in directories_to_remove:
+            if os.path.exists(directory) and os.path.isdir(directory):
+                shutil.rmtree(directory)
 
     except Exception as e:
         # If removal fails, log the exception and attempt a force removal
-        print(f"Failed to remove contents of 'tmp' directory: {e}")
-        subprocess.run(['rm', '-rf', 'src_code/tmp/*'], shell=True)
-
-        print(f"Failed to remove contents of 'temp_repo' directory: {e}")
-        subprocess.run(['rm', '-rf', 'temp_repo/*'], shell=True)
+        print(f"Failed to remove directories: {e}")
+        
+        for directory in directories_to_remove:
+            subprocess.run(['rm', '-rf', f'{directory}'], shell=True)

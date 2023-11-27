@@ -128,5 +128,4 @@ env.bak/
 venv.bak/
 
 codebert_finetuned
-src_code/tmp
 graph.csv

@@ -16,6 +16,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy the entire project into the container at /app
 COPY ./webapp ./webapp
+COPY ./webapp ./webapp
 
 # Command to run on container start
 WORKDIR /app/webapp

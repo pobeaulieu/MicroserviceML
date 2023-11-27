@@ -2,7 +2,6 @@
 
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -103,7 +102,7 @@
                 // Create a link and trigger the download
                 var link = document.createElement('a');
                 link.href = window.URL.createObjectURL(blob);
-                link.download = 'results.zip';
+                link.download = blob.
                 link.click();
             })
             .catch(error => {

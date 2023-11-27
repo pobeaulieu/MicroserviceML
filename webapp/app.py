@@ -2,6 +2,7 @@ import asyncio
 import threading
 from flask import Flask, render_template, request, jsonify, redirect, url_for, send_file
 import os, sys, uuid, zipfile, io
+from datetime import datetime
 
 app = Flask(__name__)
 parent_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
@@ -37,6 +38,7 @@ def results():
 @app.route('/pipeline', methods=['POST'])
 def pipeline():
     try:
+        timestamp = datetime.now().strftime("%Y-%m-%d-%H:%M:%S")
         run_id = generate_run_id()
         repo_url = request.form.get('repo_url')
         phase1_model_embedding = request.form.get('phase1_model_embedding')
@@ -97,6 +99,7 @@ def pipeline():
 
         results_by_run_id_dict[run_id] = {
         'repo_url': repo_url,
+        'timestamp': timestamp,
         'phase1_model_embedding': phase1_model_embedding,
         'phase1_model_ml': phase1_model_ml,
         'phase2_model': phase2_model,
@@ -120,6 +123,23 @@ def pipeline():
 @app.route('/download_results/<run_id>', methods=['GET'])
 def download_results(run_id):
     if run_id in results_by_run_id_dict:
+        # results['config'] = {}
+        # results['config']['run_id'] = result_data['run_id']
+        # results['config']['timestamp'] = result_data['timestamp']
+        # results['config']['github_url'] = result_data['repo_url']
+        # # results['config']['path_to_call_graph'] = pipeline.path_to_call_graph
+        # # results['config']['embeddings_model_name_phase_1'] = pipeline.embeddings_model_name_phase_1
+        # # results['config']['classification_model_name_phase_1'] = pipeline.classification_model_name_phase_1
+        # # results['config']['alpha_phase_2'] = pipeline.alpha_phase_2
+        # # results['config']['embeddings_model_name_phase_2'] = pipeline.embeddings_model_name_phase_2
+        # # results['config']['clustering_model_name_phase_2'] = pipeline.clustering_model_name_phase_2
+        # # results['config']['clustering_model_name_phase_3'] = pipeline.clustering_model_name_phase_3
+        # # results['config']['num_clusters'] = pipeline.num_clusters
+        # # results['config']['max_d'] = pipeline.max_d
+        # # results['config']['alpha_phase_3'] = pipeline.alpha_phase_3
+        # # results['phase_1'] = result_phase_1
+        # # results['phase_2'] = result_phase_2
+        # # results['phase_3'] = result_phase_3
         result_data = results_by_run_id_dict[run_id]
 
         # Create a BytesIO object to store the zip file in memory
@@ -136,7 +156,7 @@ def download_results(run_id):
         zip_buffer.seek(0)
 
         # Return the zip file as a response
-        return send_file(zip_buffer, download_name=f'results_{run_id}.zip', as_attachment=True)
+        return send_file(zip_buffer, download_name=f"{result_data['timestamp']}.zip", as_attachment=True)
     else:
         # Redirect to a page indicating that the run ID is not found
         return redirect(url_for('index'))

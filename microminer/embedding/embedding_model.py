@@ -2,6 +2,8 @@ from transformers import AutoTokenizer, AutoModel, AlbertTokenizer, AlbertModel,
 import nltk
 from nltk.stem import WordNetLemmatizer
 import gensim.downloader as api
+import sys, os
+
 from microminer.config.device_setup import set_device
 
 def select_model_and_tokenizer(model_type):
@@ -11,8 +13,8 @@ def select_model_and_tokenizer(model_type):
         model = AutoModel.from_pretrained("microsoft/codebert-base",force_download=False)
         model = model.to(set_device())
     elif (model_type == "ft_codebert"):
-        tokenizer = AutoTokenizer.from_pretrained("./codebert_finetuned",force_download=False)
-        model = AutoModel.from_pretrained("./codebert_finetuned",force_download=False)
+        tokenizer = AutoTokenizer.from_pretrained("./microminer/embedding/codebert_finetuned",force_download=False)
+        model = AutoModel.from_pretrained("./microminer/embedding/codebert_finetuned",force_download=False)
         model = model.to(set_device())
     elif (model_type == "bert"):
         tokenizer = BertTokenizer.from_pretrained("bert-base-uncased") 
