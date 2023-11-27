@@ -37,58 +37,102 @@
 
     <main>
         <form id="optionnal_params">
-            <!-- Phase 1 Model Dropdown -->
+            <h3>Settings</h5>
             <h5>Phase 1: Class typing</h5>
+            <div style="display: flex; justify-content: start; ">
+                <div style="flex: 0 0 50%; box-sizing: border-box; padding-right: 10px;">
 
-            <label for="phase1_model_llm">LLM (semantic code analysis):</label>
-            <select id="phase1_model_llm" name="phase1_model_llm">
-                <option value="ft_codebert">FT Codebert</option>
-                <option value="word2vec">Word2Vec</option>
-                <option value="albert">Albert</option>
+                <label for="phase1_model_ml">ML model:</label>
+                <select id="phase1_model_ml" name="phase1_model_ml">
+                    <option value="svm">SVM</option>
+                    <option value="knn">KNN</option>
+                    <option value="decision_tree">Decision Tree</option>
+                    <option value="logistic_regression">Logistic Regression</option>
+                    <option value="naive_bayes">Naive Bayes</option>
+                    <option value="ensemble">Ensemble</option>
+                </select>
+
+            <br>
+        </div>
+
+        <div style="flex: 0 0 50%; box-sizing: border-box; padding-right: 10px;">
+
+            <label for="phase1_model_emdedding">Embedding model:</label>
+            <select id="phase1_model_embedding" name="phase1_model_embedding">
                 <option value="codebert">Codebert</option>
-                <option value="roberta">Roberta</option>
-                <option value="bert">Bert</option>
+                <option value="ft_codebert">FT Codebert</option>
             </select>
-
-            <!-- Phase 1 Model Dropdown -->
-            <label for="phase1_model_ml">ML model:</label>
-            <select id="phase1_model_ml" name="phase1_model_ml">
-                <option value="svm">SVM</option>
-                <option value="knn">KNN</option>
-                <option value="decision_tree">Decision Tree</option>
-                <option value="logistic_regression">Logistic Regression</option>
-                <option value="naive_bayes">Naive Bayes</option>
-                <option value="ensemble">Ensemble</option>
-            </select>
-
-            <br>
-
+        </div>
+        </div>
             <h5>Phase 2: Typed Service Identification</h5>
-            <!-- Phase 2 Model Dropdown -->
-            <label for="phase2_model">Clustering algorithm:</label>
-            <select id="phase2_model" name="phase2_model">
-                <option value="Louvain">Louvain</option>
-                <option value="Infomap">Infomap</option>
-                <option value="LabelPropagation">Label Propagation</option>
-                <option value="FastGreedy">Fast Greedy</option>
-                <option value="GirvanNewman">Girvan Newman</option>
-                <option value="Leiden">Leiden</option>
-                <option value="Walktrap">Walktrap</option>
-            </select>
-            <br>
+            <div style="display: flex; justify-content: start; ">
+                <div style="flex: 0 0 50%; box-sizing: border-box; padding-right: 10px;">
+
+                <label for="phase2_model">Clustering algorithm:</label>
+                <select id="phase2_model" name="phase2_model">
+                    <option value="Louvain">Louvain</option>
+                    <option value="Infomap">Infomap</option>
+                    <option value="LabelPropagation">Label Propagation</option>
+                    <option value="FastGreedy">Fast Greedy</option>
+                    <option value="GirvanNewman">Girvan Newman</option>
+                    <option value="Leiden">Leiden</option>
+                    <option value="Walktrap">Walktrap</option>
+                </select>
+                <br>
+            </div>
+                <div style="flex: 0 0 50%; box-sizing: border-box; padding-right: 10px;">
+                <label for="phase2_model_embedding">Embedding Model:</label>
+                <select id="phase2_model_embedding" name="phase2_model_embedding">
+                    <option value="word2vec">Word2Vec</option>
+                    <option value="codebert">Codebert</option>
+                    <option value="albert">Albert</option>
+                    <!-- <option value="roberta">Roberta</option> -->
+                    <option value="bert">Bert</option>
+                </select>
+            </div>
+        </div>
+            <div style="display: flex; justify-content: start; ">
+                <label>Static Contribution Ratio:</label>
+                <span class="slider_span_value" style="display: block;" id="alpha_phase_2">0</span>
+            </div>
+
+            <div style="display: flex; align-items: center;">
+                <label style="margin-right: 10px; margin-left: 30px;" for="slider_alpha_phase_2">Static</label>
+                <input type="range" id="slider_alpha_phase_2" name="slider_alpha_phase_2" min="0" max="1" step="0.01" value="0.5" style="margin-bottom: 10px; outline: none; height: 5px;" >
+                <label style="margin-right: 30px; margin-left: 10px;" for="static">Semantic</label>
+            </div>
 
             <h5>Phase 3: Microservice Generation</h5>
-            <!-- Phase 3 Model Dropdown -->
-            <!-- Optional Number of Microservices Parameter -->
-            <label for="num_microservices">Number of Microservices:</label>
-            <input type="number" id="num_microservices" name="num_microservices" min="1" placeholder="Automatic">
-            <label for="phase3_model">Clustering algorithm:</label>
-            <select id="phase3_model" name="phase3_model">
-                <option value="cmeans">C-Means</option>
-                <option value="custom_cmeans">Custom C-Means</option>
-                <option value="hierarchical">Hierarchical</option>
-            </select>
+            <div style="display: flex; justify-content: start; ">
+                <div style="flex: 0 0 50%; box-sizing: border-box; padding-right: 10px;">
+
+                    <label for="phase3_model">Clustering algorithm:</label>
+                    <select id="phase3_model" name="phase3_model" onchange="toggleInputs()">
+                        <option value="custom_cmeans">Custom C-Means</option>
+                        <option value="cmeans">C-Means</option>
+                        <option value="hierarchical">Hierarchical</option>
+                    </select>
+                </div>
+                <div style="flex: 0 0 50%; box-sizing: border-box; padding-right: 10px;">
+
+                    <label for="num_microservices" id="num_microservices_label" style="display: none;">Number of Microservices:</label>
+                    <input type="number" id="num_microservices" name="num_microservices" min="1" placeholder="Automatic" style="display: none;">
+                    <label for="max_d" id="max_d_label" style="display: none;">Max d:</label>
+                    <input type="number" id="max_d" name="max_d" placeholder="Automatic" style="display: none;">
+                </div>
+            </div>
+            <div style="display: flex; justify-content: start; ">
+                <label>Static Contribution Ratio:</label>
+                <span class="slider_span_value" style="display: block;" id="alpha_phase_3">0</span>
+            </div>
+
+            <div style="display: flex; align-items: center;">
+                <label style="margin-right: 10px; margin-left: 30px;" for="slider_alpha_phase_3">Semantic</label>
+                <input type="range" id="slider_alpha_phase_3" name="slider_alpha_phase_3" min="0" max="1" step="0.01" value="0.5" style="margin-bottom: 10px;">
+                <label style="margin-right: 30px; margin-left: 10px;" for="static">Static</label>
+            </div>
         </form>
+
     </main>
 <!-- Separate script tag for custom JavaScript -->
 <script>
@@ -96,21 +140,33 @@
     // Get data from the form
     var repo_url = document.getElementById('repo_url').value;
     var call_graph_file = document.getElementById('call_graph_file').files[0];
-    var phase1_model_llm = document.getElementById('phase1_model_llm').value;
+    var phase1_model_embedding = document.getElementById('phase1_model_embedding').value;
     var phase1_model_ml = document.getElementById('phase1_model_ml').value;
     var phase2_model = document.getElementById('phase2_model').value;
+    var phase2_model_embedding = document.getElementById('phase2_model_embedding').value;
     var num_microservices = document.getElementById('num_microservices').value;
     var phase3_model = document.getElementById('phase3_model').value;
+    var max_d = document.getElementById('max_d').value;
+    var alpha_phase_2 = document.getElementById('alpha_phase_2').innerText;
+    var alpha_phase_3 = document.getElementById('alpha_phase_3').innerText;
+
 
     // Create form data
     var formData = new FormData();
     formData.append('repo_url', repo_url);
     formData.append('call_graph_file', call_graph_file);
-    formData.append('phase1_model_llm', phase1_model_llm);
+    formData.append('phase1_model_embedding', phase1_model_embedding);
     formData.append('phase1_model_ml', phase1_model_ml);
     formData.append('phase2_model', phase2_model);
+    formData.append('phase2_model_embedding', phase2_model_embedding);
     formData.append('num_microservices', num_microservices);
     formData.append('phase3_model', phase3_model);
+    formData.append('alpha_phase_2', alpha_phase_2);
+    formData.append('alpha_phase_3', alpha_phase_3);
+
+    console.log("alpha_phase_2", alpha_phase_2)
+    console.log(alpha_phase_3)
+
 
     // Make the POST request
     fetch('/pipeline', {
@@ -129,6 +185,55 @@
     document.getElementById('modal').style.display = 'flex';
 }
 
+</script>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script>
+    function toggleInputs() {
+        var selectedAlgorithm = $("#phase3_model").val();
+        var numMicroservicesLabel = $("#num_microservices_label");
+        var numMicroservicesInput = $("#num_microservices");
+        var maxDLabel = $("#max_d_label");
+        var maxDInput = $("#max_d");
+
+        // Toggle visibility based on the selected algorithm
+        if (selectedAlgorithm === "cmeans") {
+            numMicroservicesLabel.show();
+            numMicroservicesInput.show();
+            maxDLabel.hide();
+            maxDInput.hide();
+        } else if (selectedAlgorithm === "hierarchical") {
+            numMicroservicesLabel.hide();
+            numMicroservicesInput.hide();
+            maxDLabel.show();
+            maxDInput.show();
+        } else {
+            // For other algorithms, hide both inputs
+            numMicroservicesLabel.hide();
+            numMicroservicesInput.hide();
+            maxDLabel.hide();
+            maxDInput.hide();
+        }
+    }
+
+    // Initialize the visibility on page load
+    toggleInputs();
+</script>
+<script>
+    var sliderP2 = document.getElementById("slider_alpha_phase_2");
+    var alphaPhase2 = document.getElementById("alpha_phase_2");
+    alphaPhase2.innerHTML = sliderP2.value;
+
+    sliderP2.oninput = function() {
+        alphaPhase2.innerHTML = this.value;
+    }
+
+    var sliderP3 = document.getElementById("slider_alpha_phase_3");
+    var alphaPhase3 = document.getElementById("alpha_phase_3");
+    alphaPhase3.innerHTML = sliderP3.value;
+
+    sliderP3.oninput = function() {
+        alphaPhase3.innerHTML = this.value;
+    }
 </script>
    
 </body>

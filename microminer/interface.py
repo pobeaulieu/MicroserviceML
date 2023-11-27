@@ -4,7 +4,8 @@ from microminer.config.enums import Phase1EmbeddingModel, Phase1ClassifierModel,
 
 class MicroMinerInterface:
 
-    def __init__(self, github_url: str = None,
+    def __init__(self, 
+                 github_url: str = None,
                  path_to_call_graph: str = None, 
                  embeddings_model_name_phase_1: Phase1EmbeddingModel = None, 
                  classification_model_name_phase_1: Phase1ClassifierModel = None, 

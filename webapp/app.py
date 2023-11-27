@@ -19,51 +19,6 @@ results_by_run_id_dict = {}
 def generate_run_id():
     return str(uuid.uuid4())
 
-def run_pipeline(data):
-    run_id = generate_run_id()
-    repo_url = data['repo_url']
-    graph_file = data['call_graph_file']
-    phase1_model_llm = data['phase1_model_llm']
-    phase1_model_ml = data['phase1_model_ml']
-    phase2_model = data['phase2_model']
-    num_microservices = data['num_microservices']
-    phase3_model = data['phase3_model']
-    
-    # Save the file to disk
-    graph_file.save("graph.csv")
-
-    pipeline = MicroMinerPipeline(
-        github_url=repo_url, 
-        path_to_call_graph="graph.csv", 
-        embeddings_model_name_phase_1=Phase1EmbeddingModel.codebert.name, 
-        classification_model_name_phase_1=Phase1ClassifierModel.svm.name,
-        embeddings_model_name_phase_2=Phase2EmbeddingModel.word2vec.name,
-        clustering_model_name_phase_2=Phase2ClusteringModel.GirvanNewman.name,
-        clustering_model_name_phase_3=Phase3ClusteringModel.custom_cmeans.name,
-    )
-
-    pipeline.clean_up()
-
-    pipeline.clone_and_prepare_src_code()
-    result1 = pipeline.execute_phase_1()
-    result2 = pipeline.execute_phase_2()
-    result3 = pipeline.execute_phase_3()
-
-    pipeline.clean_up()
-
-    results_by_run_id_dict[run_id] = {
-    'repo_url': repo_url,
-    'phase1_model_llm': phase1_model_llm,
-    'phase1_model_ml': phase1_model_ml,
-    'phase2_model': phase2_model,
-    'num_microservices': num_microservices,
-    'phase3_model': phase3_model,
-    'result1': result1,
-    'result2': result2,
-    'result3': result3
-    }
-
-    return run_id 
 
 @app.route('/')
 def index():
@@ -80,34 +35,85 @@ def results():
         return redirect(url_for('index'))
 
 @app.route('/pipeline', methods=['POST'])
-def handle_pipeline():
-    repo_url = request.form.get('repo_url')
-    phase1_model_llm = request.form.get('phase1_model_llm')
-    phase1_model_ml = request.form.get('phase1_model_ml')
-    phase2_model = request.form.get('phase2_model')
-    num_microservices = request.form.get('num_microservices')
-    phase3_model = request.form.get('phase3_model')
-    call_graph_file = request.files.get('call_graph_file')
+def pipeline():
+    try:
+        run_id = generate_run_id()
+        repo_url = request.form.get('repo_url')
+        phase1_model_embedding = request.form.get('phase1_model_embedding')
+        phase1_model_ml = request.form.get('phase1_model_ml')
+        phase2_model = request.form.get('phase2_model')
+        phase2_model_embedding = request.form.get('phase2_model_embedding')
+        num_microservices = request.form.get('num_microservices')
+        phase3_model = request.form.get('phase3_model')
+        call_graph_file = request.files.get('call_graph_file')
+        max_d = request.form.get('max_d')
+        alpha_phase_2 = request.form.get('alpha_phase_2')
+        alpha_phase_3 = request.form.get('alpha_phase_3')
 
-    data = {
-            'repo_url': repo_url,
-            'call_graph_file': call_graph_file,
-            'phase1_model_llm': phase1_model_llm,
-            'phase1_model_ml': phase1_model_ml,
-            'phase2_model': phase2_model,
-            'num_microservices': num_microservices,
-            'phase3_model': phase3_model
-    }
+        num_microservices = int(num_microservices) if num_microservices else -1
+        max_d = float(max_d) if max_d else -1
+        alpha_phase_2 = float(alpha_phase_2) if alpha_phase_2 else 0.5
+        alpha_phase_3 = float(alpha_phase_3) if alpha_phase_3 else 0.5
 
-    run_id = run_pipeline(data)
-    return jsonify({'run_id': run_id})
+        print("num_microservices", num_microservices)
+        print("max_d", max_d)
+        print("alpha_phase_2", alpha_phase_2)
+        print("alpha_phase_3", alpha_phase_3)
+
+            
+        # Save the file to disk
+        call_graph_file.save("graph.csv")
+
+        pipeline = MicroMinerPipeline(
+            github_url=repo_url, 
+            path_to_call_graph="graph.csv", 
+            embeddings_model_name_phase_1=phase1_model_embedding, 
+            classification_model_name_phase_1=phase1_model_ml,
+            embeddings_model_name_phase_2= phase2_model_embedding,
+            alpha_phase_2 = alpha_phase_2,
+            clustering_model_name_phase_2=phase2_model,
+            clustering_model_name_phase_3=phase3_model,
+            num_clusters = num_microservices,
+            max_d = max_d,
+            alpha_phase_3 = alpha_phase_3,
+        )
+
+        pipeline.clean_up()
+
+        pipeline.clone_and_prepare_src_code()
+        result1 = pipeline.execute_phase_1()
+        result2 = pipeline.execute_phase_2()
+        result3 = pipeline.execute_phase_3()
+
+        pipeline.clean_up()
+
+        results_by_run_id_dict[run_id] = {
+        'repo_url': repo_url,
+        'phase1_model_embedding': phase1_model_embedding,
+        'phase1_model_ml': phase1_model_ml,
+        'phase2_model': phase2_model,
+        'phase2_model_embedding': phase2_model_embedding,
+        'num_microservices': num_microservices,
+        'phase3_model': phase3_model,
+        'alpha_phase_2': alpha_phase_2,
+        'alpha_phase_3': alpha_phase_3,
+        'max_d': max_d,
+        'result1': result1,
+        'result2': result2,
+        'result3': result3
+        }
+
+        return jsonify({'run_id': run_id})
+    finally:
+        # Clean up, regardless of whether an exception occurred
+        pipeline.clean_up()
 
 
 @app.route('/download_results/<run_id>', methods=['GET'])
 def download_results(run_id):
     if run_id in results_by_run_id_dict:
         result_data = results_by_run_id_dict[run_id]
-        
+
         # Create a BytesIO object to store the zip file in memory
         zip_buffer = io.BytesIO()
 

@@ -55,12 +55,6 @@ def clone_and_copy_java_contents(github_url, target_dir='src_code/tmp'):
         # Delay to ensure that all file handles are released
         time.sleep(1)
 
-        # Attempt to remove the directory
-        try:
-            subprocess.run(['rmdir', '/s', '/q', 'temp_repo'], shell=True, check=True)
-        except subprocess.CalledProcessError as e:
-            print(f"Failed to remove temp_repo with cmd: {e}")
-
     return success
 
 def copy_and_overwrite(src, dst):
@@ -92,16 +86,43 @@ def format_and_copy_java_files(src_dir):
                 formatted_path = relative_path.replace(os.path.sep, '.')
                 copy_and_overwrite(file_path, os.path.join(formatted_dir, formatted_path))
 
+
 def remove_tmp_dir():
     """
-    Removes the 'tmp' directory inside 'src_code'.
+    Removes the contents of 'tmp' directory inside 'src_code' and 'temp_repo'.
     """
     try:
-        shutil.rmtree('src_code/tmp')
-        shutil.rmtree('temp_repo')
+        tmp_dir = 'src_code/tmp'
+        temp_repo_dir = 'temp_repo'
+
+        # Remove the contents of 'tmp' directory
+        if os.path.exists(tmp_dir) and os.path.isdir(tmp_dir):
+            for file_name in os.listdir(tmp_dir):
+                file_path = os.path.join(tmp_dir, file_name)
+                try:
+                    if os.path.isfile(file_path) or os.path.islink(file_path):
+                        os.unlink(file_path)
+                    elif os.path.isdir(file_path):
+                        shutil.rmtree(file_path)
+                except Exception as e:
+                    print(f"Failed to remove {file_path}: {e}")
+
+        # Remove the contents of 'temp_repo' directory
+        if os.path.exists(temp_repo_dir) and os.path.isdir(temp_repo_dir):
+            for file_name in os.listdir(temp_repo_dir):
+                file_path = os.path.join(temp_repo_dir, file_name)
+                try:
+                    if os.path.isfile(file_path) or os.path.islink(file_path):
+                        os.unlink(file_path)
+                    elif os.path.isdir(file_path):
+                        shutil.rmtree(file_path)
+                except Exception as e:
+                    print(f"Failed to remove {file_path}: {e}")
 
     except Exception as e:
         # If removal fails, log the exception and attempt a force removal
-        # print(f"Failed to remove src_code/tmp: {e}")
-        subprocess.run(['rm', '-rf', 'src_code/tmp'], shell=True)
-        subprocess.run(['rm', '-rf', 'temp_repo'], shell=True)
+        print(f"Failed to remove contents of 'tmp' directory: {e}")
+        subprocess.run(['rm', '-rf', 'src_code/tmp/*'], shell=True)
+
+        print(f"Failed to remove contents of 'temp_repo' directory: {e}")
+        subprocess.run(['rm', '-rf', 'temp_repo/*'], shell=True)

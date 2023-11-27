@@ -34,8 +34,8 @@ from microminer.classification.classifiers import create_classifiers, train_clas
 
 
 class MicroMinerPipeline(MicroMinerInterface):
-
     def clone_and_prepare_src_code(self) -> bool:
+        print("Cloning Repository...")
         return clone_and_copy_java_contents(self.github_url)
 
     def execute_phase_1(self) -> Dict[str, List[Dict[str, str]]]:

@@ -27,7 +27,7 @@
             </div>
             <div class="hidden">
                 <h3>Parameters</h3>
-                <p><code>Model (LLM): {{ phase1_model_llm }}</code></p>
+                <p><code>Embedding LLM Model (semantic code analysis): {{ phase1_model_embedding }}</code></p>
                 <p><code>Model (ML): {{ phase1_model_ml }}</code></p>
                 <h3>Results</h3>
                 <pre><code class="json">{{ result1|tojson(indent=2) }}</code></pre>
@@ -41,7 +41,9 @@
             </div>
             <div class="hidden">
                 <h3>Parameters</h3>
-                <p><code>Model: {{ phase2_model }}</code></p>
+                <p><code>Embedding LLM Model (semantic code analysis): {{ phase2_model_embedding }}</code></p>
+                <p><code>Algorithm: {{ phase2_model }}</code></p>
+                <p><code>Static Contribution: {{ alpha_phase_2 }}</code></p>
                 <h3>Results</h3>
                 <pre><code class="json">{{ result2|tojson(indent=2) }}</code></pre>
             </div>
@@ -55,8 +57,14 @@
                 </div>
                 <div class="hidden">
                  <h3>Parameters</h3>
+                 <p><code>Algorithm: {{ phase3_model }}</code></p>
+                 {% if phase3_model == "hierarchical" %}
+                 <p><code>max_d: {{ max_d }}</code></p>
+                {% endif %}
+                {% if phase3_model == "c_means" %}
                 <p><code>Number of Microservices: {{ num_microservices }}</code></p>
-                <p><code>Model: {{ phase3_model }}</code></p>
+               {% endif %}
+               <p><code>Static Contribution: {{ alpha_phase_3 }}</code></p>
                 <h3>Results</h3>
                 <pre><code class="json">{{ result3|tojson(indent=2) }}</code></pre>
             </div>
