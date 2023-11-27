@@ -1,5 +1,7 @@
 from typing import List, Dict, Union
+import uuid
 import pandas as pd
+import datetime
 from microminer.config.enums import Phase1EmbeddingModel, Phase1ClassifierModel, Phase2EmbeddingModel, Phase2ClusteringModel, Phase3ClusteringModel
 
 class MicroMinerInterface:
@@ -17,6 +19,8 @@ class MicroMinerInterface:
                  max_d: int = -1,
                  alpha_phase_3: float = 0.5):
         
+        self.run_id = str(uuid.uuid4())
+        self.timestamp = datetime.now().strftime("%Y-%m-%d-%H:%M:%S")
         self.github_url = github_url
         self.path_to_call_graph = path_to_call_graph
         
@@ -44,6 +48,11 @@ class MicroMinerInterface:
         # Training parameters
         self.version = 'v_imen'
         self.training_system_names = ["pos", "jforum", "petclinic", "cargotracker"]
+
+        # Results
+        self.result_phase_1 = {}
+        self.result_phase_2 = {}
+        self.result_phase_3 = {}
 
     def __str__(self) -> str:
         return (

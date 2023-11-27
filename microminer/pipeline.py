@@ -1,5 +1,6 @@
 from microminer.interface import MicroMinerInterface
 from typing import List, Dict, Union
+import json
 
 from microminer.helpers.app_cloner import clone_and_copy_java_contents, remove_tmp_dir
 
@@ -54,9 +55,8 @@ class MicroMinerPipeline(MicroMinerInterface):
 
         self.labels = dict(zip(self.embeddings_phase_1.keys(), predictions))
 
-        result = map_class_labels_to_categories(self.labels)
+        self.result_phase_1 = map_class_labels_to_categories(self.labels)
 
-        return result
 
     def execute_phase_2(self) -> Dict[str, Union[Dict[str, List[Dict[str, str]]], Dict[str, List[Dict[str, str]]]]]:
         print("Phase 2 started...")
@@ -105,9 +105,8 @@ class MicroMinerPipeline(MicroMinerInterface):
                             for label_type, services in communities.items()}
 
         # Format the result
-        result = format_services(self.communities)
+        self.result_phase_2 = format_services(self.communities)
 
-        return result
 
     def execute_phase_3(self) -> Dict[str, Dict[str, Dict[str, List[Dict[str, str]]]]]:
         print("Phase 3 started...")
@@ -158,9 +157,7 @@ class MicroMinerPipeline(MicroMinerInterface):
         clusters = merge_overlapping_clusters(clusters)
 
         # Format the result
-        result = format_microservices(clusters, class_to_service_map)
-
-        return result
+        self.result_phase_3 = format_microservices(clusters, class_to_service_map)
     
     
     def execute_training_phase(self):
@@ -185,6 +182,33 @@ class MicroMinerPipeline(MicroMinerInterface):
         classifiers = create_classifiers()
         classifiers = train_classifiers(classifiers, Xtrain, ytrain)
         save_classifiers_to_pickle(classifiers, self.embeddings_model_name_phase_1)
+
+
+    def results_to_json_dict(self):
+        results = {}
+        results['config'] = {}
+        results['config']['run_id'] = self.run_id
+        results['config']['timestamp'] = self.timestamp
+        results['config']['github_url'] = self.github_url
+        results['config']['path_to_call_graph'] = self.path_to_call_graph
+        results['config']['embeddings_model_name_phase_1'] = self.embeddings_model_name_phase_1
+        results['config']['classification_model_name_phase_1'] = self.classification_model_name_phase_1
+        results['config']['alpha_phase_2'] = self.alpha_phase_2
+        results['config']['embeddings_model_name_phase_2'] = self.embeddings_model_name_phase_2
+        results['config']['clustering_model_name_phase_2'] = self.clustering_model_name_phase_2
+        results['config']['clustering_model_name_phase_3'] = self.clustering_model_name_phase_3
+        results['config']['num_clusters'] = self.num_clusters
+        results['config']['max_d'] = self.max_d
+        results['config']['alpha_phase_3'] = self.alpha_phase_3
+        results['phase_1'] = self.result_phase_1
+        results['phase_2'] = self.result_phase_2
+        results['phase_3'] = self.result_phase_3
+
+        # # save it in a readable format
+        # with open('results/results.json', 'w') as outfile:
+        #     json.dump(results, outfile, indent=4)
+
+        return results
 
 
     def clean_up(self):
