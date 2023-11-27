@@ -183,7 +183,7 @@ class MicroMinerPipeline(MicroMinerInterface):
         save_classifiers_to_pickle(classifiers, self.embeddings_model_name_phase_1)
 
 
-    def results_to_json_dict(self):
+    def get_results(self):
         results = {}
         results['config'] = {}
         results['config']['run_id'] = self.run_id
