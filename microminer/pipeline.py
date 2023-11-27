@@ -1,6 +1,5 @@
 from microminer.interface import MicroMinerInterface
 from typing import List, Dict, Union
-import json
 
 from microminer.helpers.app_cloner import clone_and_copy_java_contents, remove_tmp_dir
 
