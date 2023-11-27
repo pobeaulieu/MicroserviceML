@@ -150,6 +150,11 @@
     var alpha_phase_2 = document.getElementById('alpha_phase_2').innerText;
     var alpha_phase_3 = document.getElementById('alpha_phase_3').innerText;
 
+    if (repo_url == null || call_graph_file == null){
+        window.alert("You must provide GitHub URL and Call Graph CSV file. ")
+        return
+    }
+
 
     // Create form data
     var formData = new FormData();
