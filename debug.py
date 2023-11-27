@@ -18,16 +18,16 @@ pipeline.clean_up()
 pipeline.clone_and_prepare_src_code()
 
 # Call Phase 1
-result_phase_1 = pipeline.execute_phase_1()
-print(result_phase_1)
+pipeline.execute_phase_1()
 
 # Call Phase 2
-result_phase_2 = pipeline.execute_phase_2()
-print(result_phase_2)
+pipeline.execute_phase_2()
 
 # Call Phase 3
-result_phase_3 = pipeline.execute_phase_3()
-print(result_phase_3)
+pipeline.execute_phase_3()
+
+results = pipeline.get_results()
+print(results)
 
 pipeline.clean_up()
 
