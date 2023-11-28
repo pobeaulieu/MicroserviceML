@@ -23,11 +23,8 @@ pip install -r requirements.txt
 python webapp/app.py
 ```
 
-- MicroMiner will be available at `http://127.0.0.1:5001`
-
 ## Start WebApp with Docker
 `docker build -t microminer .`
 `docker run --name microminer -d -p 5002:5002 -e PORT=5002 microminer`
 
-- MicroMiner will be available at `http://127.0.0.1:5002`
 
