@@ -27,7 +27,19 @@ def results():
     run_id = request.args.get('run_id')
     if run_id in results_by_run_id_dict:
         result_data = results_by_run_id_dict[run_id]
-        return render_template('results.html', result1 = result_data['phase_1'], result2 = result_data['phase_2'], result3 = result_data['phase_3'])
+        return render_template('results.html', 
+        result1 = result_data['phase_1'], 
+        result2 = result_data['phase_2'], 
+        result3 = result_data['phase_3'], 
+        phase1_model_embedding= result_data['config']['embeddings_model_name_phase_1'], 
+        phase1_model_ml=result_data['config']['classification_model_name_phase_1'], 
+        phase2_model= result_data['config']['clustering_model_name_phase_2'], 
+        phase2_model_embedding= result_data['config']['embeddings_model_name_phase_2'],  
+        alpha_phase_2 = result_data['config']['alpha_phase_2'],  
+        phase3_model = result_data['config']['clustering_model_name_phase_3'],
+        max_d = result_data['config']['max_d'],
+        num_microservices = result_data['config']['num_clusters'],
+        alpha_phase_3 = result_data['config']['alpha_phase_3'])
     else:
         # Redirect to a page indicating that the run ID is not found
         return redirect(url_for('index'))
