@@ -1,8 +1,6 @@
-import asyncio
-import threading
-from flask import Flask, render_template, request, jsonify, redirect, url_for, send_file
-import os, sys, uuid, zipfile, io
-from datetime import datetime
+from flask import Flask, render_template, request, jsonify, redirect, url_for, make_response
+import os, sys, uuid, json
+from io import BytesIO
 
 app = Flask(__name__)
 parent_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
@@ -29,7 +27,7 @@ def results():
     run_id = request.args.get('run_id')
     if run_id in results_by_run_id_dict:
         result_data = results_by_run_id_dict[run_id]
-        return render_template('results.html', **result_data)
+        return render_template('results.html', result1 = result_data['phase_1'], result2 = result_data['phase_2'], result3 = result_data['phase_3'])
     else:
         # Redirect to a page indicating that the run ID is not found
         return redirect(url_for('index'))
@@ -37,8 +35,6 @@ def results():
 @app.route('/pipeline', methods=['POST'])
 def pipeline():
     try:
-        timestamp = datetime.now().strftime("%Y-%m-%d-%H:%M:%S")
-        run_id = generate_run_id()
         repo_url = request.form.get('repo_url')
         phase1_model_embedding = request.form.get('phase1_model_embedding')
         phase1_model_ml = request.form.get('phase1_model_ml')
@@ -90,77 +86,36 @@ def pipeline():
         pipeline.clean_up()
 
         pipeline.clone_and_prepare_src_code()
-        result1 = pipeline.execute_phase_1()
-        result2 = pipeline.execute_phase_2()
-        result3 = pipeline.execute_phase_3()
+        pipeline.execute_phase_1()
+        pipeline.execute_phase_2()
+        pipeline.execute_phase_3()
 
         pipeline.clean_up()
 
-        results_by_run_id_dict[run_id] = {
-        'repo_url': repo_url,
-        'timestamp': timestamp,
-        'phase1_model_embedding': phase1_model_embedding,
-        'phase1_model_ml': phase1_model_ml,
-        'phase2_model': phase2_model,
-        'phase2_model_embedding': phase2_model_embedding,
-        'num_microservices': num_microservices,
-        'phase3_model': phase3_model,
-        'alpha_phase_2': alpha_phase_2,
-        'alpha_phase_3': alpha_phase_3,
-        'max_d': max_d,
-        'result1': result1,
-        'result2': result2,
-        'result3': result3
-        }
-
-        return jsonify({'run_id': run_id})
+        results_by_run_id_dict[pipeline.run_id] = pipeline.get_results()
+        
+        return jsonify({'run_id': pipeline.run_id})
     finally:
         # Clean up, regardless of whether an exception occurred
         pipeline.clean_up()
 
-
 @app.route('/download_results/<run_id>', methods=['GET'])
 def download_results(run_id):
-    if run_id in results_by_run_id_dict:
-        # results['config'] = {}
-        # results['config']['run_id'] = result_data['run_id']
-        # results['config']['timestamp'] = result_data['timestamp']
-        # results['config']['github_url'] = result_data['repo_url']
-        # results['config']['path_to_call_graph'] = pipeline.path_to_call_graph
-        # results['config']['embeddings_model_name_phase_1'] = pipeline.embeddings_model_name_phase_1
-        # results['config']['classification_model_name_phase_1'] = pipeline.classification_model_name_phase_1
-        # results['config']['alpha_phase_2'] = pipeline.alpha_phase_2
-        # results['config']['embeddings_model_name_phase_2'] = pipeline.embeddings_model_name_phase_2
-        # results['config']['clustering_model_name_phase_2'] = pipeline.clustering_model_name_phase_2
-        # results['config']['clustering_model_name_phase_3'] = pipeline.clustering_model_name_phase_3
-        # results['config']['num_clusters'] = pipeline.num_clusters
-        # results['config']['max_d'] = pipeline.max_d
-        # results['config']['alpha_phase_3'] = pipeline.alpha_phase_3
-        # results['phase_1'] = result_phase_1
-        # results['phase_2'] = result_phase_2
-        # results['phase_3'] = result_phase_3
+    result_data = results_by_run_id_dict.get(run_id)
 
-        result_data = results_by_run_id_dict[run_id]
+    if result_data is None:
+        return jsonify({"error": "Run ID not found"}), 404
 
-        # Create a BytesIO object to store the zip file in memory
-        zip_buffer = io.BytesIO()
+    result_data_json = json.dumps(result_data, ensure_ascii=False, indent=2)
 
-        # Create a ZipFile object
-        with zipfile.ZipFile(zip_buffer, 'w') as zip_file:
-            for i, (result_key, result_content) in enumerate(result_data.items()):
-                # Convert the result_content (dictionary) to a string
-                result_content_str = str(result_content)
-                zip_file.writestr(f'{result_key}.txt', result_content_str)
+    # Create a Flask response with the JSON data
+    response = make_response(result_data_json)
+    
+    # Set the content type and attachment for download
+    response.headers['Content-Type'] = 'application/json'
+    response.headers['Content-Disposition'] = f'attachment; filename={run_id}_results.json'
 
-        # Set the BytesIO object position to the beginning
-        zip_buffer.seek(0)
-
-        # Return the zip file as a response
-        return send_file(zip_buffer, download_name=f"{result_data['timestamp']}.zip", as_attachment=True)
-    else:
-        # Redirect to a page indicating that the run ID is not found
-        return redirect(url_for('index'))
-
+    return response
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 5001))
     app.run(debug=True, port=port, host='0.0.0.0')

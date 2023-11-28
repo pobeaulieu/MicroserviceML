@@ -16,8 +16,8 @@ pip install -r requirements.txt
 ```
 
 4. Train 
- `python3.8 -m microminer.embedding.codebert_tuning`
-
+ `python -m microminer.embedding.codebert_tuning`
+` TODO`
 4. Run Webapp
 ```
 python webapp/app.py
@@ -28,5 +28,6 @@ python webapp/app.py
 ## Start WebApp with Docker
 `docker build -t microminer .`
 `docker run --name microminer -d -p 5002:5002 -e PORT=5002 microminer`
+
 - MicroMiner will be available at `http://127.0.0.1:5002`
 

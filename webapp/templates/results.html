@@ -16,7 +16,7 @@
     <div class="bodyResult">
         <div style="display: flex; justify-content: space-between; margin-top: 20px;">
             <button id="homeButton" class="button_home"> < Back to Home</button>
-            <button type="button" class="button_download" id="downloadBtn" onclick="downloadResults('{}')">Download Results</button>
+            <button type="button" class="button_download" id="downloadBtn" onclick="downloadResults()">Download Results</button>
         </div>
         <div class="result_box">
             <div class="title-container">
@@ -83,34 +83,43 @@
             // Redirect to the home page
             window.location.href = '/';
     });
-    function downloadResults(run_id) {
-        // Use URLSearchParams to get the run_id from the current URL
-        var urlSearchParams = new URLSearchParams(window.location.search);
-        var run_id = urlSearchParams.get('run_id');
-        // Make a GET request to the download_results route
-        fetch('/download_results/' + run_id)
-            .then(response => {
-                if (response.ok) {
-                    // If the response is successful, trigger the download
-                    return response.blob();
-                } else {
-                    // If the response is not successful, handle the error
-                    throw new Error('Failed to download results');
-                }
-            })
-            .then(blob => {
-                // Create a link and trigger the download
-                var link = document.createElement('a');
-                link.href = window.URL.createObjectURL(blob);
-                link.download = blob.
-                link.click();
-            })
-            .catch(error => {
-                console.error('Error:', error);
-            });
-    }
+    function downloadResults() {
+    // Use URLSearchParams to get the run_id from the current URL
+    var urlSearchParams = new URLSearchParams(window.location.search);
+    var run_id = urlSearchParams.get('run_id');
+
+    // Make a GET request to the download_results route
+    fetch('/download_results/' + run_id)
+        .then(response => {
+            if (response.ok) {
+                // Extract JSON data from the response
+                return response.json();
+            } else {
+                // If the response is not successful, handle the error
+                throw new Error('Failed to download results');
+            }
+        })
+        .then(jsonData => {
+            // Create a blob with the formatted JSON string
+            var blob = new Blob([JSON.stringify(jsonData, null, 2)], { type: 'application/json' });
+
+            // Create a link and trigger the download
+            var link = document.createElement('a');
+            link.href = window.URL.createObjectURL(blob);
+            link.download = `${jsonData['config']['timestamp']}_results.json`; // Set the filename for the download
+
+            // Append the link to the body and trigger the click
+            document.body.appendChild(link);
+            link.click();
+
+            // Remove the link element to avoid memory leaks
+            document.body.removeChild(link);
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+}
+
     </script>
 </body>
-
-
 </html>
