@@ -2,10 +2,11 @@
 FROM python:3.8.18
 
 # Copy the requirements.txt file into the container at /app
-COPY requirements.txt .
+COPY requirements_pipeline.txt .
 
 # Install dependencies
-RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install --upgrade pip
+RUN pip install -r requirements_pipeline.txt
 
 # Copy the entire project into the container at /app
 COPY ./webapp ./webapp
