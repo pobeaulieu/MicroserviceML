@@ -45,6 +45,7 @@ class MicroMinerInterface:
         self.num_clusters = num_clusters
         self.max_d = max_d
         self.alpha_phase_3 = alpha_phase_3
+        self.num_classes = 0
 
         # Training parameters
         self.version = 'v_imen'

@@ -82,7 +82,7 @@ def create_class_embeddings_for_system(model_type, model, tokenizer, is_phase_2=
     else:
         class_embeddings = {class_name: generate_embeddings_for_java_code(code, model, tokenizer, is_phase_2_model=is_phase_2) for class_name, code in class_code.items()}
 
-    return class_embeddings
+    return class_embeddings, len(class_code)
 
 
 def compute_service_embeddings(embeddings, communities):

@@ -1,5 +1,6 @@
 import pandas as pd
 import os
+import json
 
 def load_call_graph(path_to_call_graph: str) -> pd.DataFrame:
     """Load the call graph."""
@@ -28,10 +29,6 @@ def load_class_code_from_directory(training_system_name=None):
 
     return class_code
 
-def get_number_of_classes():
-    """Returns the number of classes in the system."""
-    return len(load_class_code_from_directory())
-
 def load_class_labels(system, version='v_imen'):
     def process_file(filepath, label):
         with open(filepath, 'r') as f:
@@ -51,3 +48,42 @@ def load_class_labels(system, version='v_imen'):
         process_file(base_path + file_path, label)
 
     return class_labels
+
+def load_results(results_file='results/results.json'):
+    with open(results_file, 'r') as file:
+        results_dict = json.load(file)
+
+    return results_dict
+
+def load_services_from_csv(system, version, data_type):
+    """
+    Load CSV data for services or microservices.
+    - system: The system name.
+    - version: The version of the system.
+    - data_type: Either 'services' or 'microservices'.
+    """
+    base_path = os.path.join("ground_truths", version, system)
+
+    def read_csv(file_path):
+        """ Utility function to read CSV file and process lines. """
+        with open(file_path, 'r') as file:
+            # Filter out empty elements and lines
+            return [list(filter(None, line.strip().split(','))) for line in file if line.strip()]
+
+    if data_type == 'services':
+        service_types = ["application", "utility", "entity"]
+        data = {}
+        for service_type in service_types:
+            file_path = os.path.join(base_path, "services", f"{service_type}.csv")
+            lines = read_csv(file_path)
+            data[f'{service_type}Services'] = [{'service': [{'className': name} for name in line]} for line in lines]
+        return data
+
+    elif data_type == 'microservices':
+        file_path = os.path.join(base_path, "microservices", "microservices.csv")
+        microservices = read_csv(file_path)
+        return microservices
+
+    else:
+        raise ValueError("Invalid data_type. Choose 'services' or 'microservices'.")
+

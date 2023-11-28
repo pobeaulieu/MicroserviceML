@@ -43,7 +43,7 @@ class MicroMinerPipeline(MicroMinerInterface):
         tokenizer, model = select_model_and_tokenizer(self.embeddings_model_name_phase_1)
 
         print("Creating embeddings...")
-        self.embeddings_phase_1 = create_class_embeddings_for_system(self.embeddings_model_name_phase_1, model, tokenizer)
+        self.embeddings_phase_1, self.num_classes = create_class_embeddings_for_system(self.embeddings_model_name_phase_1, model, tokenizer)
 
         print("Load classifier and predict...")
         classifier = load_classifier_from_pickle(self.embeddings_model_name_phase_1, self.classification_model_name_phase_1)
@@ -64,7 +64,7 @@ class MicroMinerPipeline(MicroMinerInterface):
         tokenizer, model = select_model_and_tokenizer(self.embeddings_model_name_phase_2)
 
         print("Creating embeddings...")
-        self.embeddings_phase_2 = create_class_embeddings_for_system(
+        self.embeddings_phase_2, _ = create_class_embeddings_for_system(
             self.embeddings_model_name_phase_2,
             model, 
             tokenizer, 
@@ -135,6 +135,7 @@ class MicroMinerPipeline(MicroMinerInterface):
             dissimilarity_matrix, 
             nodes_list, 
             self.clustering_model_name_phase_3, 
+            self.num_classes,
             self.num_clusters, 
             self.max_d
         )
@@ -165,7 +166,7 @@ class MicroMinerPipeline(MicroMinerInterface):
 
         for system_name in self.training_system_names:
             system_labels = load_class_labels(system_name, self.version)  # dict of class names to labels
-            system_embeddings = create_class_embeddings_for_system(self.embeddings_model_name_phase_1, model, tokenizer, is_phase_2=False, training_system_name=system_name)  # dict of class names to embeddings
+            system_embeddings, _ = create_class_embeddings_for_system(self.embeddings_model_name_phase_1, model, tokenizer, is_phase_2=False, training_system_name=system_name)  # dict of class names to embeddings
 
             system_data = {
                 'system_name': system_name,
