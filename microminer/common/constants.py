@@ -35,3 +35,8 @@ java_stopwords = [
     'package', 'if', 'else', 'null', 'no', 'delete', 'add', 'edit', 'get', 'new', 
     'open', 'close', 'mouse', 'event', 'window', 'throw'
 ]
+
+SYSTEM_GIT_URL_MAPPING = {'https://github.com/sadatrafsanjani/JavaFX-Point-of-Sales.git': 'pos', 
+                          'https://github.com/rafaelsteil/jforum3.git': 'jforum',
+                          'https://github.com/spring-projects/spring-petclinic.git': 'petclinic',
+                          'https://github.com/javaee/cargotracker.git': 'cargotracker'}
