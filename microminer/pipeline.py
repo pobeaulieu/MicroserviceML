@@ -50,7 +50,6 @@ class MicroMinerPipeline(MicroMinerInterface):
 
         print("Predicting class type...")
         predictions = classifier.predict(list(self.embeddings_phase_1.values()))
-        print(predictions)
 
         self.labels = dict(zip(self.embeddings_phase_1.keys(), predictions))
 
