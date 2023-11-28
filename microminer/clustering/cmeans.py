@@ -33,7 +33,7 @@ def fuzzy_cmeans_clustering(data, node_labels, optimal_clusters):
     return memberships
 
 
-def determine_optimal_clusters(data, cluster_range):
+def determine_optimal_clusters(data, cluster_range, plot_fpc=False):
     """Determines the optimal number of clusters using the Elbow method."""
     fpc_values = []
     for c_value in cluster_range:
@@ -46,14 +46,15 @@ def determine_optimal_clusters(data, cluster_range):
         )
         fpc_values.append(fpc)
 
-    # Plotting the FPC values - this can be optional based on your need
-    plt.figure()
-    plt.plot(cluster_range, fpc_values)
-    plt.title('Fuzzy Partition Coefficient (FPC) for different cluster numbers')
-    plt.xlabel('Number of clusters')
-    plt.ylabel('FPC')
-    plt.grid(True)
-    plt.show()
+    # Plotting the FPC values
+    if plot_fpc:
+        plt.figure()
+        plt.plot(cluster_range, fpc_values)
+        plt.title('Fuzzy Partition Coefficient (FPC) for different cluster numbers')
+        plt.xlabel('Number of clusters')
+        plt.ylabel('FPC')
+        plt.grid(True)
+        plt.show()
 
     # Using the detect_elbow function to find the optimal number of clusters
     elbow_index = detect_elbow(fpc_values)

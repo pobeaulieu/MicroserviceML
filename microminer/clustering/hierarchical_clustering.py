@@ -45,7 +45,7 @@ def hierarchical_clustering(dissimilarity_matrix, nodes, max_d):
     return memberships
 
 
-def determine_optimal_max_d(dissimilarity_matrix):
+def determine_optimal_max_d(dissimilarity_matrix, plot_wcss=False):
     # Detecting the elbow
     wcss_list = []
     max_d_values = np.linspace(0.1, 1.0, 10)  # Adjust the range and step as needed
@@ -62,11 +62,12 @@ def determine_optimal_max_d(dissimilarity_matrix):
     print(f"Optimal max_d is: {optimal_max_d}")
 
     # Plotting the results with the elbow point highlighted
-    plt.plot(max_d_values, wcss_list, 'bo-')
-    plt.plot(max_d_values[elbow_index], wcss_list[elbow_index], 'ro')
-    plt.title('Elbow Method For Optimal max_d')
-    plt.xlabel('max_d')
-    plt.ylabel('Within-Cluster Sum of Squares (WCSS)')
-    plt.show()
+    if plot_wcss:
+        plt.plot(max_d_values, wcss_list, 'bo-')
+        plt.plot(max_d_values[elbow_index], wcss_list[elbow_index], 'ro')
+        plt.title('Elbow Method For Optimal max_d')
+        plt.xlabel('max_d')
+        plt.ylabel('Within-Cluster Sum of Squares (WCSS)')
+        plt.show()
 
     return optimal_max_d
