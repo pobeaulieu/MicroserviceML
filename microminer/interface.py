@@ -17,7 +17,9 @@ class MicroMinerInterface:
                  clustering_model_name_phase_3: Phase3ClusteringModel = None, 
                  num_clusters: int = -1, 
                  max_d: int = -1,
-                 alpha_phase_3: float = 0.5):
+                 alpha_phase_3: float = 0.5,
+                 training_system_names: List[str] = ["pos", "jforum", "petclinic", "cargotracker"],
+                 version: str = 'v_team'):
 
         
         self.run_id = str(uuid.uuid4())
@@ -48,8 +50,8 @@ class MicroMinerInterface:
         self.num_classes = 0
 
         # Training parameters
-        self.version = 'v_imen'
-        self.training_system_names = ["pos", "jforum", "petclinic", "cargotracker"]
+        self.version = version
+        self.training_system_names = training_system_names
 
         # Results
         self.result_phase_1 = {}
