@@ -23,7 +23,8 @@ class Phase1ClassifierModel(Enum):
     knn = 2
     decision_tree = 3
     logistic_regression = 4
-    naives_bayes = 5
+    naive_bayes = 5
+    ensemble = 6
 
 # Create enum for phase 2 embedding model (word2vec, albert, roberta, bert)
 class Phase2EmbeddingModel(Enum):

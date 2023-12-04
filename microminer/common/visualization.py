@@ -34,8 +34,13 @@ def visualize_class_type_subgraph(subgraph, label_type):
 
 def visualize_class_distance_heatmap(df, values_column, title):
     """Visualize a heatmap from a dataframe."""
+    # Creating a pivot table
     pivot_table = df.pivot(index='class1', columns='class2', values=values_column)
-    
+
+    # Filling missing values with 0
+    pivot_table = pivot_table.fillna(0)
+
+    # Creating the heatmap
     plt.figure(figsize=(10, 8))
     heatmap = sns.heatmap(pivot_table, cmap='coolwarm', cbar_kws={'label': title})
     
