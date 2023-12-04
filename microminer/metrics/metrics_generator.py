@@ -3,13 +3,22 @@ from microminer.common.constants import SYSTEM_GIT_URL_MAPPING
 from microminer.metrics.classification_metrics import calculate_classification_metrics
 from microminer.metrics.clustering_metrics import calculate_clustering_metrics
 from microminer.helpers.writer import write_metrics_to_excel
+import os, glob
+
+def get_most_recent_file(directory):
+    list_of_files = glob.glob(f'{directory}/*')  # * means all files
+    if not list_of_files:  # Check if list is empty
+        return None
+    latest_file = max(list_of_files, key=os.path.getctime)
+    return latest_file
 
 # Add argument parser
 import argparse
 parser = argparse.ArgumentParser(description='Generate metrics for MicroMiner')
 
-# Add results file path argument
-parser.add_argument('--results', type=str, help='Path to results file', required=True)
+# Add results file path argument with default as the most recent file in results/
+default_results_file = get_most_recent_file('results')
+parser.add_argument('--results', type=str, help='Path to results file', default=default_results_file)
 
 def generate_metrics(results_file: str):
     # Load results and get system name from GitHub URL
@@ -64,6 +73,11 @@ def generate_metrics(results_file: str):
 if __name__ == '__main__':
     # Parse arguments
     args = parser.parse_args()
+
+    # Check if results file exists
+    if not args.results:
+        print("No results file found in the 'results/' directory.")
+        exit()
 
     # Generate metrics
     generate_metrics(args.results)
