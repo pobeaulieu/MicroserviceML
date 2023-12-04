@@ -18,8 +18,17 @@ def flatten_clusters(services, is_microservice=False):
 def calculate_overlap(set1, set2):
     """ Calculate the overlap ratio between two sets, as a number between 0 and 1. """
     intersection = len(set1.intersection(set2))
-    smaller_set_size = min(len(set1), len(set2))
-    return (intersection / smaller_set_size) if smaller_set_size > 0 else 0
+    bigger_set_size = max(len(set1), len(set2))
+    return (intersection / bigger_set_size) if bigger_set_size > 0 else 0
+
+# Suppose set1 = {A, B, C, D} and set2 = {B, C, E, F}.
+# The intersection of set1 and set2 is {B, C}, because B and C are the common elements.
+# The length of the intersection is 2 (since there are two elements: B and C).
+# The size of the bigger set is 4 (both set1 and set2 have 4 elements, so we take the maximum, which is 4).
+# The overlap ratio is therefore 2 / 4 = 0.5.
+# This means that 50% of the bigger set (in this case, either set since they are of equal size) is found in the other set, indicating a moderate overlap.
+
+# If set2 were {B, C}, then the overlap would be 0.5, as 50% of set1 is found in set2. If set2 had no elements in common with set1, the overlap would be 0, indicating no overlap.
 
 def calculate_clustering_metrics(results, ground_truths, threshold=0.8, is_microservice=False):
     """ Calculate metrics for clustering, with an option for type-specific metrics in Phase 2. """
