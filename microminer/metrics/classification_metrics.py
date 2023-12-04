@@ -22,8 +22,7 @@ def calculate_classification_metrics(results_phase_1, class_labels):
     precision = report['weighted avg']['precision']  # Get weighted average precision
     recall = report['weighted avg']['recall']  # Get weighted average recall
     f1_score = report['weighted avg']['f1-score']  # Get weighted average F1-score
-    accuracy = report['accuracy']  # Get overall accuracy
 
-    return precision, recall, f1_score, accuracy
+    return precision, recall, f1_score
 
     

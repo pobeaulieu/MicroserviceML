@@ -22,12 +22,11 @@ def generate_metrics(results_file: str):
     microservices_ground_truths = load_services_from_csv(system, version='v_team', data_type='microservices')
 
     # Calculate metrics for phase 1
-    precision, recall, f1_score, accuracy = calculate_classification_metrics(results_dict['phase_1'], class_labels)
+    precision, recall, f1_score = calculate_classification_metrics(results_dict['phase_1'], class_labels)
     metrics_phase_1 = {
         'cl_avg_precision': precision,
         'cl_avg_recall': recall,
-        'cl_avg_f1': f1_score,
-        'cl_accuracy': accuracy
+        'cl_avg_f1': f1_score
     }
 
     # Calculate metrics for phase 2

@@ -1,7 +1,6 @@
 # Functions for analyzing clusters
 import numpy as np
-from itertools import combinations
-
+from collections import defaultdict
 
 def assign_clusters_based_on_comparative_ratios(memberships):
     """
@@ -41,81 +40,56 @@ def assign_clusters_based_on_comparative_ratios(memberships):
 
     return cluster_assignments
 
-def calculate_overlap(cluster_a, cluster_b):
-        """
-        Calculate the overlap between two clusters.
-        
-        Parameters:
-        cluster_a (list): The first cluster to compare.
-        cluster_b (list): The second cluster to compare.
-        
-        Returns:
-        float: The ratio of the intersection to the union of the two clusters.
-        """
-        intersection = set(cluster_a).intersection(cluster_b)
-        union = set(cluster_a).union(cluster_b)
-        return len(intersection) / len(union) if union else 0
-
-
-def merge_overlapping_clusters(cluster_assignments, overlap_threshold=0.5):
+def merge_overlapping_clusters(data, overlap_threshold=0.5):
     """
-    Merge clusters that have significant overlap in services, and then renumber clusters sequentially.
-    Parameters:
-    - cluster_assignments (dict): A dictionary mapping services to their cluster memberships.
-    - overlap_threshold (float): Threshold to determine significant overlap.
-    Returns:
-    - dict: Updated cluster assignments after merging overlapping clusters and renumbering.
+    Merges clusters that have 50% or more common services and returns the updated data structure with sequential cluster labels.
+
+    :param data: A dictionary with services as keys and list of tuples (cluster, membership) as values.
+    :return: Updated data structure with merged clusters and sequential cluster labels.
     """
-    # Step 1: Create a mapping of cluster IDs to their services
-    cluster_service_map = {}
-    for service, memberships in cluster_assignments.items():
-        for cluster_name, _ in memberships:
-            cluster_id = int(cluster_name[7:])
-            cluster_service_map.setdefault(cluster_id, set()).add(service)
+    # Create a reverse mapping from cluster to services
+    cluster_to_services = defaultdict(set)
+    for service, clusters in data.items():
+        for cluster, _ in clusters:
+            cluster_to_services[cluster].add(service)
 
-    # Step 2: Identify overlapping clusters
-    overlapping_clusters = {
-        (cluster1, cluster2)
-        for cluster1, cluster2 in combinations(cluster_service_map.keys(), 2)
-        if calculate_overlap(cluster_service_map[cluster1], cluster_service_map[cluster2]) >= overlap_threshold
-    }
+    # Determine which clusters to merge based on common services
+    clusters_to_merge = defaultdict(set)
+    for cluster1, services1 in cluster_to_services.items():
+        for cluster2, services2 in cluster_to_services.items():
+            if cluster1 != cluster2:
+                common_services = services1.intersection(services2)
+                if len(common_services) >= overlap_threshold * min(len(services1), len(services2)):
+                    clusters_to_merge[cluster1].add(cluster2)
+                    clusters_to_merge[cluster2].add(cluster1)
 
-    # Step 3: Decide final merges
-    final_merges = {}
-    for cluster1, cluster2 in overlapping_clusters:
-        final_cluster1 = final_merges.get(cluster1, cluster1)
-        final_cluster2 = final_merges.get(cluster2, cluster2)
-        if final_cluster1 != final_cluster2:
-            smaller, larger = sorted([final_cluster1, final_cluster2])
-            final_merges[larger] = smaller
+    # Merge clusters
+    merged_clusters = {}
+    next_cluster_id = 1
+    visited = set()
+    for cluster, related_clusters in clusters_to_merge.items():
+        if cluster not in visited:
+            merged_cluster_name = f"cluster{next_cluster_id}"
+            next_cluster_id += 1
+            all_related_clusters = {cluster}.union(related_clusters)
+            for c in all_related_clusters:
+                merged_clusters[c] = merged_cluster_name
+                visited.add(c)
 
-    # Execute merges
-    for to_merge, merge_into in final_merges.items():
-        cluster_service_map[merge_into].update(cluster_service_map.pop(to_merge))
+    # Update the original data with the merged clusters
+    updated_data = defaultdict(list)
+    for service, clusters in data.items():
+        for cluster, membership in clusters:
+            new_cluster = merged_clusters.get(cluster, cluster)
+            # Take the maximum membership for the same cluster
+            existing_memberships = [m for c, m in updated_data[service] if c == new_cluster]
+            if existing_memberships:
+                max_membership = max(max(existing_memberships), membership)
+                updated_data[service] = [(c, m) if c != new_cluster else (new_cluster, max_membership) for c, m in updated_data[service]]
+            else:
+                updated_data[service].append((new_cluster, membership))
 
-    # Step 4: Renumber clusters sequentially
-    cluster_renumbering_map = {original: new for new, original in enumerate(sorted(cluster_service_map), start=1)}
-
-    # Add a check for any missing cluster IDs
-    all_cluster_ids = set(range(1, max(cluster_service_map.keys()) + 1))
-    for missing_id in all_cluster_ids - set(cluster_renumbering_map.keys()):
-        cluster_renumbering_map[missing_id] = missing_id
-
-    # Step 5: Update and consolidate cluster memberships
-    updated_cluster_assignments = {}
-    for service, memberships in cluster_assignments.items():
-        updated_memberships = {}
-        for cluster_name, membership in memberships:
-            cluster_id = int(cluster_name[7:])
-            merged_cluster_id = final_merges.get(cluster_id, cluster_id)
-            # Use get method to avoid KeyError
-            new_cluster_id = cluster_renumbering_map.get(merged_cluster_id, merged_cluster_id)
-            updated_cluster_name = f"cluster{new_cluster_id}"
-            updated_memberships[updated_cluster_name] = max(updated_memberships.get(updated_cluster_name, 0), membership)
-        updated_cluster_assignments[service] = list(updated_memberships.items())
-
-    return updated_cluster_assignments
-
+    return dict(updated_data)
 
 def identify_standalone_services(cluster_assignments, occurrence_threshold=0.5):
     """
