@@ -32,7 +32,6 @@ from microminer.helpers.reader import load_class_labels
 from microminer.classification.classifiers import create_classifiers, train_classifiers, save_classifiers_to_pickle
 
 
-
 class MicroMinerPipeline(MicroMinerInterface):
     def clone_and_prepare_src_code(self) -> bool:
         print("Cloning Repository...")
@@ -202,10 +201,6 @@ class MicroMinerPipeline(MicroMinerInterface):
         results['phase_1'] = self.result_phase_1
         results['phase_2'] = self.result_phase_2
         results['phase_3'] = self.result_phase_3
-
-        # # save it in a readable format
-        # with open('results/results.json', 'w') as outfile:
-        #     json.dump(results, outfile, indent=4)
 
         return results
 
