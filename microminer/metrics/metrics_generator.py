@@ -41,8 +41,9 @@ def generate_metrics(results_file: str):
     # Calculate metrics for phase 2
     metrics_phase_2 = calculate_clustering_metrics(results_dict['phase_2'], services_ground_truths)
     metrics_phase_2 = {
+        'services_overlap_threshold': metrics_phase_2['overlap_threshold'],
         'nb_services': sum(len(services_ground_truths[key]) for key in services_ground_truths),
-        'nb_s_clusters': sum(len(results_dict['phase_2'][key]) for key in results_dict['phase_2']),
+        'nb_service_clusters': sum(len(results_dict['phase_2'][key]) for key in results_dict['phase_2']),
         'total_tp': metrics_phase_2['average']['total_true_positives'],
         'total_fp': metrics_phase_2['average']['total_false_positives'],
         'total_fn': metrics_phase_2['average']['total_false_negatives'],
@@ -54,8 +55,9 @@ def generate_metrics(results_file: str):
     # Calculate metrics for phase 3
     metrics_phase_3 = calculate_clustering_metrics(results_dict['phase_3'], microservices_ground_truths, is_microservice=True)
     metrics_phase_3 = {
+        'microservices_overlap_threshold': metrics_phase_3['overlap_threshold'],
         'nb_microservices': len(microservices_ground_truths),
-        'nb_ms_clusters': len(results_dict['phase_3']['microservices']),
+        'nb_microservice_clusters': len(results_dict['phase_3']['microservices']),
         'tp': metrics_phase_3['average']['total_true_positives'],
         'fp': metrics_phase_3['average']['total_false_positives'],
         'fn': metrics_phase_3['average']['total_false_negatives'],

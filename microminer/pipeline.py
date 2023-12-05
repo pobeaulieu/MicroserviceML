@@ -175,7 +175,7 @@ class MicroMinerPipeline(MicroMinerInterface):
 
             training_systems.append(system_data)
 
-        Xtrain, ytrain, Xtest, ytest = prepare_training_data(training_systems)
+        Xtrain, ytrain, _, _, _, _ = prepare_training_data(training_systems)
 
         classifiers = create_classifiers()
         classifiers = train_classifiers(classifiers, Xtrain, ytrain)

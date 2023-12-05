@@ -4,6 +4,18 @@ from imblearn.over_sampling import SMOTE
 
 
 def aggregate_training_data(training_systems, test_system=None):
+    """
+    Aggregates training data from multiple systems into a single training set and a single test set.
+    
+    :param training_systems: List of dictionaries, each containing the following keys:
+        'system_name': Name of the system (e.g., 'system1')
+        'class_names': List of class names (e.g., ['class1', 'class2', 'class3'])
+        'labels': List of class labels (e.g., [0, 1, 2])
+        'embeddings': List of embeddings (e.g., [[0.1, 0.2, 0.3], [0.4, 0.5, 0.6], [0.7, 0.8, 0.9]])
+    :param test_system: Name of the system to use as test data (e.g., 'system1')
+
+    :return: Training and test data and labels.
+    """
     training_embeddings, training_labels, training_class_names = [], [], []
     test_embeddings, test_labels, test_class_names = [], [], []
 
@@ -16,7 +28,7 @@ def aggregate_training_data(training_systems, test_system=None):
         filtered_data = [(cn, lbl, emb) for cn, lbl, emb in zip(class_names, labels, embeddings) if lbl != -1]
         filtered_class_names, filtered_labels, filtered_embeddings = zip(*filtered_data)
 
-        system_name = system_data['system_name']  # Assuming each dictionary has a 'system_name' key
+        system_name = system_data['system_name']
         # Check if the system is the test_system and split data if needed
         if system_name == test_system:
             split_index = int(0.8 * len(filtered_embeddings))  # 80% for training
@@ -61,9 +73,9 @@ def resample_training_data(Xtrain, ytrain):
 
 
 def prepare_training_data(training_systems, test_system=None):
-    Xtrain, ytrain, _, Xtest, ytest, _ = aggregate_training_data(training_systems, test_system)
+    Xtrain, ytrain, training_class_names, Xtest, ytest, test_class_names = aggregate_training_data(training_systems, test_system)
     Xtrain, ytrain = resample_training_data(Xtrain, ytrain)
-    return Xtrain, ytrain, Xtest, ytest
+    return Xtrain, ytrain, training_class_names, Xtest, ytest, test_class_names
 
 
 def balance_class_distribution(Xtrain, ytrain, Xtest, ytest):

@@ -30,20 +30,22 @@ def calculate_overlap(set1, set2):
 
 # If set2 were {B, C}, then the overlap would be 0.5, as 50% of set1 is found in set2. If set2 had no elements in common with set1, the overlap would be 0, indicating no overlap.
 
-def calculate_clustering_metrics(results, ground_truths, threshold=0.8, is_microservice=False):
+def calculate_clustering_metrics(results, ground_truths, is_microservice=False, services_overlap_threshold=0.8, microservices_overlap_threshold=0.6):
     """ Calculate metrics for clustering, with an option for type-specific metrics in Phase 2. """
     metrics = {}
     total_TP = total_FP = total_FN = 0
 
     if is_microservice:
         # For Phase 3 - Microservices
+        metrics['overlap_threshold'] = microservices_overlap_threshold
+
         result_clusters = flatten_clusters(results, is_microservice)
         ground_truth_clusters = [set(microservice) for microservice in ground_truths]
         
         for result_cluster in result_clusters:
             overlaps = [calculate_overlap(result_cluster, gt_cluster) for gt_cluster in ground_truth_clusters]
             best_overlap = max(overlaps) if overlaps else 0
-            if best_overlap >= threshold:
+            if best_overlap >= microservices_overlap_threshold:
                 total_TP += 1
             else:
                 total_FP += 1
@@ -51,11 +53,13 @@ def calculate_clustering_metrics(results, ground_truths, threshold=0.8, is_micro
         for gt_cluster in ground_truth_clusters:
             overlaps = [calculate_overlap(gt_cluster, result_cluster) for result_cluster in result_clusters]
             best_overlap = max(overlaps) if overlaps else 0
-            if best_overlap < threshold:
+            if best_overlap < microservices_overlap_threshold:
                 total_FN += 1
 
     else:
         # For Phase 2 - Service Types
+        metrics['overlap_threshold'] = services_overlap_threshold
+
         for service_type in results.keys():
             result_clusters = flatten_clusters({service_type: results[service_type]})
             ground_truth_clusters = flatten_clusters({service_type: ground_truths[service_type]})
@@ -65,7 +69,7 @@ def calculate_clustering_metrics(results, ground_truths, threshold=0.8, is_micro
             for result_cluster in result_clusters:
                 overlaps = [calculate_overlap(result_cluster, gt_cluster) for gt_cluster in ground_truth_clusters]
                 best_overlap = max(overlaps) if overlaps else 0
-                if best_overlap >= threshold:
+                if best_overlap >= services_overlap_threshold:
                     TP += 1
                 else:
                     FP += 1
@@ -73,7 +77,7 @@ def calculate_clustering_metrics(results, ground_truths, threshold=0.8, is_micro
             for gt_cluster in ground_truth_clusters:
                 overlaps = [calculate_overlap(gt_cluster, result_cluster) for result_cluster in result_clusters]
                 best_overlap = max(overlaps) if overlaps else 0
-                if best_overlap < threshold:
+                if best_overlap < services_overlap_threshold:
                     FN += 1
 
             precision = TP / (TP + FP) if (TP + FP) > 0 else 0
