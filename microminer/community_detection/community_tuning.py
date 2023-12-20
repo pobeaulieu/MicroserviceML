@@ -21,6 +21,6 @@ def fine_tune_communities(services_list, distances):
     distance_map = {s1: {s2: d} for s1, s2, d in distances}
     
     for i, s in enumerate(services_list):
-        if len(s) < 2:
+        if len(s) == 1:
             services_list = fine_tune_cluster(s[0], services_list, distance_map)
     return services_list
